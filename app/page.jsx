@@ -298,7 +298,7 @@ const HeroPage = () => {
       gsap.fromTo(
         ".hero-section-2",
         {
-          x: "50%",
+          x: "60%",
           opacity: 0,
         },
         {
@@ -308,7 +308,7 @@ const HeroPage = () => {
           ease: "power3.out",  // Smoother easing
           scrollTrigger: {
             trigger: ".hero-section-2",
-            start: "top 80%",  // Start earlier
+            start: "top 100%",  // Start earlier
             end: "top 50%",
             toggleActions: "play none none reverse",
             onEnter: () => setHero2Complete(true),
@@ -320,34 +320,34 @@ const HeroPage = () => {
         gsap.to(threeDERef.current, {
           scrollTrigger: {
             trigger: ".hero-section-2",
-            start: "top 80%",
-            end: "center 40%",
-            scrub: 1.5,
+            start: "top 70%",
+            end: "top 30%",
+            scrub: true,
           },
           motionPath: {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-28vw", y: "70vh" },  // Adjusted for better vertical alignment
+              { x: "-28vw", y: "100vh" },
             ],
             curviness: 1.5,
           },
-          duration: 3,
-          ease: "power6.out",
+          duration: 2,
+          ease: "power2.out",
         });
       } else if (isLargeScreenSize) {
         gsap.to(threeDERef.current, {
           scrollTrigger: {
             trigger: ".hero-section-2",
-            start: "top 80%",
-            end: "center 40%",
-            scrub: 1.5,
+            start: "top center",
+            end: "center center",
+            scrub: true,
           },
           motionPath: {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-28vw", y: "65vh" },  // Adjusted for better vertical alignment
+              { x: "-27vw", y: "108vh" },
             ],
             curviness: 1.5,
           },
@@ -358,15 +358,15 @@ const HeroPage = () => {
         gsap.to(threeDERef.current, {
           scrollTrigger: {
             trigger: ".hero-section-2",
-            start: "top 80%",
-            end: "center 40%",
-            scrub: 1.5,
+            start: "top 70%",
+            end: "top 30%",
+            scrub: true,
           },
           motionPath: {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-28vw", y: "80vh" },  // Adjusted for better vertical alignment
+              { x: "-28vw", y: "100vh" },
             ],
             curviness: 1.5,
           },
@@ -563,15 +563,14 @@ const HeroPage = () => {
         sx={{
           position: "relative",
           zIndex: 3,
-          marginBottom: { xs: "1rem", md: "2rem", lg: "5rem" },  // Add spacing before "Our Services"
+          marginBottom: { xs: "2rem", sm: "4rem", md: "6rem", lg: "4rem", xl: "4rem" },  // Spacing before "Our Services"
           ...(isMobile || isTablet
             ? {
               opacity: 1,
               transform: "none",
             }
             : {
-              opacity: 0,  // Start hidden, GSAP will animate
-              // Removed transform to prevent glitching
+              opacity: 0,
             }),
         }}
       >

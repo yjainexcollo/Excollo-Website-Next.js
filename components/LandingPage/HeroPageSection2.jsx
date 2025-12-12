@@ -44,10 +44,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 0%",
-        end: "center 40%",
+        start: "top 10%",
+        end: "center 30%",
         scrub: true,
-        markers: true,
         id: "hero-section-2-timeline", // Add ID for debugging
         onComplete: () => {
           setTimeout(() => {
@@ -81,9 +80,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
         opacity: 1,
         x: 0,
         duration: 1,
-        ease: "power2.out",
+        ease: "power10.out",
       },
-      "-=0.5"
+      "-=1"
     );
 
     // Cleanup function to prevent memory leaks and duplicate animations
@@ -108,7 +107,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
           minHeight: {
             xs: "10vh",
             sm: isTablet ? "50vh" : "50vh",
-            md: "90vh",
+            md: "110vh",  // Increased from 90vh to push content lower
+            lg: "120vh",
+            xl: "130vh",
           },
           display: "flex",
           flexDirection: "column",
@@ -147,7 +148,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: `radial-gradient(closest-corner, rgba(115, 80, 190, 0.6) 0%, rgba(0, 0, 0, 0) 50%)`,
+            background: `radial-gradient(closest-corner, rgba(115, 80, 190, 0.6) 0%, rgba(0, 0, 0, 0) 45%)`,
             zIndex: 1,
             pointerEvents: "none",
             transformOrigin: "center center",
@@ -209,6 +210,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 md: "left",
               },
               paddingLeft: { md: "0", lg: "1rem", xl: "2rem" },
+              paddingTop: { md: "4rem", lg: "6rem", xl: "8rem" },  // Push content lower
               width: { xs: "100%", md: "auto" },
               mt: {
                 xs: 10,
@@ -249,7 +251,6 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
               Excollo delivers outcomes, leveraging AI to make businesses
               future-ready, boosting productivity and efficiency at every step.
             </Typography>
-
             <Typography
               component={Link}
               href="/services"
@@ -260,7 +261,8 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 textDecoration: "none",
                 fontWeight: 400,
                 fontSize: {
-                  xs: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
+                  xs: `clamp(0.875rem, 3.5vw, 1rem)`,
+                  sm: `clamp(0.9rem, 2.5vw, 1.1rem)`,
                   md: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                   xl: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                 },
@@ -268,16 +270,16 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 padding: {
                   xs: "12px 24px",
                   sm: "14px 28px",
-                  md: "12px 32px",
-                  lg: "14px 36px",
+                  md: "1vw 2vw",
                 },
-                minHeight: "44px",
                 borderRadius: { xs: "80px", md: "80px", xl: "80px" },
                 background:
                   "linear-gradient(to right, #000, #000) padding-box, linear-gradient(180deg, rgba(170, 63, 255, 0.9) 0%, rgba(94, 129, 235, 0.9) 100%) border-box",
                 zIndex: 3,
                 position: "relative",
                 transition: "all 0.3s ease",
+                width: { xs: "auto", sm: "auto" },
+                minHeight: "44px",
                 textAlign: "center",
                 "&:hover": {
                   background:
