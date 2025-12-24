@@ -201,7 +201,7 @@ const NavBar = () => {
                 zIndex: 0,
                 gap: {
                   md: "0.5rem",
-                  lg: "1rem",
+                  lg: "1.5rem",
                   xl: "2rem",
                 },
                 alignItems: "center",
@@ -344,12 +344,12 @@ const NavBar = () => {
                   fontWeight: "100",
                   padding: {
                     md: "0.15vw",
-                    lg: "0.2vw",
+                    lg: "0.20vw",
                     xl: "0.25vw",
                   },
                   borderRadius: { md: "35px", lg: "40px", xl: "45px" },
                   background: "transparent",
-                  minHeight: "40px",
+                  minHeight: "45px",
                   "&::before": {
                     content: '""',
                     position: "absolute",
@@ -390,9 +390,9 @@ const NavBar = () => {
                 >
                   LET'S TALK
                 </Typography>
-                <Box sx={{ mt: "4%" }}>
+                <Box sx={{ mt: "3.5%" }}>
                   <FaChevronRight
-                    style={{ marginLeft: "-10px", marginRight: "10px" }}
+                    style={{ marginLeft: "-7px", marginRight: "10px" }}
                   />
                 </Box>
               </Typography>

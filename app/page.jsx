@@ -298,18 +298,18 @@ const HeroPage = () => {
       gsap.fromTo(
         ".hero-section-2",
         {
-          x: "60%",
+          x: "50%",
           opacity: 0,
         },
         {
           x: 0,
           opacity: 1,
-          duration: 1.2,  // Slowed down from 0.1 to 1.2 for smoother transition
-          ease: "power3.out",  // Smoother easing
+          duration: 0.1,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: ".hero-section-2",
-            start: "top 100%",  // Start earlier
-            end: "top 50%",
+            start: "top center",
+            end: "top center",
             toggleActions: "play none none reverse",
             onEnter: () => setHero2Complete(true),
           },
@@ -328,7 +328,7 @@ const HeroPage = () => {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-28vw", y: "100vh" },
+              { x: "-28vw", y: "90vh" },
             ],
             curviness: 1.5,
           },
@@ -347,7 +347,7 @@ const HeroPage = () => {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-27vw", y: "108vh" },
+              { x: "-27vw", y: "90vh" },
             ],
             curviness: 1.5,
           },
@@ -563,14 +563,14 @@ const HeroPage = () => {
         sx={{
           position: "relative",
           zIndex: 3,
-          marginBottom: { xs: "2rem", sm: "4rem", md: "6rem", lg: "4rem", xl: "4rem" },  // Spacing before "Our Services"
           ...(isMobile || isTablet
             ? {
               opacity: 1,
               transform: "none",
             }
             : {
-              opacity: 0,
+              opacity: 1,
+              transform: "translateX(50%)",
             }),
         }}
       >
@@ -580,9 +580,8 @@ const HeroPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: { xs: 3, sm: 4, md: 5, lg: 6 },
-          marginTop: { xs: 2, sm: 3, md: 4 },
-          px: { xs: 0, sm: 0 },
+          gap: { xs: 2, md: 4, lg: 6 },
+          marginTop: 4,
           zIndex: 1,
         }}
       >

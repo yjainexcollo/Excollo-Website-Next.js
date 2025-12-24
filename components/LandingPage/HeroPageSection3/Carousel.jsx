@@ -851,6 +851,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
         {carouselContent.map((_, index) => (
           <Box
             key={index}
+            className="carousel-dot"
             onClick={() => handleDotClick(index)}
             sx={{
               width: { xs: "8px", md: "10px", lg: "12px" },

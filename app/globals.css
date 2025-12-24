@@ -49,7 +49,8 @@ path:not(.custom-cursor-disable),
 [class*=" fa-"]:not(.custom-cursor-disable),
 [class^="material-icons"]:not(.custom-cursor-disable),
 [class*="material-symbols"]:not(.custom-cursor-disable),
-[class*="lucide-"]:not(.custom-cursor-disable) {
+[class*="lucide-"]:not(.custom-cursor-disable),
+.carousel-dot:not(.custom-cursor-disable) {
   cursor: pointer !important;
 }
 

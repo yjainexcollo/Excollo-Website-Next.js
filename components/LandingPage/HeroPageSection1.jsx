@@ -25,30 +25,25 @@ const HeroPageSection1 = ({ animationComplete }) => {
           md: "100%",
         },
         px: {
-          xs: 1.5,
-          sm: 3,
+          xs: 2,
+          sm: 4,
           md: 0,
         },
         marginLeft: {
-          xs: "0%",
-          sm: "2.5%",
+          xs: "2.5%",
           md: "7.5%",
         },
         marginRight: {
-          xs: "0%",
-          sm: "2.5%",
+          xs: "2.5%",
           md: "0%",
         },
         position: "relative",
         minHeight: {
-          xs: "auto",
-          sm: "50vh",
+          xs: "60vh",
           md: "60vh",
         },
         zIndex: 2,
         marginTop: {
-          xs: 0,
-          sm: 0,
           md: "calc(45vh - 7%)",
           lg: "calc(47.5vh - 8%)",
           xl: "calc(50vh - 10%)",
@@ -63,7 +58,7 @@ const HeroPageSection1 = ({ animationComplete }) => {
             md: "85%",
           },
           padding: {
-            xs: 1,
+            xs: 2,
             sm: 0,
             md: 0,
           },
@@ -73,19 +68,18 @@ const HeroPageSection1 = ({ animationComplete }) => {
           variant="h3"
           component="h1"
           sx={{
-            fontWeight: 400,
+            fontWeight: 500,
             fontSize: {
-              xs: `clamp(1.5rem, 8vw, 3rem)`,
-              sm: `clamp(1.75rem, 6vw, 3.5rem)`,
+              xs: `clamp(1.75rem, calc(1.25rem + 2vw), 9rem)`,
               md: `clamp(1.75rem, calc(1.25rem + 2.5vw), 9rem)`,
               lg: `clamp(1.75rem, calc(1.37rem + 3vw), 8rem)`,
               xl: `clamp(2.25rem, calc(2rem + 3vw), 10rem)`,
             },
-            lineHeight: { xs: 1.2, sm: 1.167, md: 1.167 },
+            lineHeight: 1.167,
             letterSpacing: "-0.01562em",
             mt: {
-              xs: 8,
-              sm: 12,
+              xs: 20,
+              sm: 22,
               md: 0,
             },
           }}
@@ -100,8 +94,7 @@ const HeroPageSection1 = ({ animationComplete }) => {
             lineHeight: 1.167,
             letterSpacing: "-0.01562em",
             fontSize: {
-              xs: `clamp(1.5rem, 8vw, 3rem)`,
-              sm: `clamp(1.75rem, 6vw, 3.5rem)`,
+              xs: `clamp(1.75rem, calc(1.25rem + 2vw), 9rem)`,
               md: `clamp(1.75rem, calc(1.25rem + 2.5vw), 9rem)`,
               lg: `clamp(1.75rem, calc(1.37rem + 3vw), 8rem)`,
               xl: `clamp(2.25rem, calc(2rem + 3vw), 10rem)`,
@@ -163,11 +156,11 @@ const HeroPageSection1 = ({ animationComplete }) => {
               xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
             },
             fontWeight: 400,
-            lineHeight: { xs: 1.5, sm: 1.6, md: 1.7 },
+            lineHeight: 1.7,
             marginLeft: isTabletOrMobile ? 0 : "1%",
             mb: {
-              xs: 3,
-              sm: 4,
+              xs: 4,
+              sm: 5,
               md: 4.5,
             },
             textAlign: isTabletOrMobile ? "center" : "left",
@@ -193,16 +186,14 @@ const HeroPageSection1 = ({ animationComplete }) => {
               textDecoration: "none",
               fontWeight: 400,
               fontSize: {
-                xs: `clamp(0.875rem, 3.5vw, 1rem)`,
-                sm: `clamp(0.9rem, 2.5vw, 1.1rem)`,
+                xs: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                 md: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                 xl: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
               },
               border: "1px solid transparent",
               padding: {
-                xs: "12px 24px",
-                sm: "14px 28px",
-                md: "1vw 2vw",
+                xs: "1.5vw 4vw",
+                sm: "1vw 2vw",
               },
               borderRadius: { xs: "80px", md: "80px", xl: "80px" },
               background:

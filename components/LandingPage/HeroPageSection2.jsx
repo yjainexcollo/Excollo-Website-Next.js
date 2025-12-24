@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useRef } from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { gsap } from "gsap";
@@ -11,7 +10,6 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroPageSection2 = ({ onAnimationComplete }) => {
-  const containerRef = useRef(null);
   const sectionRef = useRef(null);
   const gradientRef = useRef(null);
   const contentRef = useRef(null);
@@ -29,25 +27,15 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
     }
 
     const section = sectionRef.current;
-
-    // Safety check for cleanup
-    if (!section) return;
-
-    // Kill any existing ScrollTriggers on this element to prevent duplicates
-    const existingTriggers = ScrollTrigger.getAll();
-    existingTriggers.forEach(trigger => {
-      if (trigger.vars.trigger === section) {
-        trigger.kill();
-      }
-    });
+    const gradient = gradientRef.current;
+    const content = contentRef.current;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top 10%",
-        end: "center 30%",
+        end: "center 50%",
         scrub: true,
-        id: "hero-section-2-timeline", // Add ID for debugging
         onComplete: () => {
           setTimeout(() => {
             onAnimationComplete?.();
@@ -57,7 +45,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
     });
 
     tl.fromTo(
-      gradientRef.current,
+      gradient,
       {
         opacity: 0,
         scale: 0.5,
@@ -71,7 +59,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
     );
 
     tl.fromTo(
-      contentRef.current,
+      content,
       {
         opacity: 0,
         x: 100,
@@ -80,17 +68,15 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
         opacity: 1,
         x: 0,
         duration: 1,
-        ease: "power10.out",
+        ease: "power2.out",
       },
-      "-=1"
+      "-=0.5"
     );
 
-    // Cleanup function to prevent memory leaks and duplicate animations
     return () => {
       tl.kill();
     };
-
-  }, { scope: containerRef, dependencies: [isMobile, isTablet, onAnimationComplete] });
+  }, [onAnimationComplete, isMobile, isTablet]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -98,124 +84,135 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
   };
 
   return (
-    <Box ref={containerRef}>
+    <Box
+      ref={sectionRef}
+      sx={{
+        color: "#fff",
+        overflow: "hidden",
+        minHeight: {
+          xs: "10vh",
+          sm: isTablet ? "50vh" : "50vh",
+          md: "100vh",
+        },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: {
+          xs: "90%",
+          sm: isTablet ? "90%" : "90%",
+          md: "85%",
+        },
+        margin: "0 auto",
+        padding: {
+          xs: "1rem",
+          sm: isTablet ? "1.5rem" : "2rem",
+          md: "4rem",
+        },
+        fontFamily: '"Inter", sans-serif',
+        position: "relative",
+        zIndex: 2,
+        marginTop: {
+          xs: "-20%",
+          sm: "-60px",
+          md: "0rem",
+        },
+      }}
+    >
       <Box
-        ref={sectionRef}
+        ref={gradientRef}
         sx={{
-          color: "#fff",
-          overflow: "hidden",
-          minHeight: {
-            xs: "10vh",
-            sm: isTablet ? "50vh" : "50vh",
-            md: "110vh",  // Increased from 90vh to push content lower
-            lg: "120vh",
-            xl: "130vh",
+          position: "absolute",
+          top: {
+            xs: "20%",
+            md: "-10%",
+            lg: "-20%",
           },
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `radial-gradient(closest-corner, rgba(115, 80, 190, 0.6) 0%, rgba(0, 0, 0, 0) 40%)`,
+          zIndex: 1,
+          pointerEvents: "none",
+          transformOrigin: "center center",
+          ...(isMobile || isTablet
+            ? {
+              opacity: 1,
+              transform: "scale(1)",
+            }
+            : {}),
+        }}
+      />
+
+      <Box
+        ref={contentRef}
+        sx={{
+          position: "relative",
+          zIndex: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          width: {
-            xs: "90%",
-            sm: isTablet ? "90%" : "90%",
-            md: "85%",
-          },
-          margin: "0 auto",
-          padding: {
-            xs: "1rem",
-            sm: isTablet ? "1.5rem" : "2rem",
-            md: "4rem",
-          },
-          fontFamily: '"Inter", sans-serif',
-          position: "relative",
-          zIndex: 2,
-          marginTop: {
-            xs: "-20%",
-            sm: "-60px",
-            md: "0rem",
-          },
+          width: "100%",
+          ...(isMobile || isTablet
+            ? {
+              opacity: 1,
+              transform: "translateX(0)",
+            }
+            : {}),
         }}
       >
         <Box
-          ref={gradientRef}
           sx={{
-            position: "absolute",
-            top: {
-              xs: "20%",
-              md: "-10%",
-              lg: "0%",
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: {
+              xs: "0",
+              sm: isTablet ? "1.75rem" : "2rem",
+              md: "0rem",
             },
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: `radial-gradient(closest-corner, rgba(115, 80, 190, 0.6) 0%, rgba(0, 0, 0, 0) 45%)`,
-            zIndex: 1,
-            pointerEvents: "none",
-            transformOrigin: "center center",
-            ...(isMobile || isTablet
-              ? {
-                opacity: 1,
-                transform: "scale(1)",
-              }
-              : {}),
-          }}
-        />
-
-        <Box
-          ref={contentRef}
-          sx={{
             position: "relative",
             zIndex: 2,
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            gap: { md: "2rem", lg: "3rem", xl: "4rem" },
-            ...(isMobile || isTablet
-              ? {
-                opacity: 1,
-                transform: "translateX(0)",
-              }
-              : {}),
+            marginLeft: {
+              xs: 0,
+              sm: isTablet ? 0 : "60%",
+              md: "100%",
+            },
+            marginTop: {
+              xs: "5%",
+              sm: isTablet ? "7%" : "10%",
+              md: "10%",
+            },
+            width: {
+              xs: "100%",
+              sm: isTablet ? "100%" : "auto",
+              md: "90%",
+            },
           }}
         >
-          {/* Left Column - ThreeDE Placeholder */}
-          <Box
-            className="threede-placeholder"
-            sx={{
-              flex: { md: "0 0 40%", lg: "0 0 45%", xl: "0 0 45%" },
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: { md: "50vh", lg: "60vh", xl: "65vh" },
-              position: "relative",
-            }}
-          >
-            {/* ThreeDE will be positioned here via GSAP animation */}
-          </Box>
-
-          {/* Right Column - Content */}
           <Box
             sx={{
-              flex: { md: "0 0 55%", lg: "0 0 50%", xl: "0 0 50%" },
+              width: {
+                xs: "100%",
+                sm: isTablet ? "100%" : "auto",
+                md: "auto",
+              },
               display: "flex",
               flexDirection: "column",
-              alignItems: {
-                xs: "center",
-                md: "flex-start",
-              },
-              textAlign: {
-                xs: "center",
-                md: "left",
-              },
-              paddingLeft: { md: "0", lg: "1rem", xl: "2rem" },
-              paddingTop: { md: "4rem", lg: "6rem", xl: "8rem" },  // Push content lower
-              width: { xs: "100%", md: "auto" },
               mt: {
                 xs: 10,
                 sm: isTablet ? 8 : 0,
                 md: 0,
+                lg: -20,
+              },
+              alignItems: {
+                xs: "center",
+                sm: isTablet ? "center" : "flex-start",
+                md: "flex-start",
+              },
+              textAlign: {
+                xs: "center",
+                sm: isTablet ? "center" : "left",
+                md: "left",
               },
             }}
           >
@@ -231,26 +228,35 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 },
                 fontWeight: 400,
                 lineHeight: 1.7,
+                marginLeft: {
+                  xs: 0,
+                  sm: isTablet ? 0 : "0.5%",
+                  md: "0.5%",
+                },
                 mb: {
                   xs: 4,
                   sm: isTablet ? 5 : 6,
                   md: 6,
-                  xl: 8,
                 },
                 maxWidth: {
                   xs: "90%",
                   sm: isTablet ? "90%" : "100%",
-                  md: "100%",
+                  md: "55%",
                 },
                 margin: {
                   xs: "0 auto 2rem auto",
-                  md: "0 0 2rem 0",
+                  sm: isTablet ? "0 auto 2rem auto" : "0 0 2rem 0.5%",
+                  md: "0 0 2rem 0.5%",
+                },
+                marginBottom: {
+                  xl: "3rem",
                 },
               }}
             >
               Excollo delivers outcomes, leveraging AI to make businesses
               future-ready, boosting productivity and efficiency at every step.
             </Typography>
+
             <Typography
               component={Link}
               href="/services"
@@ -261,16 +267,14 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 textDecoration: "none",
                 fontWeight: 400,
                 fontSize: {
-                  xs: `clamp(0.875rem, 3.5vw, 1rem)`,
-                  sm: `clamp(0.9rem, 2.5vw, 1.1rem)`,
+                  xs: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                   md: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                   xl: `clamp(0rem, calc(0.5rem + 0.8vw), 5rem)`,
                 },
                 border: "1px solid transparent",
                 padding: {
-                  xs: "12px 24px",
-                  sm: "14px 28px",
-                  md: "1vw 2vw",
+                  xs: "1.5vw 4vw",
+                  sm: "1vw 2vw",
                 },
                 borderRadius: { xs: "80px", md: "80px", xl: "80px" },
                 background:
@@ -278,8 +282,6 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                 zIndex: 3,
                 position: "relative",
                 transition: "all 0.3s ease",
-                width: { xs: "auto", sm: "auto" },
-                minHeight: "44px",
                 textAlign: "center",
                 "&:hover": {
                   background:
@@ -287,7 +289,6 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
                   color: "#ffffff",
                   transform: "scale(1.05)",
                 },
-                cursor: "pointer !important",
               }}
             >
               Explore Our Services

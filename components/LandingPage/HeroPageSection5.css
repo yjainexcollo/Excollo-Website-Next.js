@@ -15,7 +15,7 @@
   align-items: center;
   margin: 100px 70px;
   transition: 0.5s;
-  
+
 }
 
 .gradientCardBox .box::before {
@@ -55,13 +55,14 @@
 
 .gradientCardBox .box:before,
 .gradientCardBox .box:after {
-  
+
   background: linear-gradient(180deg,
-    rgba(170, 63, 255, 0.9) 0%,
-    rgba(94, 129, 235, 0.9) 100%)
+      rgba(170, 63, 255, 0.9) 0%,
+      rgba(94, 129, 235, 0.9) 100%)
 }
 
 @keyframes animate {
+
   0%,
   100% {
     transform: translateY(10px);
@@ -76,11 +77,12 @@
   position: relative;
   left: 0;
   padding: 20px 10px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.01);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   z-index: 1;
-  transform: 0.5s;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   color: #fff;
   height: 60%;
   display: flex;
@@ -92,9 +94,11 @@
 }
 
 .gradientCardBox .box .content {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(20px); /* Add this line for Safari */
-    
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 
 
@@ -151,6 +155,7 @@
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -214,157 +219,159 @@
 
 @media (max-width: 1049px) {
   .gradientCardBox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  padding: 40px 0;
-  animation: fadeIn 0.5s forwards;
-}
-
-.gradientCardBox .box {
-  position: relative;
-  width: 20%;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 100px 70px;
-  transition: 0.5s;
-}
-
-.gradientCardBox .box::before {
-  content: " ";
-  position: absolute;
-  top: 0;
-  left: 50px;
-  width: 50%;
-  height: 100%;
-  text-decoration: none;
-  background: #fff;
-  border-radius: 8px;
-  transform: skewX(15deg);
-  transition: 0.5s;
-}
-
-.gradientCardBox .box::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50;
-  width: 50%;
-  height: 100%;
-  background: #fff;
-  border-radius: 8px;
-  transform: skewX(15deg);
-  transition: 0.5s;
-  filter: blur(30px);
-}
-
-.gradientCardBox .box:hover:before,
-.gradientCardBox .box:hover:after {
-  transform: skewX(0deg);
-  left: 20px;
-  width: calc(100% - 90px);
-}
-
-.gradientCardBox .box:before,
-.gradientCardBox .box:after {
-  background: linear-gradient(180deg,
-    rgba(170, 63, 255, 0.9) 0%,
-    rgba(94, 129, 235, 0.9) 100%)
-}
-
-@keyframes animate {
-  0%,
-  100% {
-    transform: translateY(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 40px 0;
+    animation: fadeIn 0.5s forwards;
   }
 
-  50% {
-    transform: translate(-10px);
+  .gradientCardBox .box {
+    position: relative;
+    width: 20%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 70px;
+    transition: 0.5s;
   }
-}
 
-.gradientCardBox .box .content {
-  position: relative;
-  left: 0;
-  padding: 20px 10px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  z-index: 1;
-  transform: 0.5s;
-  color: #fff;
-  height: 60%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-}
-
-.gradientCardBox .box:hover .content {
-  left: -25px;
-  padding: 60px 10px;
-  transition: 0.2s;
-  height: 40%;
-}
-
-.gradientCardBox .box .content h2 {
-  font-size: 1.5rem;
-  color: #fff;
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
-
-.gradientCardBox .box:hover .content p {
-  display: block;
-  font-weight: 300;
-}
-
-.gradientCardBox .box .content p {
-  font-size: 16px;
-  margin-bottom: 10px;
-  line-height: 1.4em;
-  display: none;
-  transition: 0.2s;
-}
-
-.gradientCardBox .box .content a {
-  display: inline-block;
-  font-size: 1.1em;
-  color: #111;
-  background: #fff;
-  padding: 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  margin-top: 5px;
-}
-
-.gradientCardBox .box .content a:hover {
-  background: #ffcf4d;
-  border: 1px solid rgba(255, 0, 88, 0.4);
-  box-shadow: 0 1px 15px rgba(1, 1, 1, 0.2);
-}
-
-.gradientCardSection {
-  padding: 100px 0px;
-  overflow-x: hidden;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
+  .gradientCardBox .box::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 50%;
+    height: 100%;
+    text-decoration: none;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
+
+  .gradientCardBox .box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+    filter: blur(30px);
   }
-}
+
+  .gradientCardBox .box:hover:before,
+  .gradientCardBox .box:hover:after {
+    transform: skewX(0deg);
+    left: 20px;
+    width: calc(100% - 90px);
+  }
+
+  .gradientCardBox .box:before,
+  .gradientCardBox .box:after {
+    background: linear-gradient(180deg,
+        rgba(170, 63, 255, 0.9) 0%,
+        rgba(94, 129, 235, 0.9) 100%)
+  }
+
+  @keyframes animate {
+
+    0%,
+    100% {
+      transform: translateY(10px);
+    }
+
+    50% {
+      transform: translate(-10px);
+    }
+  }
+
+  .gradientCardBox .box .content {
+    position: relative;
+    left: 0;
+    padding: 20px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    transform: 0.5s;
+    color: #fff;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .gradientCardBox .box:hover .content {
+    left: -25px;
+    padding: 60px 10px;
+    transition: 0.2s;
+    height: 40%;
+  }
+
+  .gradientCardBox .box .content h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .gradientCardBox .box:hover .content p {
+    display: block;
+    font-weight: 300;
+  }
+
+  .gradientCardBox .box .content p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.4em;
+    display: none;
+    transition: 0.2s;
+  }
+
+  .gradientCardBox .box .content a {
+    display: inline-block;
+    font-size: 1.1em;
+    color: #111;
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 5px;
+  }
+
+  .gradientCardBox .box .content a:hover {
+    background: #ffcf4d;
+    border: 1px solid rgba(255, 0, 88, 0.4);
+    box-shadow: 0 1px 15px rgba(1, 1, 1, 0.2);
+  }
+
+  .gradientCardSection {
+    padding: 100px 0px;
+    overflow-x: hidden;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1535px) {
@@ -374,45 +381,45 @@
     padding: 50px 30px;
     gap: 30px;
   }
-  
+
   .gradientCardBox .box {
     width: 22%;
     height: 350px;
     margin: 100px 30px;
   }
-  
+
   .gradientCardBox .box::before,
   .gradientCardBox .box::after {
     left: 50px;
     width: 50%;
   }
-  
+
   .gradientCardBox .box:hover:before,
   .gradientCardBox .box:hover:after {
     left: 25px;
     width: calc(100% - 80px);
   }
-  
+
   .gradientCardBox .box .content {
     padding: 25px 15px;
     height: 60%;
   }
-  
+
   .gradientCardBox .box:hover .content {
     left: -25px;
     padding: 60px 15px;
     height: 40%;
   }
-  
+
   .gradientCardBox .box .content h2 {
     margin-bottom: 1.25rem;
   }
-  
+
   .gradientCardBox .box .content p {
     line-height: 1.5;
     margin-bottom: 12px;
   }
-  
+
   .gradientCardBox .box .content a {
     font-size: 1.125rem;
     padding: 10px 20px;
@@ -487,7 +494,7 @@
   .gradientCardBox .box {
     width: 23%;
     height: 550px;
- 
+
     margin: 140px 50px;
   }
 
@@ -532,25 +539,25 @@
   }
 }
 
-@media  (min-width:1536px) and  (max-width: 2600px) {
+@media (min-width:1536px) and (max-width: 2600px) {
   .gradientCardBox .box .content h2 {
-    font-size:clamp(0.25rem,calc(1rem + 1vw),3rem);
+    font-size: clamp(0.25rem, calc(1rem + 1vw), 3rem);
     margin-bottom: 1rem;
   }
-  
+
   .gradientCardBox .box .content p {
     font-size: clamp(0.25rem, calc(0.5rem + 0.8vw), 3rem);
     font-weight: 100;
-   
+
     line-height: 1.7;
     margin-bottom: 20px;
-  }  
+  }
 }
 
-@media  (min-width:1200px) and  (max-width: 1535px) {
- 
+@media (min-width:1200px) and (max-width: 1535px) {
+
   .gradientCardBox .box .content h2 {
-    font-size:clamp(0.25rem,calc(1rem + 0.8vw),2.2rem);
+    font-size: clamp(0.25rem, calc(1rem + 0.8vw), 2.2rem);
     margin-bottom: 0.7rem;
   }
 
@@ -563,10 +570,10 @@
 
 }
 
-@media  (min-width:900px) and  (max-width: 1199px) {
+@media (min-width:900px) and (max-width: 1199px) {
 
   .gradientCardBox .box .content h2 {
-    font-size:clamp(0.25rem,calc(1rem + 0.5vw),2.2rem);
+    font-size: clamp(0.25rem, calc(1rem + 0.5vw), 2.2rem);
     margin-bottom: 1rem;
   }
 
