@@ -2,6 +2,7 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline } from "@mui/material";
 import { Outfit } from "next/font/google";
+import ClientProviders from "../components/ClientProviders";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
       <body className={outfit.className}>
         <AppRouterCacheProvider options={{ key: "mui" }}>
           <CssBaseline />
-          {children}
+          <ClientProviders>{children}</ClientProviders>
         </AppRouterCacheProvider>
       </body>
     </html>

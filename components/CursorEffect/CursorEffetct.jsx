@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Box, styled, keyframes } from "@mui/material";
 import { useCursor } from "./context/CursorContext";
@@ -26,7 +28,9 @@ const CursorContainer = styled(Box)({
     display: "none",
   },
 });
-const CursorOuter = styled(Box)(({ theme, isIdle, isPointer, isHovered }) => ({
+const CursorOuter = styled(Box, {
+  shouldForwardProp: (prop) => !['isIdle', 'isPointer', 'isHovered'].includes(prop),
+})(({ isIdle, isPointer, isHovered }) => ({
   width: isIdle || isPointer || isHovered ? 30 : 30,
   height: isIdle || isPointer || isHovered ? 70 : 30,
   borderRadius: isIdle || isPointer || isHovered ? "50px" : "50%",
@@ -127,6 +131,8 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleMouseMove = (e) => {
       // Update cursor position
       setPosition({ x: e.clientX, y: e.clientY });
@@ -167,6 +173,8 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const moveCursor = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
       velocity.current = {
@@ -235,7 +243,11 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
   }, []);
   return (
     <CursorContainer
-      onClick={() => isIdle && window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() => {
+        if (typeof window !== "undefined" && isIdle) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
     >
       <CursorOuter
         ref={cursorOuterRef}
@@ -244,6 +256,7 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
         }`}
         isIdle={isIdle}
         isPointer={isPointer}
+        isHovered={isHovered}
         sx={{
           opacity: isHovered ? 1 : 0.7,
           display: isPointer ? "none" : isIdle ? "block" : "none",

@@ -326,7 +326,7 @@ const Footer = () => {
             item
             xs={12}
             sm={6}
-            md={4.5}
+            md={5}
             sx={{
               marginLeft: "8%",
               textAlign: { xs: "center", md: "left" },
@@ -432,7 +432,7 @@ const Footer = () => {
             md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
-              ml: { md: -10, xs: 0 },
+              ml: { md: 30, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",
@@ -495,6 +495,7 @@ const Footer = () => {
             md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
+              marginLeft: { md: 15, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",
@@ -573,11 +574,10 @@ const Footer = () => {
                 <PhoneIcon
                   sx={{
                     fontSize: {
-                      xs: 18,
-                      sm: 20,
+                      xs: 14,
+                      sm: 16,
                       xl: "1.5rem",
                     },
-                    color: "grey.400",
                   }}
                 />
                 <Link
@@ -651,6 +651,7 @@ const Footer = () => {
                         sx={{
                           ml: 0.5,
                           mt: -0.5,
+                          width: "30%",
                           position: "relative",
                           cursor: "pointer !important",
                           "&:hover": { color: "#a693c1" },
@@ -693,10 +694,10 @@ const Footer = () => {
             item
             xs={12}
             sm={6}
-            md={2.1}
+            md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
-              marginLeft: { md: 5, xs: 0 },
+              marginLeft: { md: -40, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",

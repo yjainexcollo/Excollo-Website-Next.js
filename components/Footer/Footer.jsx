@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -7,7 +9,7 @@ import {
   Divider,
   useMediaQuery,
 } from "@mui/material";
-import Image from "next/image";
+import NextLink from "next/link";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LaunchIcon from "@mui/icons-material/Launch";
 import EmailIcon from "@mui/icons-material/Email";
@@ -33,25 +35,19 @@ const Footer = () => {
     <Box sx={{ width: "80%", margin: "auto", marginLeft: "15%" }}>
       {/* Excollo Section */}
       <Box sx={{ display: "flex", mb: 4 }}>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ width: "30%", fontWeight: "500" }}
-        >
+        <Typography component="div" variant="h6" sx={{ width: "30%", fontWeight: "500" }}>
           <Box
             display="flex"
             alignItems="center"
             sx={{ position: "relative", zIndex: 0, width: "100%" }}
           >
-            <Link to="/">
-              <Image
+            <Link component={NextLink} href="/">
+              <Box
+                component="img"
                 src={ExcolloWebsiteLogo}
                 alt="excollo"
-                width={500}
-                height={200}
-                style={{ width: "50%", height: "auto" }}
-                sizes="(max-width: 899px) 200px, 320px"
-                priority
+                loading="lazy"
+                sx={{ width: "50%" }}
               />
             </Link>
           </Box>
@@ -61,6 +57,7 @@ const Footer = () => {
             AI Driven. Outcome Focused.
           </Typography>
           <Link
+            component={NextLink}
             href="/about"
             sx={{
               color: "grey.400",
@@ -69,7 +66,6 @@ const Footer = () => {
               gap: 0.5,
               textDecoration: "none",
               "&:hover": { color: "#a693c1" },
-              // justifyContent: { xs: "center", md: "flex-start" },
               mt: 1,
               fontSize: {
                 xs: "0.875rem",
@@ -105,6 +101,7 @@ const Footer = () => {
           {navigationLinks.map((item) => (
             <Link
               key={item.name}
+              component={NextLink}
               href={item.path}
               sx={{
                 color: "grey.400",
@@ -130,8 +127,8 @@ const Footer = () => {
             <EmailIcon sx={{ fontSize: 18, color: "grey.400" }} />
             <Link
               href="mailto:info@excollo.com"
-              target="_blank" // This opens in new tab
-              rel="noopener noreferrer" // Security best practice for links opening in new tab
+              target="_blank"
+              rel="noopener noreferrer"
               sx={{
                 color: "grey.400",
                 textDecoration: "none",
@@ -145,8 +142,8 @@ const Footer = () => {
             <PhoneIcon sx={{ fontSize: 18, color: "grey.400" }} />
             <Link
               href="tel:+918890204938"
-              target="_blank" // This opens in new tab
-              rel="noopener noreferrer" // Security best practice for links opening in new tab
+              target="_blank"
+              rel="noopener noreferrer"
               sx={{
                 color: "grey.400",
                 textDecoration: "none",
@@ -159,25 +156,25 @@ const Footer = () => {
           <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
             <Link
               href="https://www.google.co.in/maps/place/230,+Bharat+Marg,+Singh+Bhoomi,+Khatipura,+Jaipur,+Rajasthan+302012/@26.9221888,75.7497856,14z/data=!4m5!3m4!1s0x396db368ef4a6f2f:0x8183d4a0e877ec15!8m2!3d26.9268325!4d75.7413077?entry=ttu&g_ep=EgoyMDI1MDExMC4wIKXMDSoJLDEwMjExMjMzSAFQAw%3D%3D"
-              target="_blank" // This opens in new tab
-              rel="noopener noreferrer" // Security best practice for links opening in new tab
+              target="_blank"
+              rel="noopener noreferrer"
               sx={{ textDecoration: "none" }}
             >
-            <Typography
-              variant="body2"
-              component="div"
-              color="grey.400"
-              sx={{
-                fontSize: {
-                  xs: "0.875rem",
-                  sm: "1rem",
-                  xl: specificCondition
-                    ? `clamp(0.5rem, calc(0.5rem + 1vw), 3rem)`
-                    : "auto",
-                },
-                textAlign: "left",
-              }}
-            >
+              <Typography
+                component="div"
+                variant="body2"
+                color="grey.400"
+                sx={{
+                  fontSize: {
+                    xs: "0.875rem",
+                    sm: "1rem",
+                    xl: specificCondition
+                      ? `clamp(0.5rem, calc(0.5rem + 1vw), 3rem)`
+                      : "auto",
+                  },
+                  textAlign: "left",
+                }}
+              >
                 <Box sx={{ display: "flex", width: "60%" }}>
                   <LocationOnIcon
                     sx={{
@@ -221,8 +218,8 @@ const Footer = () => {
         <Box sx={{ width: "70%" }}>
           <Link
             href="https://www.linkedin.com/company/excollo/posts/?feedView=all"
-            target="_blank" // This opens in new tab
-            rel="noopener noreferrer" // Security best practice for links opening in new tab
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
               color: "grey.400",
               display: "flex",
@@ -236,9 +233,8 @@ const Footer = () => {
             <LinkedInIcon sx={{ fontSize: 18 }} /> LinkedIn
           </Link>
           <Link
+            component={NextLink}
             href="/contact"
-            target="_blank" // This opens in new tab
-            rel="noopener noreferrer" // Security best practice for links opening in new tab
             sx={{
               color: "grey.400",
               display: "flex",
@@ -252,9 +248,8 @@ const Footer = () => {
             Schedule a Consultation <LaunchIcon sx={{ fontSize: 14 }} />
           </Link>
           <Link
+            component={NextLink}
             href="/services"
-            target="_blank" // This opens in new tab
-            rel="noopener noreferrer" // Security best practice for links opening in new tab
             sx={{
               color: "grey.400",
               display: "flex",
@@ -300,7 +295,7 @@ const Footer = () => {
           left: 0,
           right: 0,
           height: "12%",
-          background: `radial-gradient(ellipse at bottom, rgba(196, 188, 213, 0.38) 0%, rgba(0, 0, 0, 0) 60%)`,
+          background: `radial-gradient(ellipse at bottom, rgba(196, 188, 213, 0.38) 0%, rgba(0, 0, 0, 0) 0%)`,
           zIndex: -1,
           "@media (max-width: 899px)": {
             display: "none",
@@ -333,7 +328,7 @@ const Footer = () => {
             item
             xs={12}
             sm={6}
-            md={4.5}
+            md={5}
             sx={{
               marginLeft: "8%",
               textAlign: { xs: "center", md: "left" },
@@ -359,18 +354,15 @@ const Footer = () => {
                 alignItems="center"
                 sx={{ position: "relative", zIndex: 0, width: "100%" }}
               >
-                <Link to="/">
-                  <Image
+                <Link component={NextLink} href="/">
+                  <Box
+                    component="img"
                     src={ExcolloWebsiteLogo}
                     alt="excollo"
-                    width={400}
-                    height={200}
-                    style={{
+                    loading="lazy"
+                    sx={{
                       width: specificCondition ? "100%" : "50%",
-                      height: "auto",
                     }}
-                    sizes="(max-width: 768px) 220px, (max-width: 1200px) 260px, 320px"
-                    priority
                   />
                 </Link>
               </Box>
@@ -382,7 +374,6 @@ const Footer = () => {
                 fontSize: {
                   xs: "0.875rem",
                   sm: "1rem",
-
                   md: "1rem",
                   lg: "1rem",
                   xl: "2rem",
@@ -393,6 +384,7 @@ const Footer = () => {
               AI Driven. Outcome Focused.
             </Typography>
             <Link
+              component={NextLink}
               href="/about"
               sx={{
                 color: "grey.400",
@@ -436,7 +428,7 @@ const Footer = () => {
             md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
-              ml: { md: -10, xs: 0 },
+              ml: { md: 30, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",
@@ -471,6 +463,7 @@ const Footer = () => {
               {navigationLinks.map((item) => (
                 <Link
                   key={item.name}
+                  component={NextLink}
                   href={item.path}
                   sx={{
                     color: "grey.400",
@@ -499,6 +492,7 @@ const Footer = () => {
             md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
+              marginLeft: { md: 15, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",
@@ -550,8 +544,8 @@ const Footer = () => {
                 />
                 <Link
                   href="mailto:info@excollo.com"
-                  target="_blank" // This opens in new tab
-                  rel="noopener noreferrer" // Security best practice for links opening in new tab
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     color: "grey.400",
                     textDecoration: "none",
@@ -577,8 +571,8 @@ const Footer = () => {
                 <PhoneIcon
                   sx={{
                     fontSize: {
-                      xs: 18,
-                      sm: 20,
+                      xs: 14,
+                      sm: 16,
                       xl: "1.5rem",
                     },
                     color: "grey.400",
@@ -586,8 +580,8 @@ const Footer = () => {
                 />
                 <Link
                   href="tel:+918890204938"
-                  target="_blank" // This opens in new tab
-                  rel="noopener noreferrer" // Security best practice for links opening in new tab
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     color: "grey.400",
                     textDecoration: "none",
@@ -614,13 +608,13 @@ const Footer = () => {
               >
                 <Link
                   href="https://www.google.co.in/maps/place/230,+Bharat+Marg,+Singh+Bhoomi,+Khatipura,+Jaipur,+Rajasthan+302012/@26.9221888,75.7497856,14z/data=!4m5!3m4!1s0x396db368ef4a6f2f:0x8183d4a0e877ec15!8m2!3d26.9268325!4d75.7413077?entry=ttu&g_ep=EgoyMDI1MDExMC4wIKXMDSoJLDEwMjExMjMzSAFQAw%3D%3D"
-                  target="_blank" // This opens in new tab
-                  rel="noopener noreferrer" // Security best practice for links opening in new tab
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{ textDecoration: "none" }}
                 >
                   <Typography
-                    variant="body2"
                     component="div"
+                    variant="body2"
                     color="grey.400"
                     sx={{
                       fontSize: {
@@ -656,6 +650,7 @@ const Footer = () => {
                         sx={{
                           ml: 0.5,
                           mt: -0.5,
+                          width: "30%",
                           position: "relative",
                           cursor: "pointer !important",
                           "&:hover": { color: "#a693c1" },
@@ -698,10 +693,10 @@ const Footer = () => {
             item
             xs={12}
             sm={6}
-            md={2.1}
+            md={2}
             sx={{
               textAlign: { xs: "center", md: "left" },
-              marginLeft: { md: 5, xs: 0 },
+              marginLeft: { md: -40, xs: 0 },
               "@media (max-width: 768px)": {
                 textAlign: "center",
                 marginBottom: "2rem",
@@ -735,8 +730,6 @@ const Footer = () => {
             >
               <Link
                 href="https://www.linkedin.com/company/excollo/posts/?feedView=all"
-                // target="_blank" // This opens in new tab
-                // rel="noopener noreferrer" // Security best practice for links opening in new tab
                 sx={{
                   color: "grey.400",
                   display: "flex",
@@ -764,9 +757,8 @@ const Footer = () => {
                 LinkedIn
               </Link>
               <Link
+                component={NextLink}
                 href="/contact"
-                // target="_blank" // This opens in new tab
-                // rel="noopener noreferrer" // Security best practice for links opening in new tab
                 sx={{
                   color: "grey.400",
                   display: "flex",
@@ -794,9 +786,10 @@ const Footer = () => {
                 />
               </Link>
               <Link
+                component={NextLink}
                 href="/services"
-                target="_blank" // This opens in new tab
-                rel="noopener noreferrer" // Security best practice for links opening in new tab
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   color: "grey.400",
                   display: "flex",
@@ -876,15 +869,12 @@ const Footer = () => {
             mr: { md: 6, xs: 6 },
             "@media (max-width: 768px)": {
               justifyContent: "space-between",
-              // marginTop: "1rem",
             },
           }}
         >
           <Link
-            variant="caption"
+            component={NextLink}
             href="/privacy&policy"
-            target="_blank" // This opens in new tab
-            rel="noopener noreferrer" // Security best practice for links opening in new tab
             sx={{
               color: "grey.400",
               textDecoration: "none",
@@ -899,10 +889,8 @@ const Footer = () => {
             Privacy Policy
           </Link>
           <Link
-            variant="caption"
+            component={NextLink}
             href="/termsofservice"
-            target="_blank" // This opens in new tab
-            rel="noopener noreferrer" // Security best practice for links opening in new tab
             sx={{
               color: "grey.400",
               textDecoration: "none",

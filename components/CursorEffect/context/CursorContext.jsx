@@ -1,3 +1,5 @@
+"use client";
+
 // src/context/CursorContext.js
 import React, { createContext, useContext, useState } from "react";
 

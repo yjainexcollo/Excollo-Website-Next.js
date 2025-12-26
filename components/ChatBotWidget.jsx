@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -72,6 +74,23 @@ function formatBotMessage(text) {
 
 // Responsive utility functions
 const getResponsiveDimensions = () => {
+  if (typeof window === "undefined") {
+    // Default dimensions for SSR
+    return {
+      width: "28vw",
+      height: "70vh",
+      maxWidth: "450px",
+      maxHeight: "600px",
+      bottom: 24,
+      right: 24,
+      borderRadius: 24,
+      buttonSize: 60,
+      fontSize: 15,
+      headerFontSize: 18,
+      padding: "20px 24px",
+      messageMaxWidth: "280px",
+    };
+  }
   const isMobile = window.innerWidth <= 768;
   const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
   const isDesktop = window.innerWidth > 1024;
@@ -133,13 +152,22 @@ const ChatBotWidget = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState("");
-  const [dimensions, setDimensions] = useState(getResponsiveDimensions());
+  const [dimensions, setDimensions] = useState(() => getResponsiveDimensions());
   const messagesEndRef = useRef(null);
   const chatBoxRef = useRef(null);
   const textareaRef = useRef(null);
 
+  // Initialize dimensions on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setDimensions(getResponsiveDimensions());
+    }
+  }, []);
+
   // Handle window resize
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    
     const handleResize = () => {
       setDimensions(getResponsiveDimensions());
     };
@@ -149,6 +177,7 @@ const ChatBotWidget = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (open) {
       const newSessionId = generateUUID();
       setSessionId(newSessionId);
@@ -157,6 +186,7 @@ const ChatBotWidget = () => {
   }, [open]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const storedSessionId = localStorage.getItem(SESSION_KEY);
     if (storedSessionId) {
       setSessionId(storedSessionId);
