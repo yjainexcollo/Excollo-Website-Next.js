@@ -1,45 +1,71 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { useTheme, useMediaQuery } from "@mui/material";
 import * as THREE from "three";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import { gsap } from "gsap";
 
 const FONT_URL =
   "https://excollo.github.io/Outfit-Font-Strong/Outfit_ExtraBold_Regular.json";
 
 const ThreeDE = ({ textSize }) => {
   const mountRef = useRef(null);
-  const textRef = useRef(null);
+  const didInitRef = useRef(false);
+  const animationFrameIdRef = useRef(null);
+  const rendererRef = useRef(null);
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const textMeshRef = useRef(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
+    
+    // Guard: prevent double initialization for the same mount
+    if (didInitRef.current) return;
+    didInitRef.current = true;
+
+    // Clear any existing children before appending
+    while (mountRef.current.firstChild) {
+      mountRef.current.removeChild(mountRef.current.firstChild);
+    }
 
     const WIDTH = mountRef.current.offsetWidth || 300;
     const HEIGHT = mountRef.current.offsetHeight || 600;
 
     const scene = new THREE.Scene();
     scene.background = null;
+    sceneRef.current = scene;
+    
     const camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000);
     camera.position.z = 50;
+    cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(WIDTH, HEIGHT);
     renderer.setClearColor(0x000000, 0);
+    rendererRef.current = renderer;
+    
     mountRef.current.appendChild(renderer.domElement);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
+    // Cancellation flag for async font loader
+    let cancelled = false;
+
     const fontLoader = new FontLoader();
     fontLoader.load(
       FONT_URL,
       (font) => {
+        // Check if cleanup happened before font loaded
+        if (cancelled || !mountRef.current) return;
+
+        // Normalize textSize to Number once
+        const normalizedSize = Number(textSize) || 34.5;
+
         const textGeometry = new TextGeometry("e", {
           font,
-          size: Number(textSize),
+          size: normalizedSize,
           height: 2,
           bevelEnabled: true,
           bevelThickness: 3,
@@ -102,11 +128,15 @@ const ThreeDE = ({ textSize }) => {
         });
 
         const textMesh = new THREE.Mesh(textGeometry, shaderMaterial);
-        textRef.current = textMesh;
+        textMeshRef.current = textMesh;
         scene.add(textMesh);
 
+        // Store animation frame ID for cleanup
         const animate = () => {
-          requestAnimationFrame(animate);
+          // Check if cancelled before continuing
+          if (cancelled || !mountRef.current) return;
+          
+          animationFrameIdRef.current = requestAnimationFrame(animate);
           textMesh.rotation.y += 0.02;
           renderer.render(scene, camera);
         };
@@ -114,11 +144,15 @@ const ThreeDE = ({ textSize }) => {
         animate();
       },
       undefined,
-      (error) => console.error("Error loading font:", error)
+      (error) => {
+        if (!cancelled) {
+          console.error("Error loading font:", error);
+        }
+      }
     );
 
     const handleResize = () => {
-      if (!mountRef.current) return;
+      if (!mountRef.current || cancelled) return;
 
       const newWidth = mountRef.current.offsetWidth;
       const newHeight = mountRef.current.offsetHeight;
@@ -131,21 +165,54 @@ const ThreeDE = ({ textSize }) => {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      // Set cancellation flag first
+      cancelled = true;
+      didInitRef.current = false;
+
+      // Cancel animation frame
+      if (animationFrameIdRef.current !== null) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
+      }
+
+      // Remove resize listener
       window.removeEventListener("resize", handleResize);
 
-      if (renderer) {
-        renderer.dispose();
-      }
-
-      if (scene) {
-        while (scene.children.length > 0) {
-          const child = scene.children[0];
-          if (child.geometry) child.geometry.dispose();
-          if (child.material) child.material.dispose();
-          scene.remove(child);
+      // Dispose geometry and material
+      if (textMeshRef.current) {
+        if (textMeshRef.current.geometry) {
+          textMeshRef.current.geometry.dispose();
         }
+        if (textMeshRef.current.material) {
+          textMeshRef.current.material.dispose();
+        }
+        textMeshRef.current = null;
       }
 
+      // Clean up scene
+      if (sceneRef.current) {
+        while (sceneRef.current.children.length > 0) {
+          const child = sceneRef.current.children[0];
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((mat) => mat.dispose());
+            } else {
+              child.material.dispose();
+            }
+          }
+          sceneRef.current.remove(child);
+        }
+        sceneRef.current = null;
+      }
+
+      // Dispose renderer
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+        rendererRef.current = null;
+      }
+
+      // Remove canvas from DOM
       if (mountRef.current) {
         while (mountRef.current.firstChild) {
           mountRef.current.removeChild(mountRef.current.firstChild);

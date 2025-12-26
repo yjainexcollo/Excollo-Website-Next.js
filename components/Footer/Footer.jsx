@@ -13,7 +13,8 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ExcolloWebsiteLogo from "../../assets/logo/ExcolloWebsiteLogo.png";
+// Logo from public directory
+const ExcolloWebsiteLogo = "/ExcolloWebsiteLogo.png";
 
 const Footer = () => {
   const isTablet = useMediaQuery("(min-width:480px) and (max-width:899px)");

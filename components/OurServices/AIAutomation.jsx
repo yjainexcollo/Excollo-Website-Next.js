@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useState,
   useEffect,
@@ -449,7 +451,7 @@ const AIAutomation = forwardRef((props, ref) => {
                 sx={{
                   fontWeight: "500",
                   fontSize: `clamp(1rem, calc(1.3rem + 2vw), 9rem)`,
-                  textAlign: "center",
+                  textAlign: "center"
                 }}
               >
                 AI & Automation
@@ -786,6 +788,7 @@ const AIAutomation = forwardRef((props, ref) => {
             sx={{
               fontWeight: "500",
               textAlign: "center",
+              color: "#fff",
             }}
           >
             AI & Automation
@@ -794,7 +797,7 @@ const AIAutomation = forwardRef((props, ref) => {
         <Box>
           <Typography
             variant="h4"
-            sx={{ textAlign: "center", fontWeight: "500", mt: 2 }}
+            sx={{ textAlign: "center", fontWeight: "500", mt: 2, color: "#fff" }}
           >
             Empower Your Business With AI
           </Typography>

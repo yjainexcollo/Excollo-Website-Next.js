@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import figma from "../../../assets/marqueelogo4/figma.png";
-import nextjs from "../../../assets/marqueelogo4/nextjs.png";
-import nodejs from "../../../assets/marqueelogo4/nodejs.png";
-import postgresql from "../../../assets/marqueelogo4/postgresql.png";
-import react from "../../../assets/marqueelogo4/react.png";
-import reactnative from "../../../assets/marqueelogo4/reactnative.png";
-import webflow from "../../../assets/marqueelogo4/webflow.png";
-import wix from "../../../assets/marqueelogo4/wix.png";
+// Images from public directory
+const figma = "/marqueelogo4/figma.png";
+const nextjs = "/marqueelogo4/nextjs.png";
+const nodejs = "/marqueelogo4/nodejs.png";
+const postgresql = "/marqueelogo4/postgresql.png";
+const react = "/marqueelogo4/react.png";
+const reactnative = "/marqueelogo4/reactnative.png";
+const webflow = "/marqueelogo4/webflow.png";
+const wix = "/marqueelogo4/wix.png";
 
 const MarqueeCarousel4 = () => {
    const theme = useTheme();

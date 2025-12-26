@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@mui/material";
 import { IoChatbubble } from "react-icons/io5";
 import { IoSend } from "react-icons/io5";
-import ExcolloLogo from "../assets/logo/ExcolloWebsiteLogo.png";
+// Logo from public directory
+const ExcolloLogo = "/ExcolloWebsiteLogo.png";
 
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {

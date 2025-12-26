@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useState,
   useEffect,
@@ -775,6 +777,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
             sx={{
               fontWeight: "500",
               textAlign: "center",
+              color: "#fff",
             }}
           >
             Product Development
@@ -783,7 +786,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
         <Box>
           <Typography
             variant="h4"
-            sx={{ textAlign: "center", fontWeight: "500", mt: 2 }}
+            sx={{ textAlign: "center", fontWeight: "500", mt: 2, color: "#fff", }}
           >
             Scalable And Reliable Development
           </Typography>

@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import apache from "../../../assets/marqueelogo3/apache.png";
-import metabase from "../../../assets/marqueelogo3/metabase.png";
-import mongodb from "../../../assets/marqueelogo3/mongodb.png";
-import mysql from "../../../assets/marqueelogo3/mysql.png";
-import powerbi from "../../../assets/marqueelogo3/powerbi.png";
-import python from "../../../assets/marqueelogo3/python.png";
-import pytorch from "../../../assets/marqueelogo3/pytorch.png";
+// Images from public directory
+const apache = "/marqueelogo3/apache.png";
+const metabase = "/marqueelogo3/metabase.png";
+const mongodb = "/marqueelogo3/mongodb.png";
+const mysql = "/marqueelogo3/mysql.png";
+const powerbi = "/marqueelogo3/powerbi.png";
+const python = "/marqueelogo3/python.png";
+const pytorch = "/marqueelogo3/pytorch.png";
 
 const MarqueeCarousel3 = () => {
    const theme = useTheme();

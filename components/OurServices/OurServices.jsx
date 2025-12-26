@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
@@ -17,6 +19,7 @@ import MLDrivenDataAnalysis from "./MLDrivenDataAnalysis";
 import { IoLogoWhatsapp } from "react-icons/io5";
 const OurServices = () => {
   const [showButton, setShowButton] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 899px)");
@@ -27,6 +30,16 @@ const OurServices = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.only("lg"));
   const isExtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Compute which ThreeDE to show - ensure only one can be true
+  const showMobileThreeDE = mounted && (isMobile || isTablet || isLandscapeMedium);
+  const showDesktopThreeDE = mounted && !isMobile && !isTablet && !isLandscapeMedium;
+
   const aiAutomationRef = useRef(null);
   const salesChannelRef = useRef(null);
   const mlDrivenDataAnalysisRef = useRef(null);
@@ -34,62 +47,62 @@ const OurServices = () => {
   const techConsultancyRef = useRef(null);
   const sectionRef = useRef(null);
   // Reload the page on window resize
- 
 
-   useEffect(() => {
-     let resizeTimeout;
-     const handleResize = () => {
-       // Only reload if there's a significant change in screen width
-       const currentWidth = window.innerWidth;
-       const storedWidth = parseInt(
-         sessionStorage.getItem("screenWidth") || "0"
-       );
-       // Check if width changed by more than 100px (adjust this threshold as needed)
-       if (Math.abs(currentWidth - storedWidth) > 100) {
-         sessionStorage.setItem("screenWidth", currentWidth.toString());
-         window.location.reload();
-       }
-     };
-     const debouncedResize = () => {
-       clearTimeout(resizeTimeout);
-       resizeTimeout = setTimeout(handleResize, 250); // Wait 250ms after resize ends
-     };
-     // Store initial width
-     sessionStorage.setItem("screenWidth", window.innerWidth.toString());
-     // Add debounced event listener
-     window.addEventListener("resize", debouncedResize);
-     return () => {
-       window.removeEventListener("resize", debouncedResize);
-       clearTimeout(resizeTimeout);
-     };
-   }, []);
-   // Add orientation change handler separately if needed
-   useEffect(() => {
-     const handleOrientationChange = () => {
-       // Wait for the orientation change to complete
-       setTimeout(() => {
-         window.location.reload();
-       }, 100);
-     };
-     window.addEventListener("orientationchange", handleOrientationChange);
-     return () => {
-       window.removeEventListener("orientationchange", handleOrientationChange);
-     };
-   }, []);
 
-   useEffect(() => {
-       const handleScroll = () => {
-         if (window.scrollY > 0) {
-           setShowWhatsAppButton(true);
-         } else {
-           setShowButton(false);
-         }
-       };
-       window.addEventListener("scroll", handleScroll);
-       return () => {
-         window.removeEventListener("scroll", handleScroll);
-       };
-     }, []);
+  useEffect(() => {
+    let resizeTimeout;
+    const handleResize = () => {
+      // Only reload if there's a significant change in screen width
+      const currentWidth = window.innerWidth;
+      const storedWidth = parseInt(
+        sessionStorage.getItem("screenWidth") || "0"
+      );
+      // Check if width changed by more than 100px (adjust this threshold as needed)
+      if (Math.abs(currentWidth - storedWidth) > 100) {
+        sessionStorage.setItem("screenWidth", currentWidth.toString());
+        window.location.reload();
+      }
+    };
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 250); // Wait 250ms after resize ends
+    };
+    // Store initial width
+    sessionStorage.setItem("screenWidth", window.innerWidth.toString());
+    // Add debounced event listener
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
+  // Add orientation change handler separately if needed
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      // Wait for the orientation change to complete
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    };
+    window.addEventListener("orientationchange", handleOrientationChange);
+    return () => {
+      window.removeEventListener("orientationchange", handleOrientationChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowWhatsAppButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -174,28 +187,28 @@ const OurServices = () => {
             }}
           >
             <Box sx={{ width: { md: "70%", lg: "70%", xl: "70%" } }}>
-              <Box
-                sx={{
-                  width: { xs: "100%", md: "50%", lg: "40%" },
-                  height: "50vh",
-                  display: { xs: "block", md: "none", lg: "none", xl: "none" },
-                  // isMobile || isTablet || isLandscapeMedium ? "block" : "none",
-                  top: 0,
-                  left: 200,
-                }}
-              >
+              {showMobileThreeDE && (
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    height: "100%",
+                    width: { xs: "100%", md: "50%", lg: "40%" },
+                    height: "50vh",
+                    top: 0,
+                    left: 200,
                   }}
                 >
-                  <ThreeDE textSize="34.5" />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <ThreeDE textSize="34.5" />
+                  </Box>
                 </Box>
-              </Box>
+              )}
               <Box
                 sx={{
                   display: "flex",
@@ -244,8 +257,9 @@ const OurServices = () => {
                     lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
                     xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
                   },
-                  fontWeight: 200,
+                  fontWeight: 400,
                   lineHeight: 1.7,
+                  color: "#fff",
                   textAlign: { xs: "center", md: "left" },
                   ml: isLandscapeMedium ? "5%" : { xs: 0, md: "1%" },
                   px: { xs: 2, md: 0 },
@@ -258,15 +272,12 @@ const OurServices = () => {
                 success.
               </Typography>
             </Box>
-            {!isMobile && !isTablet && (
+            {showDesktopThreeDE && (
               <Box
                 sx={{
-                  width: isLandscapeMedium ? "50%" : { md: "50%", lg: "40%" },
+                  width: { md: "50%", lg: "40%" },
                   height: "100vh",
                   display: "flex",
-                  "@media (min-width: 200px) and (max-width: 899px)": {
-                    display: "none",
-                  },
                   top: 0,
                   left: 0,
                 }}

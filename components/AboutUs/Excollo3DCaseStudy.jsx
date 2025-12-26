@@ -1,6 +1,7 @@
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
-import Logo from "../../assets/logo/excollo3d.png";
+// Logo from public directory
+const Logo = "/logo/excollo3d.png";
 
 const Excollo3DCaseStudy = ({ isStatic = false, disableScroll = false }) => {
   const theme = useTheme();

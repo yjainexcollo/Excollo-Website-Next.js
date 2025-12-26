@@ -1,7 +1,11 @@
+"use client";
+
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Logo from "../../assets/logo/excollo3d.png";
-import { m } from "framer-motion";
+import Image from "next/image";
+// Logo from public directory
+const Logo = "/logo/excollo3d.png";
+
 const Excollo3D = () => {
   const theme = useTheme();
   const [scrollY, setScrollY] = useState(0);
@@ -36,6 +40,7 @@ const Excollo3D = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   useEffect(() => {
     if (!isMobile && !isTablet) {
       const handleScroll = () => {
@@ -47,6 +52,7 @@ const Excollo3D = () => {
       };
     }
   }, [isMobile, isTablet]);
+
   const handleMouseMove = (e) => {
     if (isMobile || isTablet) return;
     const { clientX, clientY, currentTarget } = e;
@@ -55,27 +61,31 @@ const Excollo3D = () => {
     const y = ((clientY - rect.top) / rect.height - 0.5) * -30;
     setRotation({ x, y });
   };
+
   const handleMouseLeave = () => {
     if (isMobile || isTablet) return;
     setRotation({ x: 0, y: 0 });
   };
+
   const translateYImage = is2301to2600px
     ? Math.max(3600 - scrollY * 0.5, 0)
     : is2001to2300px
-    ? Math.max(3100 - scrollY * 0.5, 0)
-    : is1750to2000px
-    ? Math.max(2800 - scrollY * 0.5, 0)
-    : isXtraLargeScreen
-    ? Math.max(2300 - scrollY * 0.5, 0)
-    : is1300pxto1535px
-    ? Math.max(1900 - scrollY * 0.5, 0)
-    : isLargeScreen
-    ? Math.max(1900 - scrollY * 0.5, 0)
-    : isSmallerLaptop
-    ? Math.max(1800 - scrollY * 0.5, 0)
-    : Math.max(100 - scrollY * 0.5, 0);
+      ? Math.max(3100 - scrollY * 0.5, 0)
+      : is1750to2000px
+        ? Math.max(2800 - scrollY * 0.5, 0)
+        : isXtraLargeScreen
+          ? Math.max(2300 - scrollY * 0.5, 0)
+          : is1300pxto1535px
+            ? Math.max(1900 - scrollY * 0.5, 0)
+            : isLargeScreen
+              ? Math.max(1900 - scrollY * 0.5, 0)
+              : isSmallerLaptop
+                ? Math.max(1800 - scrollY * 0.5, 0)
+                : Math.max(100 - scrollY * 0.5, 0);
+
   const gradientOpacity =
     scrollY > 100 ? Math.min((scrollY - 800) / 300, 1) : 1;
+
   return (
     <Box>
       <Box
@@ -103,20 +113,20 @@ const Excollo3D = () => {
           },
         }}
       >
-        <img
+        <Box
+          component="img"
           src={Logo}
           alt="Logo"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          style={{
+          sx={{
             height: "auto",
             width: "80%",
             transform:
               isMobile || isTablet
                 ? "none"
-                : `translateY(${Math.min(translateYImage, 1000)}px) rotateX(${
-                    rotation.y
-                  }deg) rotateY(${rotation.x}deg)`,
+                : `translateY(${Math.min(translateYImage, 1000)}px) rotateX(${rotation.y
+                }deg) rotateY(${rotation.x}deg)`,
             transformStyle: "preserve-3d",
             willChange: "transform",
             transition: "transform 0.2s ease-out",
@@ -159,4 +169,5 @@ const Excollo3D = () => {
     </Box>
   );
 };
+
 export default Excollo3D;

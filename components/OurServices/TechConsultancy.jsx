@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useState,
   useEffect,
@@ -777,6 +779,7 @@ const TechConsultancy = forwardRef((props, ref) => {
             sx={{
               fontWeight: "500",
               textAlign: "center",
+              color: "#fff"
             }}
           >
             Tech Consultancy
@@ -785,7 +788,7 @@ const TechConsultancy = forwardRef((props, ref) => {
         <Box>
           <Typography
             variant="h4"
-            sx={{ textAlign: "center", fontWeight: "500", mt: 2 }}
+            sx={{ textAlign: "center", fontWeight: "500", mt: 2, color: "#fff" }}
           >
             Transformative Strategies
           </Typography>

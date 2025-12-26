@@ -26,7 +26,8 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import WorkIcon from "@mui/icons-material/Work";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import CloseIcon from "@mui/icons-material/Close";
-import ExcolloWebsiteLogo from "../../assets/logo/ExcolloWebsiteLogo.png";
+// Logo from public directory
+const ExcolloWebsiteLogo = "/ExcolloWebsiteLogo.png";
 
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -93,7 +94,7 @@ const NavBar = () => {
               height: "auto",
               maxWidth: "100%"
             }}
-            src={ExcolloWebsiteLogo.src}
+            src={ExcolloWebsiteLogo}
             alt="excollo"
             loading="lazy"
           />
@@ -176,7 +177,7 @@ const NavBar = () => {
                   maxWidth: "150px",
                   minHeight: "32px",
                 }}
-                src={ExcolloWebsiteLogo.src}
+                src={ExcolloWebsiteLogo}
                 alt="excollo"
                 loading="lazy"
               />

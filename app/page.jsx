@@ -52,6 +52,10 @@ const HeroPage = () => {
     setMounted(true);
   }, []);
 
+  // Compute which ThreeDE to show - ensure only one can be true
+  const showMobileThreeDE = mounted && (isMobile || isTablet);
+  const showDesktopThreeDE = mounted && !isMobile && !isTablet;
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const ANIMATION_SESSION_DURATION = 1 * 60 * 60 * 1000;
@@ -464,35 +468,37 @@ const HeroPage = () => {
         </Button>
       </Fade>
 
-      {/* Desktop ThreeDE - Hidden on mobile/tablet */}
-      <Box
-        className="threeDE"
-        ref={threeDERef}
-        suppressHydrationWarning
-        sx={{
-          width: "100vw",
-          height: "100vh",
-          display: { xs: "none", md: "flex" },
-          justifyContent: "left",
-          alignItems: "left",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: 2,
-        }}
-      >
+      {/* Desktop ThreeDE - Only render on desktop */}
+      {showDesktopThreeDE && (
         <Box
+          className="threeDE"
+          ref={threeDERef}
+          suppressHydrationWarning
           sx={{
+            width: "100vw",
+            height: "100vh",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
+            justifyContent: "left",
+            alignItems: "left",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 2,
           }}
         >
-          <ThreeDE textSize="34.5" />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <ThreeDE textSize="34.5" />
+          </Box>
         </Box>
-      </Box>
+      )}
 
       <Box
         className="gradient-background"
@@ -519,31 +525,32 @@ const HeroPage = () => {
       >
         <NavBar />
       </Box>
-      {/* Mobile ThreeDE - CSS-only visibility control */}
-      <Box
-        suppressHydrationWarning
-        sx={{
-          width: { xs: "100%", sm: "80%", md: "50%", lg: "40%" },
-          height: { xs: "40vh", sm: "45vh", md: "55vh" },
-          maxHeight: "500px",
-          display: { xs: "block", sm: "block", md: "none" },
-          position: "relative",
-          top: 0,
-          margin: "0 auto",
-        }}
-      >
+      {/* Mobile ThreeDE - Only render on mobile/tablet */}
+      {showMobileThreeDE && (
         <Box
+          suppressHydrationWarning
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
+            width: { xs: "100%", sm: "80%", md: "50%", lg: "40%" },
+            height: { xs: "40vh", sm: "45vh", md: "55vh" },
+            maxHeight: "500px",
+            position: "relative",
+            top: 0,
+            margin: "0 auto",
           }}
         >
-          <ThreeDE textSize="34.5" />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <ThreeDE textSize="34.5" />
+          </Box>
         </Box>
-      </Box>
+      )}
       <Box
         className="hero-content"
         sx={{

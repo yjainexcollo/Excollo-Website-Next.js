@@ -1,7 +1,7 @@
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Logo from "../../assets/logo/excollo3d.png";
+// Logo from public directory
+const Logo = "/logo/excollo3d.png";
 import { m } from "framer-motion";
 const HeroPageSection7 = () => {
   const theme = useTheme();
@@ -101,14 +101,11 @@ const HeroPageSection7 = () => {
         }}
       >
         <Box
-          component={Image}
+          component="img"
           src={Logo}
           alt="Excollo logo"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          width={1200}
-          height={700}
-          priority
           sx={{
             height: "auto",
             width: "80%",

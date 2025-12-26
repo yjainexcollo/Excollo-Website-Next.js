@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import botpress from "../../../assets/marqueelogo1/botpress.png";
-import github_copilot from "../../../assets/marqueelogo1/github_copilot.png";
-import microsoft_azure from "../../../assets/marqueelogo1/microsoft_azure.png";
-import n8n from "../../../assets/marqueelogo1/n8n.png";
-import openai from "../../../assets/marqueelogo1/openai.png";
-import Zapier from "../../../assets/marqueelogo1/Zapier.png";
-import LLama from "../../../assets/marqueelogo1/LLama.png";
+// Images from public directory
+const botpress = "/marqueelogo1/botpress.png";
+const github_copilot = "/marqueelogo1/github_copilot.png";
+const microsoft_azure = "/marqueelogo1/microsoft_azure.png";
+const n8n = "/marqueelogo1/n8n.png";
+const openai = "/marqueelogo1/openai.png";
+const Zapier = "/marqueelogo1/Zapier.png";
+const LLama = "/marqueelogo1/LLama.png";
 
 const MarqueeCarousel1 = () => {
    const theme = useTheme();

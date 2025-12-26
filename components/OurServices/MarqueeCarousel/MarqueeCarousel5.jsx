@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import github_copilot from "../../../assets/marqueelogo5/github_copilot.png";
-import microsoft365 from "../../../assets/marqueelogo5/microsoft365.png";
-import openai from "../../../assets/marqueelogo5/openai.png";
-import shopify from "../../../assets/marqueelogo5/shopify.png";
-import zoho from "../../../assets/marqueelogo5/zoho.png";
-import claude from "../../../assets/marqueelogo5/claude.png";
-import microsoft_azure from "../../../assets/marqueelogo5/microsoft_azure.png";
+// Images from public directory
+const github_copilot = "/marqueelogo5/github_copilot.png";
+const microsoft365 = "/marqueelogo5/microsoft365.png";
+const openai = "/marqueelogo5/openai.png";
+const shopify = "/marqueelogo5/shopify.png";
+const zoho = "/marqueelogo5/zoho.png";
+const claude = "/marqueelogo5/claude.png";
+const microsoft_azure = "/marqueelogo5/microsoft_azure.png";
 
 const MarqueeCarousel5 = () => {
   const theme = useTheme();

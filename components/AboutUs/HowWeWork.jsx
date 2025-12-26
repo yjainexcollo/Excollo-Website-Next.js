@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import {
   Box,
@@ -20,19 +22,19 @@ const TableGrid = styled("div")(({ theme }) => ({
   flexWrap: "wrap",
   width: "100%",
   position: "relative",
-  justifyContent: "center", // Center items on all screens
-  alignItems: "center", // Center vertically in column layout
+  justifyContent: "center",
+  alignItems: "center",
   flexDirection: "column",
   [theme.breakpoints.up("xs")]: {
-    width: "70%", // Changed from maxWidth: "50%" to width: "100%"
+    width: "70%",
     margin: "auto"
   },
   [theme.breakpoints.up("sm")]: {
-    width: "80%", // Changed from maxWidth: "50%" to width: "100%"
+    width: "80%",
   },
   [theme.breakpoints.up("md")]: {
     flexDirection: "row",
-    justifyContent: "center", // Changed from space-evenly to center
+    justifyContent: "center",
     alignItems: "stretch",
     width: "fit-content",
     margin: "0 auto",
@@ -73,7 +75,7 @@ const TableContent = styled("div")(({ theme }) => ({
     margin: 0,
     borderLeft: "none",
     "&:first-of-type": {
-      borderLeft: "1px solid #7E22CE", // Add back left border only to first card
+      borderLeft: "1px solid #7E22CE",
     },
   },
   [theme.breakpoints.up("lg")]: {
@@ -86,10 +88,10 @@ const TableContent = styled("div")(({ theme }) => ({
     padding: "1vw 1vw",
     borderRadius: 0,
     background: "transparent",
-    margin: 0, // Remove any margin
-    borderLeft: "none", // Remove left border
+    margin: 0,
+    borderLeft: "none",
     "&:first-of-type": {
-      borderLeft: "1px solid #7E22CE", // Add back left border only to first card
+      borderLeft: "1px solid #7E22CE",
     },
   },
   [theme.breakpoints.up("xl")]: {
@@ -125,7 +127,7 @@ const TableContent = styled("div")(({ theme }) => ({
     margin: "10px auto",
     color: "#FFFFFF",
     textAlign: "center",
-    fontSize: "1rem", // default size
+    fontSize: "1rem",
     [theme.breakpoints.up("xs")]: {
       fontSize: "clamp(1.35rem, calc(0.5rem + 1vw), 9rem)",
     },
@@ -147,7 +149,7 @@ const TableContent = styled("div")(({ theme }) => ({
     margin: "10px",
     lineHeight: 1.6,
     textAlign: "center",
-    fontSize: "1rem", // default size
+    fontSize: "1rem",
     [theme.breakpoints.up("xs")]: {
       fontSize: "clamp(0.8rem, calc(0.5rem + 1vw), 9rem)",
     },
@@ -167,48 +169,44 @@ const HowWeWork = () => {
   const containerRef = useRef(null);
   const contentRefs = useRef([]);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isLaptop = useMediaQuery(theme.breakpoints.up("md"));
-  const isLargeLaptop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isXtraLargeLaptop = useMediaQuery(theme.breakpoints.up("xl"));
 
- useEffect(() => {
-   const isDesktop = window.innerWidth >= 900;
-   if (!isDesktop) return;
+  useEffect(() => {
+    const isDesktop = window.innerWidth >= 900;
+    if (!isDesktop) return;
 
-   const container = containerRef.current;
-   const contents = contentRefs.current;
+    const container = containerRef.current;
+    const contents = contentRefs.current;
 
-   const mainTl = gsap.timeline({
-     scrollTrigger: {
-       trigger: container,
-       start: "top 0%",
-       end: "+=400%",
-       pin: true,
-       scrub: 0.5,
-       anticipatePin: 1,
-     },
-   });
+    const mainTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top 0%",
+        end: "+=400%",
+        pin: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+      },
+    });
 
-   contents.forEach((content, index) => {
-     if (!content) return;
-     const tl = gsap.timeline();
-     gsap.set(content, {
-       opacity: 0,
-       y: 400,
-       visibility: "hidden",
-       borderColor: "#7E22CE",
-     });
-     tl.to(content, { visibility: "visible", duration: 1 })
-       .to(content, { opacity: 1, y: 0, duration: 5, ease: "power2.out" })
-       .to(content, { borderColor: "#FFFFFF", duration: 2, ease: "power2.out" })
-       .to(content, { duration: 3 });
-     mainTl.add(tl, index * 3);
-   });
+    contents.forEach((content, index) => {
+      if (!content) return;
+      const tl = gsap.timeline();
+      gsap.set(content, {
+        opacity: 0,
+        y: 400,
+        visibility: "hidden",
+        borderColor: "#7E22CE",
+      });
+      tl.to(content, { visibility: "visible", duration: 1 })
+        .to(content, { opacity: 1, y: 0, duration: 5, ease: "power2.out" })
+        .to(content, { borderColor: "#FFFFFF", duration: 2, ease: "power2.out" })
+        .to(content, { duration: 3 });
+      mainTl.add(tl, index * 3);
+    });
 
-   return () => ScrollTrigger.getAll().forEach((t) => t.kill());
- }, []);
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, []);
+
   return (
     <Box
       ref={containerRef}
@@ -304,7 +302,7 @@ const HowWeWork = () => {
                     width: "100%",
                   }}
                 >
-                  <Box sx={{margin: {xs: "0", md: "10% 0"}}}>
+                  <Box sx={{ margin: { xs: "0", md: "10% 0" } }}>
                     <Typography variant="h3">{step.title}</Typography>
                   </Box>
                   <Typography variant="body1">{step.content}</Typography>
@@ -313,9 +311,9 @@ const HowWeWork = () => {
             </Box>
           ))}
         </TableGrid>
-        {/* <LineBox /> */}
       </WorkTable>
     </Box>
   );
 };
+
 export default HowWeWork;

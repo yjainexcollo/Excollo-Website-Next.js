@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState, useCallback } from "react";
 import {
   Box,
@@ -10,9 +12,8 @@ import {
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import HowWeWork from "./HowWeWork";
-import NavBar from "@/components/NavBar/NavBar";
-import ThreeDE from "@/components/ThreeDE";
-import Footer from "@/components/Footer/Footer";
+import ThreeDE from "../ThreeDE";
+import Footer from "../Footer/Footer";
 import Excollo3D from "./Excollo3D";
 import { IoLogoWhatsapp } from "react-icons/io5";
 
@@ -131,7 +132,7 @@ const Card = styled("div")(
       fontFamily: '"Inter", sans-serif',
       color: "#D1D1E2",
       lineHeight: 1.7,
-      fontWeight: 200,
+      fontWeight: 400,
       textAlign: "left",
       padding: 20,
       margin: 15,
@@ -200,17 +201,16 @@ const AboutUs = () => {
   const isLandscapeMedium = useMediaQuery(
     "(min-width: 625px) and (max-width: 899px) and (orientation: landscape)"
   );
-  const isSpecificMargin = useMediaQuery(
-    "(min-width: 1800px) and (max-width: 2600px)"
-  );
-  const isLaptop = useMediaQuery(theme.breakpoints.up("md"));
-  const isLargeLaptop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isXtraLargeLaptop = useMediaQuery(theme.breakpoints.up("xl"));
 
   const [showButton, setShowButton] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
+  // Initialize windowWidth on client side only
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   // Handle window resize and trigger refresh if needed
   useEffect(() => {
@@ -243,46 +243,46 @@ const AboutUs = () => {
       clearTimeout(resizeTimer);
     };
   }, [windowWidth, shouldRefresh]);
-  
-   useEffect(() => {
-     let resizeTimeout;
-     const handleResize = () => {
-       // Only reload if there's a significant change in screen width
-       const currentWidth = window.innerWidth;
-       const storedWidth = parseInt(
-         sessionStorage.getItem("screenWidth") || "0"
-       );
-       if (Math.abs(currentWidth - storedWidth) > 100) {
-         sessionStorage.setItem("screenWidth", currentWidth.toString());
-         window.location.reload();
-       }
-     };
-     const debouncedResize = () => {
-       clearTimeout(resizeTimeout);
-       resizeTimeout = setTimeout(handleResize, 250); 
-     };
-     // Store initial width
-     sessionStorage.setItem("screenWidth", window.innerWidth.toString());
-     // Add debounced event listener
-     window.addEventListener("resize", debouncedResize);
-     return () => {
-       window.removeEventListener("resize", debouncedResize);
-       clearTimeout(resizeTimeout);
-     };
-   }, []);
-   // Add orientation change handler separately if needed
-   useEffect(() => {
-     const handleOrientationChange = () => {
-       // Wait for the orientation change to complete
-       setTimeout(() => {
-         window.location.reload();
-       }, 100);
-     };
-     window.addEventListener("orientationchange", handleOrientationChange);
-     return () => {
-       window.removeEventListener("orientationchange", handleOrientationChange);
-     };
-   }, []);
+
+  useEffect(() => {
+    let resizeTimeout;
+    const handleResize = () => {
+      // Only reload if there's a significant change in screen width
+      const currentWidth = window.innerWidth;
+      const storedWidth = parseInt(
+        sessionStorage.getItem("screenWidth") || "0"
+      );
+      if (Math.abs(currentWidth - storedWidth) > 100) {
+        sessionStorage.setItem("screenWidth", currentWidth.toString());
+        window.location.reload();
+      }
+    };
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 250);
+    };
+    // Store initial width
+    sessionStorage.setItem("screenWidth", window.innerWidth.toString());
+    // Add debounced event listener
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
+  // Add orientation change handler separately if needed
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      // Wait for the orientation change to complete
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    };
+    window.addEventListener("orientationchange", handleOrientationChange);
+    return () => {
+      window.removeEventListener("orientationchange", handleOrientationChange);
+    };
+  }, []);
 
   // Helper function to determine breakpoint category
   const getBreakpoint = (width) => {
@@ -307,7 +307,6 @@ const AboutUs = () => {
   }, []);
 
   const handleScrollToTop = () => {
-    // Immediately set scroll position
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -315,22 +314,22 @@ const AboutUs = () => {
   };
 
   useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > 0) {
-          setShowWhatsAppButton(true);
-        } else {
-          setShowButton(false);
-        }
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowWhatsAppButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleWhatsapp = () => {
     window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let’s%20talk%21",
+      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
       "_blank"
     );
   };
@@ -451,8 +450,7 @@ const AboutUs = () => {
           <Card>
             <p>
               At Excollo, we commit to results, not just solutions. Our "Outcome
-              as a Service" (OaaS) approach <br />
-              ensures every action is aligned to achieve measurable success for
+              as a Service" (OaaS) approach ensures every action is aligned to achieve measurable success for
               our clients.
             </p>
           </Card>
@@ -469,8 +467,8 @@ const AboutUs = () => {
           minHeight: isLandscapeMedium
             ? "50vh"
             : isMobile || isSpecificSize
-            ? "38vh"
-            : "100vh",
+              ? "38vh"
+              : "100vh",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           width: "100%",
@@ -509,28 +507,28 @@ const AboutUs = () => {
                 mb: { xs: 0, sm: 0, md: 0 },
               }}
             >
-              <Box
-                sx={{
-                  width: { xs: "100%", md: "50%", lg: "40%" },
-                  height: "50vh",
-                  display: { xs: "block", md: "none", lg: "none", xl: "none" },
-                  // isMobile || isTablet || isLandscapeMedium ? "block" : "none",
-                  top: 0,
-                  left: 200,
-                }}
-              >
+              {(isMobile || isTablet || isLandscapeMedium) && (
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    height: "100%",
+                    width: { xs: "100%", md: "50%", lg: "40%" },
+                    height: "50vh",
+                    top: 0,
+                    left: 200,
                   }}
                 >
-                  <ThreeDE textSize="34.5" />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <ThreeDE textSize="34.5" />
+                  </Box>
                 </Box>
-              </Box>
+              )}
               <Box
                 sx={{
                   display: "flex",
@@ -553,7 +551,7 @@ const AboutUs = () => {
                     fontFamily: '"Inter", sans-serif',
                     fontWeight: "600",
                     color: "#fff",
-                    whiteSpace: "nowrap", // Prevent line break
+                    whiteSpace: "nowrap",
                     ml: isLandscapeMedium ? "5%" : 0,
                   }}
                 >
@@ -580,29 +578,27 @@ const AboutUs = () => {
                     lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
                     xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
                   },
-                  fontWeight: 200,
+                  fontWeight: 400,
                   lineHeight: 1.7,
+                  color: "#fff",
                   textAlign: { xs: "center", md: "left" },
                   ml: isLandscapeMedium ? "5%" : { xs: 0, md: "1%" },
                   px: { xs: 2, md: 0 },
                   mt: isLandscapeMedium ? 2 : { xs: 3, md: 5 },
                 }}
               >
-                Excollo bridges today’s challenges and tomorrow’s opportunities.
+                Excollo bridges today's challenges and tomorrow's opportunities.
                 We harness cutting-edge technology, AI, and tailored solutions
                 to deliver outcomes and make businesses future-ready.
               </Typography>
             </Box>
 
-            {!isMobile && !isTablet && (
+            {!isMobile && !isTablet && !isLandscapeMedium && (
               <Box
                 sx={{
-                  width: isLandscapeMedium ? "50%" : { md: "50%", lg: "40%" },
+                  width: { md: "50%", lg: "40%" },
                   height: "100vh",
                   display: "flex",
-                  "@media (min-width: 200px) and (max-width: 899px)": {
-                    display: "none",
-                  },
                   top: 0,
                   left: 0,
                 }}
@@ -632,6 +628,7 @@ const AboutUs = () => {
           flexDirection: "column",
           alignItems: "center",
           rowGap: "2rem",
+          color: "#fff",
         }}
       >
         <VisionSection />

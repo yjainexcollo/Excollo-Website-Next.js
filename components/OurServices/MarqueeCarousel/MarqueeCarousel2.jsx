@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import canva from "../../../assets/marqueelogo2/canva-seeklogo.png";
-import google_analytics from "../../../assets/marqueelogo2/google_analytics.png";
-import hubspot from "../../../assets/marqueelogo2/hubspot.png";
-import meta from "../../../assets/marqueelogo2/meta.png";
-import shopify from "../../../assets/marqueelogo2/shopify.png";
-import whatsapp from "../../../assets/marqueelogo2/whatsapp.png";
-import zoho from "../../../assets/marqueelogo2/zoho.png";
-import aisensy from "../../../assets/marqueelogo2/aisensy.png";
+// Images from public directory
+const canva = "/marqueelogo2/canva-seeklogo.png";
+const google_analytics = "/marqueelogo2/google_analytics.png";
+const hubspot = "/marqueelogo2/hubspot.png";
+const meta = "/marqueelogo2/meta.png";
+const shopify = "/marqueelogo2/shopify.png";
+const whatsapp = "/marqueelogo2/whatsapp.png";
+const zoho = "/marqueelogo2/zoho.png";
+const aisensy = "/marqueelogo2/aisensy.png";
 
 const MarqueeCarousel2 = () => {
   const theme = useTheme();
