@@ -29,6 +29,7 @@ const HeroPage = () => {
   const [showThreeDE, setShowThreeDE] = useState(true);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
   const [hero1Complete, setHero1Complete] = useState(false);
   const [hero2Complete, setHero2Complete] = useState(false);
   const threeDERef = useRef(null);
@@ -116,7 +117,7 @@ const HeroPage = () => {
     };
   }, []);
 
-  // Scroll logic
+  // Scroll logic for scroll-to-top button
   useEffect(() => {
     if (typeof window === "undefined") return;
     const handleScroll = () => {
@@ -124,6 +125,22 @@ const HeroPage = () => {
         setShowButton(true);
       } else {
         setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Scroll logic for WhatsApp button
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowWhatsAppButton(true);
+      } else {
+        setShowWhatsAppButton(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -273,7 +290,6 @@ const HeroPage = () => {
     isTablet,
     isMobile,
     isDesktop,
-    // hasAnimationPlayed, 
   ]);
 
   // Set ThreeDE position on mount if played
@@ -395,7 +411,7 @@ const HeroPage = () => {
 
   const handleWhatsapp = () => {
     window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let’s%20talk%21",
+      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
       "_blank"
     );
   };
@@ -436,28 +452,30 @@ const HeroPage = () => {
           <ArrowUpwardIcon />
         </Button>
       </Fade>
-      <Button
-        onClick={handleWhatsapp}
-        variant="contained"
-        color="primary"
-        sx={{
-          position: "fixed",
-          width: { xs: 50, sm: 56, md: 60 },
-          height: { xs: 50, sm: 56, md: 60 },
-          minWidth: "44px",
-          minHeight: "44px",
-          bottom: { xs: 200, md: 100 },
-          right: { xs: 24, md: 24 },
-          zIndex: 10001,
-          borderRadius: "50%",
-          background: "rgba(255, 255, 255, 0.1)",
-          "&:hover": {
-            background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-          },
-        }}
-      >
-        <IoLogoWhatsapp size={30} />
-      </Button>
+      <Fade in={showWhatsAppButton}>
+        <Button
+          onClick={handleWhatsapp}
+          variant="contained"
+          color="primary"
+          sx={{
+            position: "fixed",
+            width: { xs: 50, sm: 56, md: 60 },
+            height: { xs: 50, sm: 56, md: 60 },
+            minWidth: "44px",
+            minHeight: "44px",
+            bottom: { xs: 200, md: 100 },
+            right: { xs: 24, md: 24 },
+            zIndex: 10001,
+            borderRadius: "50%",
+            background: "rgba(255, 255, 255, 0.1)",
+            "&:hover": {
+              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
+            },
+          }}
+        >
+          <IoLogoWhatsapp size={30} />
+        </Button>
+      </Fade>
 
       {/* Desktop ThreeDE - Only render on desktop */}
       {showDesktopThreeDE && (
@@ -525,8 +543,9 @@ const HeroPage = () => {
             height: { xs: "40vh", sm: "45vh", md: "55vh" },
             maxHeight: "500px",
             position: "relative",
-            top: 0,
+            top: { xs: "-2vh", sm: "-1vh", md: 0 },
             margin: "0 auto",
+            marginBottom: { xs: "-4vh", sm: "-3vh", md: 0 },
           }}
         >
           <Box
@@ -548,7 +567,7 @@ const HeroPage = () => {
           display: "flex",
           position: "relative",
           zIndex: 3,
-          marginTop: { xs: "-15%", sm: "-10%", md: "-6rem" },
+          marginTop: { xs: "-8vh", sm: "-6vh", md: "-6rem" },
           opacity: isMobile || isTablet ? 1 : 0,
           transform:
             isMobile || isTablet ? "translateX(0)" : "translateX(-100px)",
