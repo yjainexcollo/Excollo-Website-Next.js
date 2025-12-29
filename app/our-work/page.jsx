@@ -398,7 +398,6 @@ const OurWorkPage = () => {
           onMouseLeave={handle3DMouseLeave}
           sx={{ 
             mt: { xs: -10, md: -8 },
-            mb: { xs: -4, md: -2 },
             position: 'relative',
             zIndex: 4,
             background: '#000',

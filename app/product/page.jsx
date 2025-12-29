@@ -201,66 +201,110 @@ const ProductPage = () => {
         </Box>
 
         {/* Features Grid */}
-        <Box sx={{ mb: { xs: 10, md: 12 }, maxWidth: 1100, mx: 'auto' }}>
+        <Box sx={{ 
+          mb: { xs: 10, md: 12 }, 
+          maxWidth: 1200, 
+          mx: 'auto',
+          position: 'relative',
+          px: { xs: 2, sm: 3 }
+        }}>
+          {/* Background glow effect */}
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '100%',
+              height: '80%',
+              background: 'radial-gradient(ellipse at center, rgba(126, 34, 206, 0.15) 0%, rgba(126, 34, 206, 0) 70%)',
+              filter: 'blur(60px)',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }}
+          />
+          
           <Typography
             sx={{
               fontSize: { xs: 24, sm: 28, md: 32 },
               fontWeight: 700,
               textAlign: 'center',
-              mb: 6
+              mb: 6,
+              position: 'relative',
+              zIndex: 1
             }}
           >
             Key Features
           </Typography>
 
-          <Grid container spacing={{ xs: 3, sm: 4, md: 5 }} rowSpacing={{ xs: 5, sm: 6, md: 8 }}>
+          <Grid 
+            container 
+            spacing={{ xs: 3, md: 4 }}
+            justifyContent="center"
+            alignItems="stretch"
+            sx={{ position: 'relative', zIndex: 1, maxWidth: 1200, mx: 'auto' }}
+          >
             {features.map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Card
+                  elevation={0}
                   sx={{
-                    background: 'rgba(0,0,0,0.4)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(126, 34, 206, 0.2)',
-                    borderRadius: 3,
-                    p: 3,
+                    backgroundColor: "#000",
+                    border: "1px solid rgba(126,34,206,0.65)",
+                    borderRadius: "16px",
+                    p: { xs: 3, md: 3.5 },
                     height: '100%',
-                    transition: 'all 0.3s ease',
+                    width: '100%',
+                    maxWidth: 360,
+                    minHeight: { xs: 240, md: 280 },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    textAlign: 'left',
+                    boxShadow: 'none',
+                    transition: 'all 0.25s ease',
                     '&:hover': {
-                      transform: 'translateY(-4px)',
-                      border: '1px solid rgba(126, 34, 206, 0.4)',
-                      boxShadow: '0 8px 32px rgba(126, 34, 206, 0.2)'
+                      transform: 'translateY(-6px)',
+                      border: '1px solid rgba(126,34,206,0.95)',
+                      boxShadow: '0 0 0 1px rgba(126,34,206,0.25), 0 0 50px rgba(126,34,206,0.22)'
                     }
                   }}
                 >
                   <Box
                     sx={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 2,
+                      width: 64,
+                      height: 64,
+                      borderRadius: "14px",
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      mb: 2,
-                      background: 'linear-gradient(135deg, rgba(37, 121, 227, 0.2) 0%, rgba(142, 84, 247, 0.2) 100%)'
+                      backgroundColor: '#141624',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      mb: 0
                     }}
                   >
                     {React.cloneElement(feature.icon, { color: '#8E54F7' })}
                   </Box>
                   <Typography
+                    component="h3"
                     sx={{
-                      fontSize: 18,
-                      fontWeight: 600,
-                      mb: 1.5,
-                      color: '#fff'
+                      fontSize: 20,
+                      fontWeight: 700,
+                      mt: 2,
+                      mb: 1.25,
+                      color: '#fff',
+                      textAlign: 'left'
                     }}
                   >
                     {feature.title}
                   </Typography>
                   <Typography
+                    component="p"
                     sx={{
-                      fontSize: 14,
+                      fontSize: 15,
                       color: 'rgba(255,255,255,0.7)',
-                      lineHeight: 1.6
+                      lineHeight: 1.6,
+                      textAlign: 'left'
                     }}
                   >
                     {feature.description}

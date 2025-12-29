@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
@@ -12,9 +14,11 @@ import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "./HeroPageSection5.css";
+import styles from "./HeroPageSection5.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const HeroPageSection5 = () => {
   const sectionRef = useRef(null);
@@ -26,10 +30,12 @@ const HeroPageSection5 = () => {
   const [windowSize, setWindowSize] = useState(0);
 
   useEffect(() => {
-    setWindowSize(window.innerWidth);
-    const handleResize = () => setWindowSize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      setWindowSize(window.innerWidth);
+      const handleResize = () => setWindowSize(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   const cards = [
@@ -53,28 +59,45 @@ const HeroPageSection5 = () => {
   ];
 
   // GSAP Animation Logic
-  const initializeAnimations = () => {
-    if (isDesktop) {
-      cardRefs.current.forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          { x: "70%", opacity: 0 },
-          {
-            x: "0%",
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-              end: "top 70%",
-              scrub: true,
-            },
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    const initializeAnimations = () => {
+      if (isDesktop && cardRefs.current.length > 0) {
+        cardRefs.current.forEach((card, index) => {
+          if (card) {
+            gsap.fromTo(
+              card,
+              { x: "70%", opacity: 0 },
+              {
+                x: "0%",
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 90%",
+                  end: "top 70%",
+                  scrub: true,
+                },
+              }
+            );
           }
-        );
+        });
+      }
+    };
+
+    initializeAnimations();
+
+    return () => {
+      // Cleanup ScrollTriggers
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (cardRefs.current.includes(trigger.vars.trigger)) {
+          trigger.kill();
+        }
       });
-    }
-  };
+    };
+  }, [isDesktop]);
 
   return (
     <Box
@@ -218,18 +241,17 @@ const HeroPageSection5 = () => {
       {/* Desktop Layout */}
       <Box className="row" sx={{ display: { xs: "none", md: "block" } }}>
         <div className="col-md-12">
-          <div className="gradientCardBox">
+          <div className={styles.gradientCardBox}>
             {cards.map((card, index) => (
               <div
-                className="box aos-init aos-animate"
+                className={`${styles.box} aos-init aos-animate`}
                 data-aos="fade-left"
                 data-aos-easing="linear"
                 data-aos-duration={`${500 + index * 100}`}
                 ref={(el) => (cardRefs.current[index] = el)}
                 key={index}
               >
-                <span></span>
-                <div className="content">
+                <div className={styles.content}>
                   <h2>{card.title}</h2>
                   <p>{card.description}</p>
                 </div>

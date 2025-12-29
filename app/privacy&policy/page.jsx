@@ -139,6 +139,7 @@ const PrivacyPolicy = () => {
           <ul style={{ marginLeft: "3%" }}>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -158,6 +159,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -178,6 +180,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -235,6 +238,7 @@ const PrivacyPolicy = () => {
           <ul style={{ marginLeft: "3%" }}>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -253,6 +257,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -270,6 +275,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -337,6 +343,7 @@ const PrivacyPolicy = () => {
           <ul style={{ marginLeft: "3%" }}>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -355,6 +362,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -417,6 +425,7 @@ const PrivacyPolicy = () => {
           <ul style={{ marginLeft: "3%" }}>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -435,6 +444,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <Typography
+                component="div"
                 sx={{
                   color: "#fff",
                   mb: 1,
@@ -606,10 +616,11 @@ const PrivacyPolicy = () => {
             If you have questions or concerns about this Privacy Policy, please
             contact us at:
           </Typography>
-          <Typography>
+          <Box component="div">
             <ul style={{ marginLeft: "3%" }}>
               <li>
                 <Typography
+                  component="div"
                   sx={{
                     // fontSize: "1rem",
                     color: "#fff",
@@ -637,6 +648,7 @@ const PrivacyPolicy = () => {
               </li>
               <li>
                 <Typography
+                  component="div"
                   sx={{
                     // fontSize: "1rem",
                     color: "#fff",
@@ -653,7 +665,7 @@ const PrivacyPolicy = () => {
                 </Typography>
               </li>
             </ul>
-          </Typography>
+          </Box>
         </Box>
       </Container>
       {/* Footer */}

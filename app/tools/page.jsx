@@ -206,19 +206,21 @@ const SampleToolsPage = () => {
         {/* AI Tools grid */}
         <Box sx={{
           position: 'relative',
-          maxWidth: { md: 1200, lg: 1320 },
+          maxWidth: { md: 1200, lg: 1320, xl: 1400 },
           mx: 'auto',
-          px: { xs: 2, sm: 4, md: 6 },
+          px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, md: 3 },
           borderRadius: 3,
         }}>
           <Grid
             container
-            spacing={{ xs: 3, sm: 3, md: 4 }}
+            spacing={4}
+            alignItems="stretch"
+            justifyContent="center"
           >
             {aiTools.map((tool) => (
-              <Grid item xs={12} sm={6} md={4} key={tool.id}>
-                <Box sx={{ height: '100%', display: 'flex' }}>
+              <Grid item xs={12} sm={6} md={4} key={tool.id} sx={{ display: 'flex', height: '100%' }}>
+                <Box sx={{ flex: 1, display: 'flex' }}>
                   <AIToolCard
                     icon={tool.icon}
                     title={tool.title}
@@ -296,14 +298,13 @@ const SampleToolsPage = () => {
       </Container>
 
       {/* Excollo3D Component */}
-      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
+      <Container maxWidth="xl">
         <Box 
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
           sx={{ 
-            mt: { xs: -16, md: -12 },
-            mb: { xs: -8, md: -4 },
+            mt: { xs: -16, md: -15 },
             position: 'relative',
             zIndex: 4,
             background: '#000',
