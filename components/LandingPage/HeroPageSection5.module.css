@@ -85,11 +85,11 @@
   -webkit-transform: translate(-50%, -50%) translateZ(0);
   width: 100%;
   padding: 24px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
   z-index: 2;
   will-change: transform;
   transition: 0.25s ease;
@@ -305,11 +305,10 @@
     -webkit-transform: translate(-50%, -50%) translateZ(0);
     width: 90%;
     padding: 24px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
     z-index: 2;
     will-change: transform;
     transition: 0.25s ease;
@@ -469,6 +468,10 @@
   .content {
     padding: 30px 20px;
     height: 65%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
   }
 
   .box:hover .content {
@@ -525,6 +528,10 @@
   .content {
     padding: 40px 30px;
     height: 70%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
   }
 
   .box:hover .content {
