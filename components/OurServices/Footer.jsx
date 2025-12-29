@@ -158,6 +158,7 @@ const Footer = () => {
               sx={{ textDecoration: "none" }}
             >
               <Typography
+                component="div"
                 variant="body2"
                 color="grey.400"
                 sx={{
@@ -615,6 +616,7 @@ const Footer = () => {
                   sx={{ textDecoration: "none" }}
                 >
                   <Typography
+                    component="div"
                     variant="body2"
                     color="grey.400"
                     sx={{

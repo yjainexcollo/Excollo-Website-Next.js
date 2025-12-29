@@ -1,7 +1,7 @@
 "use client";
 
 // Import React hooks for state management and side effects
-import React, { useRef, useCallback, useState, useEffect } from "react";
+import React, { useRef, useCallback } from "react";
 // Import Next.js navigation
 import { useRouter } from "next/navigation";
 // Import GSAP for animations
@@ -12,7 +12,7 @@ import Footer from "@/components/Footer/Footer";
 import Excollo3DCaseStudy from "@/components/AboutUs/Excollo3DCaseStudy";
 import AIToolCard from "@/components/AIToolCard";
 // Import Material-UI components for UI layout and styling
-import { Container, Grid, Typography, Box, Button, Fade } from "@mui/material";
+import { Container, Grid, Typography, Box, Button } from "@mui/material";
 // Import Material-UI icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 // Import WhatsApp icon for contact button
@@ -29,8 +29,6 @@ const SampleToolsPage = () => {
   const router = useRouter();
   // Ref for 3D element interaction
   const ex3dTiltRef = useRef(null);
-  // State for WhatsApp button visibility based on scroll
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
 
   /**
    * Handle 3D mouse movement for interactive 3D element
@@ -97,19 +95,6 @@ const SampleToolsPage = () => {
     window.open('/sampletools/pdf-to-csv', '_blank');
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const aiTools = [
     {
@@ -213,7 +198,7 @@ const SampleToolsPage = () => {
               color: 'transparent'
             }}>Tools</Box>
           </Typography>
-          <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif' }}>
+          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif' }}>
             let's create a universe of possibilities together!
           </Typography>
         </Box>
@@ -221,27 +206,30 @@ const SampleToolsPage = () => {
         {/* AI Tools grid */}
         <Box sx={{
           position: 'relative',
-          px: { xs: 2, sm: 4, md: 8, lg: 12 },
+          maxWidth: { md: 1200, lg: 1320 },
+          mx: 'auto',
+          px: { xs: 2, sm: 4, md: 6 },
           py: { xs: 2, md: 3 },
           borderRadius: 3,
         }}>
           <Grid
             container
-            spacing={{ xs: 3, sm: 4, md: 5 }}
-            
+            spacing={{ xs: 3, sm: 3, md: 4 }}
           >
-          {aiTools.map((tool) => (
-            <Grid item xs={12} sm={6} md={4} key={tool.id}>
-              <AIToolCard
-                icon={tool.icon}
-                title={tool.title}
-                description={tool.description}
-                suitableFor={tool.suitableFor}
-                suitableForType={tool.suitableForType}
-                onClick={tool.onClick}
-              />
-            </Grid>
-          ))}
+            {aiTools.map((tool) => (
+              <Grid item xs={12} sm={6} md={4} key={tool.id}>
+                <Box sx={{ height: '100%', display: 'flex' }}>
+                  <AIToolCard
+                    icon={tool.icon}
+                    title={tool.title}
+                    description={tool.description}
+                    suitableFor={tool.suitableFor}
+                    suitableForType={tool.suitableForType}
+                    onClick={tool.onClick}
+                  />
+                </Box>
+              </Grid>
+            ))}
           </Grid>
         </Box>
 
@@ -271,7 +259,7 @@ const SampleToolsPage = () => {
             }}>tools</Box>
           </Typography>
 
-          <Typography sx={{
+          <Typography component="p" sx={{
             color: 'rgba(255,255,255,0.75)',
             fontSize: { xs: 16, sm: 18, md: 22 },
             maxWidth: 1100,
@@ -328,27 +316,26 @@ const SampleToolsPage = () => {
       
       <Footer />
       
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+      <Button
+        onClick={handleWhatsapp}
+        variant="contained"
+        color="primary"
+        sx={{
+          position: "fixed",
+          height: 60,
+          width: 60,
+          bottom: { xs: 200, md: 100 },
+          right: { xs: 24, md: 24 },
+          zIndex: 10001,
+          borderRadius: "50%",
+          background: "rgba(255, 255, 255, 0.1)",
+          "&:hover": {
+            background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
+          },
+        }}
+      >
+        <IoLogoWhatsapp size={30} />
+      </Button>
     </Box>
   );
 };

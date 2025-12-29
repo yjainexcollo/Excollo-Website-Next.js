@@ -29,7 +29,6 @@ const HeroPage = () => {
   const [showThreeDE, setShowThreeDE] = useState(true);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
   const [hero1Complete, setHero1Complete] = useState(false);
   const [hero2Complete, setHero2Complete] = useState(false);
   const threeDERef = useRef(null);
@@ -123,12 +122,6 @@ const HeroPage = () => {
     const handleScroll = () => {
       if (window.scrollY > 250) {
         setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
       } else {
         setShowButton(false);
       }
@@ -443,30 +436,28 @@ const HeroPage = () => {
           <ArrowUpwardIcon />
         </Button>
       </Fade>
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            width: { xs: 50, sm: 56, md: 60 },
-            height: { xs: 50, sm: 56, md: 60 },
-            minWidth: "44px",
-            minHeight: "44px",
-            bottom: { xs: 20, sm: 24, md: 24 },
-            right: { xs: 20, sm: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+      <Button
+        onClick={handleWhatsapp}
+        variant="contained"
+        color="primary"
+        sx={{
+          position: "fixed",
+          width: { xs: 50, sm: 56, md: 60 },
+          height: { xs: 50, sm: 56, md: 60 },
+          minWidth: "44px",
+          minHeight: "44px",
+          bottom: { xs: 200, md: 100 },
+          right: { xs: 24, md: 24 },
+          zIndex: 10001,
+          borderRadius: "50%",
+          background: "rgba(255, 255, 255, 0.1)",
+          "&:hover": {
+            background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
+          },
+        }}
+      >
+        <IoLogoWhatsapp size={30} />
+      </Button>
 
       {/* Desktop ThreeDE - Only render on desktop */}
       {showDesktopThreeDE && (

@@ -25,18 +25,23 @@ const TableGrid = styled("div")(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
+  boxSizing: "border-box",
   [theme.breakpoints.up("xs")]: {
     width: "70%",
-    margin: "auto"
+    margin: "auto",
+    maxWidth: "90%",
   },
   [theme.breakpoints.up("sm")]: {
     width: "80%",
+    maxWidth: "90%",
   },
   [theme.breakpoints.up("md")]: {
     flexDirection: "row",
+    flexWrap: "nowrap",
     justifyContent: "center",
     alignItems: "stretch",
     width: "fit-content",
+    maxWidth: "1300px",
     margin: "0 auto",
   },
 }));
@@ -45,6 +50,7 @@ const TableContent = styled("div")(({ theme }) => ({
   flex: "1 1",
   margin: "0 0",
   padding: "10px",
+  minHeight: 360,
   height: "auto",
   opacity: 1,
   transform: "none",
@@ -54,23 +60,28 @@ const TableContent = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-start",
   marginBottom: "20px",
   borderRadius: "20px",
   background: "linear-gradient(180deg, #05000A 0%, #1B1125 100%)",
   color: "#fff",
-  m: 2,
+  marginX: "8px",
   border: "2px solid rgba(255, 255, 255, 0.1)",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  boxSizing: "border-box",
+  overflowWrap: "anywhere",
+  wordBreak: "break-word",
   [theme.breakpoints.up("md")]: {
-    width: "14vw",
-    height: "60vh",
+    flex: "1 1 0%",
+    minWidth: "200px",
+    maxWidth: "280px",
+    minHeight: "clamp(400px, 50vh, 600px)",
     opacity: 0,
     transform: "translateY(100%)",
     visibility: "hidden",
     marginBottom: 0,
     borderRadius: 0,
-    padding: "1vw 1vw",
+    padding: "clamp(16px, 1.5vw, 24px) clamp(12px, 1vw, 20px)",
     background: "transparent",
     margin: 0,
     borderLeft: "none",
@@ -79,13 +90,14 @@ const TableContent = styled("div")(({ theme }) => ({
     },
   },
   [theme.breakpoints.up("lg")]: {
-    width: "15vw",
-    height: "50vh",
+    minWidth: "220px",
+    maxWidth: "300px",
+    minHeight: "clamp(450px, 50vh, 650px)",
     opacity: 0,
     transform: "translateY(100%)",
     visibility: "hidden",
     marginBottom: 0,
-    padding: "1vw 1vw",
+    padding: "clamp(20px, 1.8vw, 28px) clamp(16px, 1.2vw, 24px)",
     borderRadius: 0,
     background: "transparent",
     margin: 0,
@@ -95,22 +107,20 @@ const TableContent = styled("div")(({ theme }) => ({
     },
   },
   [theme.breakpoints.up("xl")]: {
-    width: "15vw",
-    height: "50vh",
+    minWidth: "240px",
+    maxWidth: "320px",
+    minHeight: "clamp(500px, 50vh, 700px)",
     opacity: 0,
     transform: "translateY(100%)",
     visibility: "hidden",
     marginBottom: 0,
-    padding: "2vw 1vw",
+    padding: "clamp(24px, 2vw, 32px) clamp(20px, 1.5vw, 28px)",
     borderRadius: 0,
     background: "transparent",
     margin: 0,
     borderLeft: "none",
     "&:first-of-type": {
       borderLeft: "1px solid #7E22CE",
-    },
-    "& > div": {
-      marginTop: "calc(25vh - 100%)",
     },
   },
 
@@ -128,6 +138,8 @@ const TableContent = styled("div")(({ theme }) => ({
     color: "#FFFFFF",
     textAlign: "center",
     fontSize: "1rem",
+    overflowWrap: "anywhere",
+    wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
       fontSize: "clamp(1.35rem, calc(0.5rem + 1vw), 9rem)",
     },
@@ -150,6 +162,8 @@ const TableContent = styled("div")(({ theme }) => ({
     lineHeight: 1.6,
     textAlign: "center",
     fontSize: "1rem",
+    overflowWrap: "anywhere",
+    wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
       fontSize: "clamp(0.8rem, calc(0.5rem + 1vw), 9rem)",
     },
@@ -171,6 +185,8 @@ const HowWeWork = () => {
   const theme = useTheme();
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    
     const isDesktop = window.innerWidth >= 900;
     if (!isDesktop) return;
 
@@ -285,12 +301,13 @@ const HowWeWork = () => {
             },
           ].map((step, index) => (
             <Box
+              key={index}
               sx={{
                 width: { xs: "100%", md: "auto" },
                 position: "relative",
                 perspective: "1000px",
+                boxSizing: "border-box",
               }}
-              key={index}
             >
               <TableContent
                 ref={(el) => (contentRefs.current[index] = el)}
@@ -298,8 +315,13 @@ const HowWeWork = () => {
               >
                 <Box
                   sx={{
-                    height: "100%",
                     width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxSizing: "border-box",
+                    padding: { xs: "16px", md: 0 },
                   }}
                 >
                   <Box sx={{ margin: { xs: "0", md: "10% 0" } }}>
