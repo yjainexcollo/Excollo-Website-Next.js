@@ -151,6 +151,8 @@ const HeroPageSection4 = ({ onComplete }) => {
   const [key, setKey] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(1440);
   const sectionRef = useRef(null);
+  const titlePinTriggerRef = useRef(null);
+  const mainCardTriggerRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -370,10 +372,22 @@ const HeroPageSection4 = ({ onComplete }) => {
   };
 
   const initializeGSAPAnimations = () => {
-    if (isMobile || isTablet || prefersReducedMotion) return;
+    if (typeof window === 'undefined' || isMobile || isTablet || prefersReducedMotion) return;
+
+    // Cleanup any existing triggers first
+    if (titlePinTriggerRef.current) {
+      titlePinTriggerRef.current.kill();
+      titlePinTriggerRef.current = null;
+    }
+    if (mainCardTriggerRef.current) {
+      mainCardTriggerRef.current.kill();
+      mainCardTriggerRef.current = null;
+    }
 
     // Set will-change for better performance
-    gsap.set(".side-cards-container, .main-card", { willChange: "transform, opacity" });
+    gsap.set(".side-cards-container, .main-card", {
+      willChange: "transform, opacity",
+    });
 
     gsap.set(".side-cards-container", {
       opacity: 0,
@@ -381,16 +395,15 @@ const HeroPageSection4 = ({ onComplete }) => {
       x: (index) => (index === 0 ? -100 : 100),
     });
 
-    ScrollTrigger.create({
-      trigger: ".hero-page-section-4",
-      start: "top top",
-      end: "top 20%",
-      scrub: 0.5,
-      pin: ".title-section",
-      pinSpacing: false,
-    });
+    // NOTE:
+    // We intentionally avoid pinning the title separately here.
+    // Pinning ".title-section" caused Safari to position the heading
+    // relative to the viewport's left edge instead of the centered container,
+    // making the entire section appear shifted to the left in Safari.
+    // The main ScrollTrigger below (pin: true) already pins the whole section,
+    // including the title, so we only need this single trigger.
 
-    const mainCardTrigger = ScrollTrigger.create({
+    mainCardTriggerRef.current = ScrollTrigger.create({
       trigger: ".hero-page-section-4",
       start: "center 55%",
       end: "center 55%",
@@ -483,22 +496,28 @@ const HeroPageSection4 = ({ onComplete }) => {
         }
       },
     });
-
-    return () => {
-      mainCardTrigger.kill();
-      // Cleanup: unset will-change
-      gsap.set(".side-cards-container, .main-card", { willChange: "auto" });
-    };
   };
 
   useEffect(() => {
-    let cleanup;
     if (sectionRef.current) {
-      cleanup = initializeGSAPAnimations();
+      initializeGSAPAnimations();
     }
     return () => {
-      if (cleanup) cleanup();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      // Cleanup ScrollTriggers in reverse order: kill triggers first, then restore DOM
+      // This prevents React from trying to remove nodes that GSAP has moved
+      if (mainCardTriggerRef.current) {
+        mainCardTriggerRef.current.kill();
+        mainCardTriggerRef.current = null;
+      }
+      if (titlePinTriggerRef.current) {
+        titlePinTriggerRef.current.kill();
+        titlePinTriggerRef.current = null;
+      }
+      
+      // Small delay to ensure DOM is restored before React unmounts
+      setTimeout(() => {
+        gsap.set(".side-cards-container, .main-card", { willChange: "auto" });
+      }, 0);
     };
   }, [onComplete, isMobile, isTablet, prefersReducedMotion, viewportWidth, key, isSmallDesktop, isLaptop13, isLaptop14, isLaptop15, isLargeDesktop, isXtraLargeDesktop, isUltraWide]);
 
@@ -662,6 +681,9 @@ const HeroPageSection4 = ({ onComplete }) => {
           md: getContainerMaxWidth(), // Ultra-wide constraints
         },
         margin: "0 auto",
+        marginLeft: "auto", // Explicit Safari centering fix
+        marginRight: "auto", // Explicit Safari centering fix
+        display: "block", // Required for margin: 0 auto to work in Safari
         padding: {
           xs: "1.5rem",
           sm: "2rem",
@@ -681,6 +703,7 @@ const HeroPageSection4 = ({ onComplete }) => {
             md: "2%",
           },
           textAlign: "center",
+          width: "100%", // Explicit width for Safari text centering
           zIndex: 2,
         }}
       >
@@ -734,7 +757,9 @@ const HeroPageSection4 = ({ onComplete }) => {
           justifyContent: "center",
           alignItems: "center",
           maxWidth: "100%",
+          width: "100%", // Explicit width for Safari flex centering
           boxSizing: "border-box",
+          WebkitBoxSizing: "border-box", // Safari prefix
           transition: prefersReducedMotion ? "none" : "gap 0.3s ease",
           gap: {
             xs: "1rem",
