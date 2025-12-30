@@ -412,7 +412,7 @@
     transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     -webkit-transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     padding: 60px 15px;
-    height: 70%;
+    height: 75%;
   }
 
   .content h2 {
@@ -478,7 +478,7 @@
     transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     -webkit-transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     padding: 80px 20px;
-    height: 45%;
+    height: 75%;
   }
 
   .content h2 {
@@ -544,7 +544,7 @@
     transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     -webkit-transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     padding: 100px 30px;
-    height: 50%;
+    height: 75%;
   }
 
   .content h2 {
@@ -610,7 +610,7 @@
     transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     -webkit-transform: translate(-50%, -50%) scale(1.03) translateZ(0);
     padding: 100px 30px;
-    height: 50%;
+    height: 75%;
   }
 
   .content h2 {

@@ -27,15 +27,15 @@ const mqOpts = { noSsr: true, defaultMatches: false };
 // Calculate card dimensions based on viewport width with granular breakpoints
 // Keeps desktop baseline (1440-1919) unchanged, provides smooth scaling for other sizes
 const getCardDimensions = (viewportWidth) => {
-  // Desktop baseline (1440-1919px): CARD_WIDTH = 650, GAP = 1200
-  const BASELINE_CARD = 650;
-  const BASELINE_GAP = 1200;
+  // Desktop baseline (1440-1919px): CARD_WIDTH = 850, GAP = 1000 (increased card width)
+  const BASELINE_CARD = 850;
+  const BASELINE_GAP = 1000;
   
   // Ultra-wide screens (2560px+)
   if (viewportWidth >= 2560) {
     return { 
-      CARD_WIDTH: 900, 
-      GAP: 1600 
+      CARD_WIDTH: 1100, 
+      GAP: 1300 
     };
   }
   
@@ -53,9 +53,9 @@ const getCardDimensions = (viewportWidth) => {
     return { CARD_WIDTH: BASELINE_CARD, GAP: BASELINE_GAP };
   }
   
-  // Laptop 15" (1440-1535px) - baseline range
+  // Laptop 15" (1440-1535px) - reduced width to prevent breaking
   if (viewportWidth >= 1440 && viewportWidth < 1536) {
-    return { CARD_WIDTH: BASELINE_CARD, GAP: BASELINE_GAP };
+    return { CARD_WIDTH: 650, GAP: 900 }; // Reduced for laptop 15" to prevent overflow
   }
   
   // Laptop 14" (1280-1439px)
@@ -69,7 +69,7 @@ const getCardDimensions = (viewportWidth) => {
   
   // Laptop 13" (1024-1279px)
   if (viewportWidth >= 1024 && viewportWidth < 1280) {
-    const scale = 0.7 + ((viewportWidth - 1024) / 256) * 0.15; // Scale from 0.7 to 0.85
+    const scale = 0.6 + ((viewportWidth - 1024) / 256) * 0.15; // Scale from 0.7 to 0.85
     return {
       CARD_WIDTH: Math.round(BASELINE_CARD * scale),
       GAP: Math.round(BASELINE_GAP * scale),
@@ -425,6 +425,14 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   const { CARD_WIDTH, GAP } = getCardDimensions(viewportWidth);
   const TOTAL_WIDTH = CARD_WIDTH + GAP;
 
+  // Set CSS custom properties for dynamic CARD_WIDTH and GAP
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.setProperty('--card-width', `${CARD_WIDTH}px`);
+      containerRef.current.style.setProperty('--card-gap', `${GAP}px`);
+    }
+  }, [CARD_WIDTH, GAP]);
+
   const handleMouseMove = useCallback(
     (e, index) => {
       if (isMobile || isTablet) return;
@@ -696,7 +704,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
     const isAnimating = isHovered || isScrolling;
     const baseStyle = {
       flex: "0 0 auto",
-      width: isMobile || isTablet ? "80%" : `${CARD_WIDTH}px`,
+      width: isMobile || isTablet ? "80%" : `${CARD_WIDTH}px`, // Use direct value from getCardDimensions
       height: issmallLaptop
         ? "calc(40vh + 5vw)"
         : isMobile || isTablet
@@ -844,7 +852,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
           msOverflowStyle: "none",
           "&::-webkit-scrollbar": { display: "none" },
           touchAction: "pan-x pinch-zoom",
-          gap: isMobile || isTablet ? "1rem" : `${GAP}px`, // Dynamic gap
+          gap: isMobile || isTablet ? "1rem" : `${GAP}px`, // Use direct value from getCardDimensions
           paddingLeft: isLargeScreen ? "20%" : "15%", // Adjusted for larger screens
           paddingRight: isLargeScreen ? "20%" : "30%", // Adjusted for larger screens
         }}
