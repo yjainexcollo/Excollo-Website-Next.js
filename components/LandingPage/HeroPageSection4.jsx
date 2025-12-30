@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
@@ -25,25 +27,41 @@ const FeatureCard = ({
     background: "linear-gradient(180deg, #05000A 0%, #1B1125 100%)",
     borderRadius: "12px",
     textAlign: "center",
-    padding: "1rem",
+    padding: {
+      xs: "1rem",
+      sm: "1.25rem",
+      md: "1rem",
+    },
     height: isMobile ? "150px" : isTablet ? "200px" : "100%",
+    minHeight: {
+      xs: "150px",
+      sm: "200px",
+      md: "auto",
+    },
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "1rem",
+    marginBottom: {
+      xs: "1rem",
+      sm: "1.5rem",
+      md: "1rem",
+    },
+    // Reduced blur for better Safari performance
     boxShadow: {
       xs: "rgba(133, 86, 245, 0.4) 0px 0px 20px 0px",
-      md: "rgba(133, 86, 245, 0.4) 0px 0px 100px 0px",
+      md: "rgba(133, 86, 245, 0.4) 0px 0px 60px 0px", // Reduced from 100px
     },
-    border: isFinalState ? "1px solid #7e22ce" : "1px solid #7e22ce",
+    border: "1px solid #7e22ce",
     transition: "all 0.3s ease",
+    backfaceVisibility: "hidden",
+    WebkitBackfaceVisibility: "hidden",
     "&:hover": {
       backgroundColor: "#000000",
       transform: "translateY(-5px)",
       boxShadow: {
-        xs: "rgba(133, 86, 245, 0.4) 0px 0px 50px 0px",
-        md: "rgba(133, 86, 245, 0.4) 0px 0px 100px 0px",
+        xs: "rgba(133, 86, 245, 0.4) 0px 0px 40px 0px", // Reduced blur
+        md: "rgba(133, 86, 245, 0.4) 0px 0px 60px 0px", // Reduced from 100px
       },
     },
   };
@@ -61,7 +79,9 @@ const FeatureCard = ({
     fontSize: isMainCard
       ? isTablet
         ? `clamp(1.35rem, calc(0.5rem + 1.5vw), 9rem)`
-        : { md: "3.5rem", lg: "4rem", xl: "5rem" }
+        : isMobile
+        ? `clamp(1.35rem, calc(0.5rem + 1vw), 9rem)`
+        : "4rem" // Will be overridden by GSAP animation, but provides fallback
       : isMobile
       ? `clamp(1.35rem, calc(0.5rem + 1vw), 9rem)`
       : isTablet
@@ -129,10 +149,21 @@ const HeroPageSection4 = ({ onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [direction, setDirection] = useState(0);
   const [key, setKey] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(1440);
   const sectionRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  
+  // Comprehensive breakpoints matching Section1/2/3 pattern
+  const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
+  const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
+  const isLaptop14 = useMediaQuery("(min-width: 1280px) and (max-width: 1439px)");
+  const isLaptop15 = useMediaQuery("(min-width: 1440px) and (max-width: 1535px)");
+  const isLargeDesktop = useMediaQuery("(min-width: 1536px) and (max-width: 1919px)");
+  const isXtraLargeDesktop = useMediaQuery("(min-width: 1920px)");
+  const isUltraWide = useMediaQuery("(min-width: 2560px)");
 
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
@@ -196,7 +227,7 @@ const HeroPageSection4 = ({ onComplete }) => {
     if (Math.abs(diff) >= dragThreshold) {
       if (diff > 0 && currentIndex > 0) {
         // Swipe right
-      setCurrentIndex((prev) => prev - 1);
+        setCurrentIndex((prev) => prev - 1);
       } else if (diff < 0 && currentIndex < MobileCards.length - 1) {
         // Swipe left
         setCurrentIndex((prev) => prev + 1);
@@ -206,8 +237,143 @@ const HeroPageSection4 = ({ onComplete }) => {
     setDragOffset(0);
   };
 
+  // Track viewport width to avoid hydration issues
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    setViewportWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Helper function to get container width (matching Section1/2/3)
+  const getContainerWidth = () => {
+    if (isSmallDesktop) return "88%";
+    if (isLaptop13) return "88%";
+    if (isLaptop14) return "87%";
+    if (isLaptop15) return "90%";
+    if (isLargeDesktop) return "85%"; // Baseline: 1440-1919px (unchanged)
+    if (isXtraLargeDesktop) return "82%";
+    if (isUltraWide) return "75%";
+    return "85%"; // Default fallback
+  };
+
+  // Helper function to get container max-width for ultra-wide
+  const getContainerMaxWidth = () => {
+    if (isXtraLargeDesktop) return "1920px"; // Constrain 1920-2559px
+    if (isUltraWide) return "2400px"; // Constrain 2560px+
+    return "none"; // No constraint for baseline desktop
+  };
+
+  // Helper function to get padding (matching Section2/3)
+  const getPadding = () => {
+    if (isSmallDesktop) return "3rem";
+    if (isLaptop13) return "3.5rem";
+    if (isLaptop14) return "3.75rem";
+    if (isLaptop15) return "4rem";
+    if (isLargeDesktop) return "4rem"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "4rem";
+    if (isUltraWide) return "5rem";
+    return "4rem"; // Default
+  };
+
+  // Helper function to get heading font size (matching Section1/3 pattern)
+  const getHeadingFontSize = () => {
+    if (isSmallDesktop) return `clamp(1.75rem, calc(1.28rem + 2.1vw), 7.25rem)`;
+    if (isLaptop13) return `clamp(1.75rem, calc(1.3rem + 2.2vw), 7.5rem)`;
+    if (isLaptop14) return `clamp(1.75rem, calc(1.32rem + 2.4vw), 8rem)`;
+    if (isLaptop15) return `clamp(1.75rem, calc(1.35rem + 2.6vw), 8.5rem)`;
+    if (isLargeDesktop) return `clamp(1.75rem, calc(1.37rem + 3vw), 8rem)`; // Baseline: unchanged
+    if (isXtraLargeDesktop) return `clamp(2.25rem, calc(2rem + 3vw), 10rem)`;
+    if (isUltraWide) return `clamp(2.25rem, calc(2rem + 3vw), 10rem)`;
+    return `clamp(1.75rem, calc(1.25rem + 2.5vw), 9rem)`; // Default
+  };
+
+  // Helper function to get margin-top for vertical rhythm
+  const getMarginTop = () => {
+    if (isSmallDesktop) return "-7rem";
+    if (isLaptop13) return "-7rem";
+    if (isLaptop14) return "-7rem";
+    if (isLaptop15) return "-7rem";
+    if (isLargeDesktop) return "-7rem"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "-7rem";
+    if (isUltraWide) return "-7rem";
+    return "-7rem"; // Default
+  };
+
+  // Helper function to get main card width (matching GSAP animation start: 90%)
+  const getMainCardWidth = () => {
+    if (isSmallDesktop) return "88%";
+    if (isLaptop13) return "88%";
+    if (isLaptop14) return "89%";
+    if (isLaptop15) return "90%";
+    if (isLargeDesktop) return "90%"; // Baseline: matches GSAP animation
+    if (isXtraLargeDesktop) return "88%";
+    if (isUltraWide) return "85%";
+    return "90%"; // Default
+  };
+
+  // Helper function to get main card height
+  const getMainCardHeight = () => {
+    if (isSmallDesktop) return "50%";
+    if (isLaptop13) return "52%";
+    if (isLaptop14) return "54%";
+    if (isLaptop15) return "55%";
+    if (isLargeDesktop) return "55%"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "60%";
+    if (isUltraWide) return "65%";
+    return "55%"; // Default
+  };
+
+  // Helper function to get side card max-width
+  const getSideCardMaxWidth = () => {
+    if (isSmallDesktop) return "20%";
+    if (isLaptop13) return "20%";
+    if (isLaptop14) return "21%";
+    if (isLaptop15) return "22%";
+    if (isLargeDesktop) return "22%"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "20%";
+    if (isUltraWide) return "18%";
+    return "22%"; // Default
+  };
+
+  // Helper function to get side card height
+  const getSideCardHeight = () => {
+    if (isSmallDesktop) return "50%";
+    if (isLaptop13) return "52%";
+    if (isLaptop14) return "54%";
+    if (isLaptop15) return "55%";
+    if (isLargeDesktop) return "55%"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "60%";
+    if (isUltraWide) return "65%";
+    return "55%"; // Default
+  };
+
+  // Helper function to get main card title font size (responsive)
+  const getMainCardTitleFontSize = () => {
+    if (isSmallDesktop) return "3.25rem";
+    if (isLaptop13) return "3.5rem";
+    if (isLaptop14) return "3.75rem";
+    if (isLaptop15) return "4rem";
+    if (isLargeDesktop) return "4rem"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "4.5rem";
+    if (isUltraWide) return "5rem";
+    return "4rem"; // Default
+  };
+
   const initializeGSAPAnimations = () => {
-    if (isMobile || isTablet) return;
+    if (isMobile || isTablet || prefersReducedMotion) return;
+
+    // Set will-change for better performance
+    gsap.set(".side-cards-container, .main-card", { willChange: "transform, opacity" });
 
     gsap.set(".side-cards-container", {
       opacity: 0,
@@ -242,7 +408,7 @@ const HeroPageSection4 = ({ onComplete }) => {
 
         // Card shrinking animation
         gsap.to(".main-card", {
-          width: `${80 - scale * 60}%`,
+          width: `${90 - scale * 67}%`,
           duration: 1,
           ease: "power2.out",
         });
@@ -263,7 +429,7 @@ const HeroPageSection4 = ({ onComplete }) => {
         });
 
         const dynamicInitialFontSize = () => {
-          const viewportWidth = window.innerWidth;
+          // Use state-based viewportWidth instead of window.innerWidth
           if (viewportWidth < 900) {
             return "3rem"; // Smaller font size for mobile
           } else if (viewportWidth < 1200) {
@@ -275,6 +441,7 @@ const HeroPageSection4 = ({ onComplete }) => {
           } else if (viewportWidth < 2600) {
             return "5rem";
           }
+          return "5rem"; // Default for ultra-wide
         };
 
         const initialFontSize = dynamicInitialFontSize(); // Get dynamic initial font size
@@ -285,11 +452,11 @@ const HeroPageSection4 = ({ onComplete }) => {
           xl: `clamp(0.25rem,calc(1rem + 1vw),3rem)`,
         };
 
-        // Get the current breakpoint (md, lg, xl)
+        // Get the current breakpoint (md, lg, xl) using state-based viewportWidth
         const breakpoint =
-          window.innerWidth < 900
+          viewportWidth < 900
             ? "md"
-            : window.innerWidth < 1200
+            : viewportWidth < 1200
             ? "lg"
             : "xl";
 
@@ -319,6 +486,8 @@ const HeroPageSection4 = ({ onComplete }) => {
 
     return () => {
       mainCardTrigger.kill();
+      // Cleanup: unset will-change
+      gsap.set(".side-cards-container, .main-card", { willChange: "auto" });
     };
   };
 
@@ -331,25 +500,34 @@ const HeroPageSection4 = ({ onComplete }) => {
       if (cleanup) cleanup();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [onComplete, isMobile, isTablet, key]);
+  }, [onComplete, isMobile, isTablet, prefersReducedMotion, viewportWidth, key, isSmallDesktop, isLaptop13, isLaptop14, isLaptop15, isLargeDesktop, isXtraLargeDesktop, isUltraWide]);
 
   if (isMobile || isTablet) {
     return (
       <Box
         sx={{
-          minHeight: { xs: "50vh" },
+          minHeight: { xs: "50vh", sm: "60vh" },
           color: "#fff",
           fontFamily: '"Inter", sans-serif',
           position: "relative",
+          width: {
+            xs: "95%",
+            sm: "92%",
+          },
           maxWidth: "100%",
-          paddingTop: { xs: "25%", sm: "25%" },
-          mx: "auto",
+          margin: "0 auto",
+          padding: {
+            xs: "1.5rem",
+            sm: "2rem",
+          },
+          paddingTop: { xs: "2rem", sm: "3rem" },
           zIndex: 2,
           marginTop: {
-            xs: "5%",
-            sm: "10%",
+            xs: "2rem",
+            sm: "2rem",
           },
           overflow: "hidden",
+          boxSizing: "border-box",
         }}
       >
         <Typography
@@ -384,11 +562,13 @@ const HeroPageSection4 = ({ onComplete }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            columnGap: "12%",
+            columnGap: isMobile ? "10%" : "12%", // Responsive gap
             width: "100%",
-            padding: "0 20%",
+            padding: isMobile ? "0 15%" : "0 20%", // Responsive padding
             overflow: "visible",
             touchAction: "pan-y pinch-zoom",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
           animate={{
             x: `calc(-${currentIndex * 60}% + ${
@@ -396,9 +576,10 @@ const HeroPageSection4 = ({ onComplete }) => {
             }% + ${dragOffset}px)`,
           }}
           transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 20,
+            type: prefersReducedMotion ? "tween" : "spring",
+            duration: prefersReducedMotion ? 0 : undefined,
+            stiffness: prefersReducedMotion ? undefined : 200,
+            damping: prefersReducedMotion ? undefined : 20,
           }}
           onTouchStart={handleDragStart}
           onTouchMove={handleDragMove}
@@ -409,9 +590,13 @@ const HeroPageSection4 = ({ onComplete }) => {
             <Box
               key={index}
               sx={{
-                width: "60%",
+                width: isMobile ? "70%" : "60%", // Responsive card width
                 flexShrink: 0,
-                transition: "all 0.3s ease",
+                opacity: index === currentIndex ? 1 : 0.5,
+                transform: index === currentIndex ? "scale(1.05)" : "scale(0.95)",
+                transition: prefersReducedMotion ? "none" : "all 0.3s ease",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
               }}
             >
               <FeatureCard
@@ -419,8 +604,6 @@ const HeroPageSection4 = ({ onComplete }) => {
                 description={card.description}
                 isMobile={isMobile}
                 isTablet={isTablet}
-                opacity={index === currentIndex ? 1 : 0.5}
-                scale={index === currentIndex ? 1.2 : 0.8}
               />
             </Box>
           ))}
@@ -452,18 +635,51 @@ const HeroPageSection4 = ({ onComplete }) => {
       ref={sectionRef}
       className="hero-page-section-4"
       sx={{
-        height: "100vh",
+        minHeight: {
+          xs: "60vh",
+          sm: "70vh",
+          md: "100vh",
+        },
+        height: {
+          md: "100vh",
+        },
         color: "#fff",
         position: "relative",
         fontFamily: '"Inter", sans-serif',
-        marginTop: "-7rem",
+        marginTop: {
+          xs: "2rem",
+          sm: "2rem",
+          md: getMarginTop(), // Aligned with Section1/2/3 vertical rhythm
+        },
+        width: {
+          xs: "95%",
+          sm: "92%",
+          md: getContainerWidth(), // Matching Section2/3 container system
+        },
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: getContainerMaxWidth(), // Ultra-wide constraints
+        },
+        margin: "0 auto",
+        padding: {
+          xs: "1.5rem",
+          sm: "2rem",
+          md: getPadding(), // Matching Section2/3 padding system
+        },
+        overflow: "hidden", // Prevent horizontal scroll
+        boxSizing: "border-box",
       }}
     >
       <Box
         className="title-section"
         sx={{
           position: "relative",
-          top: "2%",
+          top: {
+            xs: "5%",
+            sm: "3%",
+            md: "2%",
+          },
           textAlign: "center",
           zIndex: 2,
         }}
@@ -475,12 +691,16 @@ const HeroPageSection4 = ({ onComplete }) => {
             lineHeight: 1.167,
             letterSpacing: "-0.01562em",
             fontSize: {
-              md: `clamp(1.75rem, calc(1.25rem + 2vw), 9rem)`,
-              lg: `clamp(1.75rem, calc(1.37rem + 2.5vw), 8rem)`,
-              xl: `clamp(2.25rem, calc(2rem + 2.5vw), 10rem)`,
+              xs: `clamp(1.75rem, calc(1.15rem + 2vw), 9rem)`,
+              sm: `clamp(1.75rem, calc(1.2rem + 2vw), 9rem)`,
+              md: getHeadingFontSize(), // Using Section1/3 pattern
             },
             position: "relative",
-            top: "20px",
+            top: {
+              xs: "10px",
+              sm: "15px",
+              md: "20px",
+            },
           }}
         >
           Why Choose{" "}
@@ -500,21 +720,67 @@ const HeroPageSection4 = ({ onComplete }) => {
       <Box
         className="cards-container"
         sx={{
-          height: "calc(100vh - 0%)",
+          height: {
+            xs: "auto",
+            sm: "auto",
+            md: "calc(100vh - 10%)",
+          },
+          minHeight: {
+            xs: "50vh",
+            sm: "60vh",
+            md: "calc(100vh - 10%)",
+          },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           maxWidth: "100%",
           boxSizing: "border-box",
-          transition: "gap 0.3s ease",
+          transition: prefersReducedMotion ? "none" : "gap 0.3s ease",
+          gap: {
+            xs: "1rem",
+            sm: "1.5rem",
+            md: "0",
+          },
+          padding: {
+            xs: "2rem 0",
+            sm: "3rem 0",
+            md: "0",
+          },
+          flexWrap: {
+            xs: "wrap",
+            md: "nowrap",
+          },
         }}
       >
         <Box
           className="side-cards-container"
           sx={{
-            height: "50%",
-            maxWidth: "20%",
-            opacity: 0,
+            height: {
+              xs: "auto",
+              sm: "auto",
+              md: getSideCardHeight(), // Responsive height
+            },
+            maxWidth: {
+              xs: "100%",
+              sm: "100%",
+              md: getSideCardMaxWidth(), // Responsive max-width
+            },
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "auto",
+            },
+            opacity: {
+              xs: 1,
+              sm: 1,
+              md: 0,
+            },
+            display: {
+              xs: "none", // Hide side cards on mobile/tablet
+              md: "block",
+            },
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
         >
           <FeatureCard
@@ -522,15 +788,33 @@ const HeroPageSection4 = ({ onComplete }) => {
             description="Our solutions evolve with your business, ensuring long-term success."
             showDescription={isCardShrunk}
             isFinalState={isCardShrunk}
+            isMobile={isMobile}
+            isTablet={isTablet}
           />
         </Box>
 
         <Box
           className="main-card"
           sx={{
-            width: "80%",
-            height: "50%",
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: getMainCardWidth(), // Responsive width matching GSAP animation start
+            },
+            height: {
+              xs: "auto",
+              sm: "auto",
+              md: getMainCardHeight(), // Responsive height
+            },
+            minHeight: {
+              xs: "200px",
+              sm: "250px",
+              md: "auto",
+            },
             flexShrink: 0,
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: prefersReducedMotion ? "auto" : "transform",
           }}
         >
           <FeatureCard
@@ -539,15 +823,41 @@ const HeroPageSection4 = ({ onComplete }) => {
             showDescription={isCardShrunk}
             isFinalState={isCardShrunk}
             isMainCard={true}
+            isMobile={isMobile}
+            isTablet={isTablet}
+            getMainCardTitleFontSize={getMainCardTitleFontSize}
           />
         </Box>
 
         <Box
           className="side-cards-container"
           sx={{
-            height: "50%",
-            maxWidth: "20%",
-            opacity: 0,
+            height: {
+              xs: "auto",
+              sm: "auto",
+              md: getSideCardHeight(), // Responsive height
+            },
+            maxWidth: {
+              xs: "100%",
+              sm: "100%",
+              md: getSideCardMaxWidth(), // Responsive max-width
+            },
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "auto",
+            },
+            opacity: {
+              xs: 1,
+              sm: 1,
+              md: 0,
+            },
+            display: {
+              xs: "none", // Hide side cards on mobile/tablet
+              md: "block",
+            },
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
         >
           <FeatureCard
@@ -555,6 +865,8 @@ const HeroPageSection4 = ({ onComplete }) => {
             description="Cutting-edge AI and automation drive scalable, innovative solutions."
             showDescription={isCardShrunk}
             isFinalState={isCardShrunk}
+            isMobile={isMobile}
+            isTablet={isTablet}
           />
         </Box>
       </Box>
