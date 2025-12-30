@@ -86,13 +86,13 @@ const HeroPageSection1 = ({ animationComplete }) => {
 
   // Helper function to get laptop-specific button padding
   const getButtonPadding = () => {
-    if (isSmallDesktop) return "0.85vw 2.25vw"; // Fill the gap
-    if (isLaptop13) return "0.9vw 2.5vw";
-    if (isLaptop14) return "0.95vw 2.75vw";
-    if (isLaptop15) return "1vw 3vw";
-    if (isLargeDesktop) return "1vw 3vw";
-    if (isXtraLargeDesktop) return "1vw 3vw";
-    return "1vw 3vw"; // Default
+    if (isSmallDesktop) return "1vw 2vw"; // Fill the gap
+    if (isLaptop13) return "1vw 2vw";
+    if (isLaptop14) return "1vw 2vw";
+    if (isLaptop15) return "1vw 2vw";
+    if (isLargeDesktop) return "1vw 2vw";
+    if (isXtraLargeDesktop) return "1vw 2vw";
+    return "1vw 2vw"; // Default
   };
 
   // Helper function to get gradient text margin-bottom

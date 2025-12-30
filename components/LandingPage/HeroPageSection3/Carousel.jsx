@@ -24,18 +24,82 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const mqOpts = { noSsr: true, defaultMatches: false };
 
-// Dynamic card width and gap based on screen size
-const getCardDimensions = (width) => {
-  if (width >= 2001 && width <= 2600) {
-    return { CARD_WIDTH: 1000, GAP: 1400 }; // Adjusted for larger screens
-  } else if (width >= 1536 && width <= 2000) {
-    return { CARD_WIDTH: 800, GAP: 1200 }; // Adjusted for larger screens
-  } else if (width >= 1200 && width < 1536) {
-    return { CARD_WIDTH: 600, GAP: 1000 }; // Adjusted for medium-large screens
-  } else if (width >= 900 && width < 1200) {
-    return { CARD_WIDTH: 400, GAP: 800 }; // Adjusted for medium screens
+// Calculate card dimensions based on viewport width with granular breakpoints
+// Keeps desktop baseline (1440-1919) unchanged, provides smooth scaling for other sizes
+const getCardDimensions = (viewportWidth) => {
+  // Desktop baseline (1440-1919px): CARD_WIDTH = 650, GAP = 1200
+  const BASELINE_CARD = 650;
+  const BASELINE_GAP = 1200;
+  
+  // Ultra-wide screens (2560px+)
+  if (viewportWidth >= 2560) {
+    return { 
+      CARD_WIDTH: 900, 
+      GAP: 1600 
+    };
   }
-  return { CARD_WIDTH: 620, GAP: 950 }; // Default for smaller screens
+  
+  // Extra large screens (1920-2559px)
+  if (viewportWidth >= 1920 && viewportWidth < 2560) {
+    const scale = 1 + ((viewportWidth - 1920) / 640) * 0.15; // Scale from 1.0 to 1.15
+    return {
+      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+      GAP: Math.round(BASELINE_GAP * scale),
+    };
+  }
+  
+  // Large desktop baseline (1536-1919px) - unchanged
+  if (viewportWidth >= 1536 && viewportWidth < 1920) {
+    return { CARD_WIDTH: BASELINE_CARD, GAP: BASELINE_GAP };
+  }
+  
+  // Laptop 15" (1440-1535px) - baseline range
+  if (viewportWidth >= 1440 && viewportWidth < 1536) {
+    return { CARD_WIDTH: BASELINE_CARD, GAP: BASELINE_GAP };
+  }
+  
+  // Laptop 14" (1280-1439px)
+  if (viewportWidth >= 1280 && viewportWidth < 1440) {
+    const scale = 0.85 + ((viewportWidth - 1280) / 160) * 0.1; // Scale from 0.85 to 0.95
+    return {
+      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+      GAP: Math.round(BASELINE_GAP * scale),
+    };
+  }
+  
+  // Laptop 13" (1024-1279px)
+  if (viewportWidth >= 1024 && viewportWidth < 1280) {
+    const scale = 0.7 + ((viewportWidth - 1024) / 256) * 0.15; // Scale from 0.7 to 0.85
+    return {
+      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+      GAP: Math.round(BASELINE_GAP * scale),
+    };
+  }
+  
+  // Small desktop (900-1023px)
+  if (viewportWidth >= 900 && viewportWidth < 1024) {
+    const scale = 0.6 + ((viewportWidth - 900) / 124) * 0.1; // Scale from 0.6 to 0.7
+    return {
+      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+      GAP: Math.round(BASELINE_GAP * scale),
+    };
+  }
+  
+  // Tablet (768-899px)
+  if (viewportWidth >= 768 && viewportWidth < 900) {
+    const scale = 0.5 + ((viewportWidth - 768) / 132) * 0.1; // Scale from 0.5 to 0.6
+    return {
+      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+      GAP: Math.round(BASELINE_GAP * scale),
+    };
+  }
+  
+  // Mobile/Tablet (below 768px) - use proportional scaling with minimum
+  const scale = Math.max(viewportWidth / 1440, 0.35); // Min 35% of baseline
+  return {
+    CARD_WIDTH: Math.round(BASELINE_CARD * scale),
+    GAP: Math.round(BASELINE_GAP * scale),
+  };
 };
 
 const SCROLL_COOLDOWN = 800;
@@ -157,6 +221,7 @@ const ResponsiveView = ({ type, isTablet }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"), mqOpts);
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)", mqOpts);
   const [key, setKey] = useState(0);
 
   const router = useRouter();
@@ -238,7 +303,10 @@ const ResponsiveView = ({ type, isTablet }) => {
             initial={{ opacity: 0, x: direction > 0 ? "100%" : "-100%" }}
             animate={{ opacity: 1, x: "0%" }}
             exit={{ opacity: 0, x: direction > 0 ? "-100%" : "100%" }}
-            transition={{ duration: 0.5 }}
+            transition={{ 
+              duration: prefersReducedMotion ? 0 : 0.5,
+              ease: "easeInOut"
+            }}
             style={{
               width: "80%",
               position: "absolute",
@@ -305,6 +373,7 @@ const ResponsiveView = ({ type, isTablet }) => {
 
 const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
   const {
     scrollPosition,
     setScrollPosition,
@@ -317,6 +386,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   } = useContext(ScrollContext);
   const [isScrolling, setIsScrolling] = useState(false);
   const [isOverCard, setIsOverCard] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(1440); // Default to baseline
   const lastScrollTime = useRef(Date.now());
   const initialScrollDirection = useRef(null);
   const router = useRouter();
@@ -324,6 +394,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"), mqOpts);
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"), mqOpts);
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)", mqOpts);
   const isLargeScreen = useMediaQuery(
     "(min-width: 1536px) and (max-width: 2600px)",
     mqOpts
@@ -332,8 +403,26 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   const islaptop = useMediaQuery(theme.breakpoints.up("lg"), mqOpts);
   const isXtraLargeLaptop = useMediaQuery(theme.breakpoints.up("xl"), mqOpts);
 
-  // Dynamic card dimensions
-  const { CARD_WIDTH, GAP } = getCardDimensions(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  // Use viewport width for breakpoint detection (more accurate than container width)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    // Set initial viewport width
+    setViewportWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Calculate card dimensions based on viewport width (more accurate for breakpoints)
+  const { CARD_WIDTH, GAP } = getCardDimensions(viewportWidth);
   const TOTAL_WIDTH = CARD_WIDTH + GAP;
 
   const handleMouseMove = useCallback(
@@ -369,6 +458,15 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
     setRotation({ x: 0, y: 0 });
     setHoveredIndex(null);
     setIsOverCard(false);
+    // Remove will-change when not hovering
+    if (containerRef.current) {
+      const cards = containerRef.current.querySelectorAll('.carousel-card');
+      cards.forEach(card => {
+        if (card instanceof HTMLElement) {
+          card.style.willChange = 'auto';
+        }
+      });
+    }
   }, []);
 
   const handleContainerMouseLeave = useCallback(() => {
@@ -595,6 +693,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
 
   const getCardStyle = (index) => {
     const isHovered = hoveredIndex === index;
+    const isAnimating = isHovered || isScrolling;
     const baseStyle = {
       flex: "0 0 auto",
       width: isMobile || isTablet ? "80%" : `${CARD_WIDTH}px`,
@@ -629,17 +728,25 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
       textAlign: "center",
       marginLeft: index === 0 ? (type === "title" ? "40%" : "30%") : "0",
       marginRight: index === carouselContent.length - 1 ? "40%" : "0",
-      transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      transition: prefersReducedMotion 
+        ? "none" 
+        : "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       transformStyle: "preserve-3d",
+      backfaceVisibility: "hidden",
+      WebkitBackfaceVisibility: "hidden",
+      willChange: isAnimating && !prefersReducedMotion ? "transform" : "auto",
       backgroundColor:
         type === "description" ? "rgba(255, 255, 255, 0.1)" : "transparent",
+      // Reduced blur for better performance
       boxShadow:
-        type === "description" ? "0 10px 30px -15px rgba(0,0,0,0.3)" : "none",
-      transform: isHovered
+        type === "description" ? "0 10px 20px -10px rgba(0,0,0,0.2)" : "none",
+      transform: isHovered && !prefersReducedMotion
         ? `perspective(1000px) scale(1) rotateX(${rotation.y}deg) rotateY(${rotation.x
         }deg) translateZ(${type === "title" ? "100px" : "50px"})`
-        : `perspective(1000px) scale(1.05) rotateX(${rotation.y}deg) rotateY(${rotation.x
-        }deg) translateZ(${type === "title" ? "30px" : "10px"})`,
+        : !prefersReducedMotion
+          ? `perspective(1000px) scale(1.05) rotateX(${rotation.y}deg) rotateY(${rotation.x
+          }deg) translateZ(${type === "title" ? "30px" : "10px"})`
+          : "none",
       "& .MuiTypography-h3": {
         fontSize: {
           xs: "2.5rem",
@@ -685,13 +792,14 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
 
   return (
     <Box
+      ref={wrapperRef}
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         touchAction: "none",
         position: "relative",
-        perspective: "1000px",
+        perspective: prefersReducedMotion ? "none" : "1000px",
       }}
     >
       {!isMobile && !isTablet && (
