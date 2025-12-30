@@ -27,6 +27,14 @@ const HeroPageSection5 = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
+  const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
+  const isLaptop14 = useMediaQuery("(min-width: 1280px) and (max-width: 1439px)");
+  const isLaptop15 = useMediaQuery("(min-width: 1440px) and (max-width: 1535px)");
+  const isLargeDesktop = useMediaQuery("(min-width: 1536px) and (max-width: 1919px)");
+  const isXtraLargeDesktop = useMediaQuery("(min-width: 1920px) and (max-width: 2559px)");
+  const isUltraWide = useMediaQuery("(min-width: 2560px)");
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [windowSize, setWindowSize] = useState(0);
 
   useEffect(() => {
@@ -60,12 +68,15 @@ const HeroPageSection5 = () => {
 
   // GSAP Animation Logic
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || prefersReducedMotion) return;
     
     const initializeAnimations = () => {
       if (isDesktop && cardRefs.current.length > 0) {
         cardRefs.current.forEach((card, index) => {
           if (card) {
+            // Set will-change for better performance
+            gsap.set(card, { willChange: "transform, opacity" });
+            
             gsap.fromTo(
               card,
               { x: "70%", opacity: 0 },
@@ -76,9 +87,13 @@ const HeroPageSection5 = () => {
                 ease: "power2.out",
                 scrollTrigger: {
                   trigger: card,
-                  start: "top 90%",
-                  end: "top 70%",
+                  start: "top 80%",
+                  end: "top 60%",
                   scrub: true,
+                  onComplete: () => {
+                    // Unset will-change after animation completes
+                    gsap.set(card, { willChange: "auto" });
+                  },
                 },
               }
             );
@@ -96,12 +111,19 @@ const HeroPageSection5 = () => {
           trigger.kill();
         }
       });
+      // Ensure will-change is unset on cleanup
+      cardRefs.current.forEach((card) => {
+        if (card) {
+          gsap.set(card, { willChange: "auto" });
+        }
+      });
     };
-  }, [isDesktop]);
+  }, [isDesktop, prefersReducedMotion]);
 
   return (
     <Box
       ref={sectionRef}
+      className={styles.sectionRoot}
       sx={{
         minHeight: { md: "80vh", xl: "100vh" },
         fontFamily: '"Inter", sans-serif',
@@ -125,11 +147,11 @@ const HeroPageSection5 = () => {
         }}
       />
       {/* Title Section */}
-      <Box sx={{ marginTop: { xs: "10%", sm: "15%", md: "0" }, marginBottom: { xs: "20%", sm: "10%", md: "0%", xl: "1%" } }}>
+      <Box className={styles.sectionInner}>
         <Box
           sx={{
             position: "absolute",
-            top: { xs: "-10%", md: "-20%" },
+            top: { xs: "-10%", md: "-12%" },
             left: "0",
             right: "0%",
             bottom: 0,
@@ -173,18 +195,7 @@ const HeroPageSection5 = () => {
         </Typography>
       </Box>
       {/* Mobile/Tablet Cards */}
-      <Box
-        sx={{
-          display: { xs: "flex", md: "none" },
-          flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 3, sm: 4, md: 6 },
-          justifyContent: "center",
-          alignItems: "center",
-          px: { xs: 2, sm: 4, md: 6 },
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
+      <Box className={styles.mobileCardsWrapper}>
         {cards.map((card, index) => (
           <Card
             key={index}
@@ -239,8 +250,8 @@ const HeroPageSection5 = () => {
       </Box>
 
       {/* Desktop Layout */}
-      <Box className="row" sx={{ display: { xs: "none", md: "block" } }}>
-        <div className="col-md-12">
+      <Box className={styles.desktopWrapper}>
+        <div className={styles.desktopInner}>
           <div className={styles.gradientCardBox}>
             {cards.map((card, index) => (
               <div
