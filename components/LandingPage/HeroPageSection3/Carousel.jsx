@@ -706,10 +706,10 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
       flex: "0 0 auto",
       width: isMobile || isTablet ? "80%" : `${CARD_WIDTH}px`, // Use direct value from getCardDimensions
       height: issmallLaptop
-        ? "calc(40vh + 5vw)"
+        ? "calc(45vh + 5vw)"
         : isMobile || isTablet
           ? "auto"
-          : "calc(60vh + 5vw)",
+          : "calc(50vh + 5vw)",
       marginTop: isLargeScreen
         ? "4rem"
         : islaptop
