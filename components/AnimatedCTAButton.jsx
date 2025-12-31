@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -29,13 +31,27 @@ const StyledButton = styled(Button)(({ theme }) => ({
   background:
     "linear-gradient(180deg, rgba(170, 63, 255, 0.9) 0%, rgba(94, 129, 235, 0.9) 100%)",
   color: "white",
-  transition: " background transform 0.3s ease",
+  transition: "background 0.3s ease, transform 0.3s ease",
   fontWeight: 500,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  boxSizing: "border-box",
+  backfaceVisibility: "hidden",
+  WebkitBackfaceVisibility: "hidden",
+  willChange: "transform",
+  WebkitFontSmoothing: "antialiased",
+  MozOsxFontSmoothing: "grayscale",
 
   "&:hover": {
-    transform: " scale(1.05)",
+    transform: "scale(1.05)",
+    WebkitTransform: "scale(1.05)", // Safari prefix
     background:
       "linear-gradient(180deg, rgba(170, 63, 255, 0.9) 0%, rgba(94, 129, 235, 0.9) 100%)",
+  },
+  "&:active": {
+    transform: "scale(0.98)",
+    WebkitTransform: "scale(0.98)", // Safari prefix
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: "2rem",
@@ -68,10 +84,63 @@ const AnimatedCTA = () => {
   const containerRef = useRef(null);
   const buttonRef = useRef(null);
   const router = useRouter();
+  const theme = useTheme();
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   useEffect(() => {
     const container = containerRef.current;
     const button = buttonRef.current;
+
+    if (!container || !button) return;
+
+    // Calculate responsive button dimensions using clamp
+    const getButtonWidth = () => {
+      return "clamp(180px, 14vw, 320px)";
+    };
+
+    const getButtonHeight = () => {
+      return "clamp(52px, 7vh, 84px)";
+    };
+
+    const getButtonPadding = () => {
+      if (typeof window === "undefined") return "16px 32px";
+      const viewportWidth = window.innerWidth;
+      if (viewportWidth < 600) return "10px 20px";
+      if (viewportWidth < 960) return "12px 24px";
+      if (viewportWidth < 1440) return "14px 28px";
+      if (viewportWidth < 1920) return "16px 32px";
+      return "18px 36px";
+    };
+
+    const getButtonFontSize = () => {
+      return "clamp(1rem, 0.6rem + 0.6vw, 1.75rem)";
+    };
+
+    // If reduced motion, set final state immediately
+    if (prefersReducedMotion) {
+      gsap.set(container, {
+        opacity: 1,
+        scale: 1,
+      });
+      gsap.set(button, {
+        opacity: 1,
+        scale: 1,
+        width: getButtonWidth(),
+        height: getButtonHeight(),
+        borderRadius: "980px",
+        fontSize: getButtonFontSize(),
+        minWidth: "200px",
+        padding: getButtonPadding(),
+      });
+      return;
+    }
+
+    // Set will-change for performance
+    gsap.set([container, button], {
+      willChange: "transform, opacity",
+      backfaceVisibility: "hidden",
+      WebkitBackfaceVisibility: "hidden",
+    });
 
     // Initial state
     gsap.set(container, {
@@ -81,9 +150,9 @@ const AnimatedCTA = () => {
     gsap.set(button, {
       width: "80px",
       height: "80px",
-      padding: 0,
+      padding: "0",
       borderRadius: "50%",
-      fontSize: 0,
+      fontSize: "0",
       minWidth: "50px",
       opacity: 0,
       scale: 0,
@@ -127,6 +196,8 @@ const AnimatedCTA = () => {
       },
     });
 
+    const finalPadding = getButtonPadding();
+
     buttonTl
       .to(button, {
         opacity: 1,
@@ -136,30 +207,21 @@ const AnimatedCTA = () => {
       .to(button, {
         width: "60px",
         height: "60px",
-        padding: 0,
+        padding: "0",
         borderRadius: "50%",
-        fontSize: 0,
+        fontSize: "0",
         minWidth: "50px",
         duration: 0.6,
       })
       .to(button, {
-        width: "13vw",
-        height: "8vh",
-
-        padding: {
-          xs: "5px 10px",
-          sm: "16px 32px",
-          md: " 1vw 1vw",
-          xl: "0.5vw 2vw",
-        },
+        width: getButtonWidth(),
+        height: getButtonHeight(),
+        padding: finalPadding,
         borderRadius: "980px",
-        fontSize: `clamp(1rem, calc(0.5rem + 0.7vw), 4rem)`,
+        fontSize: getButtonFontSize(),
         fontWeight: "500",
         minWidth: "200px",
         duration: 0.36,
-        "&:hover": {
-          transform: "scale(1.05)",
-        },
       })
       .to(button, {
         y: "10%",
@@ -177,8 +239,10 @@ const AnimatedCTA = () => {
       }
       tl.kill();
       buttonTl.kill();
+      // Reset will-change
+      gsap.set([container, button], { willChange: "auto" });
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   // Handle button click to navigate to ContactUs page
   const handleButtonClick = () => {
