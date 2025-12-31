@@ -1,78 +1,89 @@
+"use client";
+
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 // Logo from public directory
 const Logo = "/logo/excollo3d.png";
-import { m } from "framer-motion";
+
 const HeroPageSection7 = () => {
   const theme = useTheme();
   const [scrollY, setScrollY] = useState(0);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
-  const isSpecified = useMediaQuery("(max-width: 899px)");
-  const isSmallerLaptop = useMediaQuery(theme.breakpoints.up("md"));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  const is1300pxto1535px = useMediaQuery( "(min-width:1300px) and (max-width:1535px)");
-  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const is1750to2000px = useMediaQuery("(min-width:1750px) and (max-width:2000px)");
-  const is2001to2300px = useMediaQuery(
-    "(min-width:2001px) and (max-width:2300px)"
-  );
-  const is2301to2600px = useMediaQuery(
-    "(min-width:2301px) and (max-width:2600px)"
-  );
+  const rafRef = useRef(null);
   
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 480);
-      setIsTablet(window.innerWidth > 480 && window.innerWidth <= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  useEffect(() => {
-    if (!isMobile && !isTablet) {
-      const handleScroll = () => {
+  // Use MUI useMediaQuery for responsive detection (SSR-safe)
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // < 600px
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md")); // 600-900px
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  
+  // Comprehensive breakpoints matching Section1-6 pattern
+  const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
+  const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
+  const isLaptop14 = useMediaQuery("(min-width: 1280px) and (max-width: 1439px)");
+  const isLaptop15 = useMediaQuery("(min-width: 1440px) and (max-width: 1535px)");
+  const isLargeDesktop = useMediaQuery("(min-width: 1536px) and (max-width: 1919px)");
+  const isXtraLargeDesktop = useMediaQuery("(min-width: 1920px) and (max-width: 2559px)");
+  const isUltraWide = useMediaQuery("(min-width: 2560px)");
+  // Throttled scroll handler using requestAnimationFrame for smooth performance
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    rafRef.current = requestAnimationFrame(() => {
+      if (typeof window !== "undefined") {
         setScrollY(window.scrollY);
-      };
-      window.addEventListener("scroll", handleScroll);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    // Only enable scroll tracking on desktop and if reduced motion is not preferred
+    if (!isMobile && !isTablet && !prefersReducedMotion) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
       return () => {
         window.removeEventListener("scroll", handleScroll);
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
       };
+    } else {
+      // Reset scroll position when disabled
+      setScrollY(0);
     }
-  }, [isMobile, isTablet]);
-  const handleMouseMove = (e) => {
-    if (isMobile || isTablet) return;
+  }, [isMobile, isTablet, prefersReducedMotion, handleScroll]);
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile || isTablet || prefersReducedMotion) return;
     const { clientX, clientY, currentTarget } = e;
     const rect = currentTarget.getBoundingClientRect();
     const x = ((clientX - rect.left) / rect.width - 0.5) * 30;
     const y = ((clientY - rect.top) / rect.height - 0.5) * -30;
     setRotation({ x, y });
-  };
-  const handleMouseLeave = () => {
-    if (isMobile || isTablet) return;
+  }, [isMobile, isTablet, prefersReducedMotion]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile || isTablet || prefersReducedMotion) return;
     setRotation({ x: 0, y: 0 });
+  }, [isMobile, isTablet, prefersReducedMotion]);
+  // Simplified translateY calculation with responsive baseline offsets
+  const getTranslateYBaseline = () => {
+    if (isUltraWide) return 3000;
+    if (isXtraLargeDesktop) return 2500;
+    if (isLargeDesktop) return 2000;
+    if (isLaptop15) return 1900;
+    if (isLaptop14) return 1800;
+    if (isLaptop13) return 1800;
+    if (isSmallDesktop) return 1800;
+    return 100; // Mobile/tablet fallback (not used due to early return)
   };
-  const translateYImage = is2301to2600px
-    ? Math.max(3000 - scrollY * 0.5, 0)
-    : is2001to2300px
-    ? Math.max(2700 - scrollY * 0.5, 0)
-    : is1750to2000px
-    ? Math.max(2500 - scrollY * 0.5, 0)
-    : isXtraLargeScreen
-    ? Math.max(2300 - scrollY * 0.5, 0)
-    : is1300pxto1535px
-    ? Math.max(1900 - scrollY * 0.5, 0)
-    : isLargeScreen
-    ? Math.max(1800 - scrollY * 0.5, 0)
-    : isSmallerLaptop
-    ? Math.max(1800 - scrollY * 0.5, 0)
-    : Math.max(100 - scrollY * 0.5, 0); ;
+
+  const translateYImage = prefersReducedMotion || isMobile || isTablet
+    ? 0
+    : Math.max(getTranslateYBaseline() - scrollY * 0.5, 0);
+
   const gradientOpacity =
-    scrollY > 100 ? Math.min((scrollY - 800) / 300, 1) : 1;
+    prefersReducedMotion || scrollY <= 100
+      ? 1
+      : Math.min((scrollY - 800) / 300, 1);
   return (
     <Box>
       <Box
@@ -82,21 +93,23 @@ const HeroPageSection7 = () => {
         position="relative"
         zIndex={2}
         sx={{
-          height: "60vh",
+          height: {
+            xs: "400px",
+            sm: "50vh",
+            md: "60vh",
+          },
           width: "100%",
           overflow: "hidden",
-          "@media (max-width: 899px)": {
-            width: "100%",
-            marginTop: "-5%",
+          marginTop: {
+            xs: "-25%",
+            sm: "-15%",
+            md: "-5%",
+            lg: 0,
           },
-          "@media (max-width: 768px)": {
-            width: "100%",
-            margin: "-15% auto",
-          },
-          "@media (max-width: 480px)": {
-            width: "100%",
-            height: "400px",
-            margin: " -25% 0 -25%  0",
+          marginBottom: {
+            xs: "-25%",
+            sm: 0,
+            md: 0,
           },
         }}
       >
@@ -108,19 +121,32 @@ const HeroPageSection7 = () => {
           onMouseLeave={handleMouseLeave}
           sx={{
             height: "auto",
-            width: "80%",
+            width: {
+              xs: "80%",
+              sm: "80%",
+              md: "80%",
+              lg: "80%",
+              xl: "80%",
+            },
+            maxWidth: "100%",
             transform:
-              isMobile || isTablet
+              prefersReducedMotion || isMobile || isTablet
                 ? "none"
-                : `translateY(${Math.min(translateYImage, 1000)}px) rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`,
+                : `translate3d(0, ${Math.min(translateYImage, 1000)}px, 0) rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`,
             transformStyle: "preserve-3d",
-            willChange: "transform",
-            transition: "transform 0.2s ease-out",
+            willChange: prefersReducedMotion ? "auto" : "transform",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transition: prefersReducedMotion ? "none" : "transform 0.2s ease-out",
+            // Safari 3D transform fixes
+            WebkitTransform: prefersReducedMotion || isMobile || isTablet
+              ? "none"
+              : `translate3d(0, ${Math.min(translateYImage, 1000)}px, 0) rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`,
           }}
         />
       </Box>
       {/* Gradient Animation Section */}
-      {!isMobile && !isTablet && (
+      {!isMobile && !isTablet && !prefersReducedMotion && (
         <Box
           position="relative"
           zIndex={0}
