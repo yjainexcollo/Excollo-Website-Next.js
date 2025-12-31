@@ -52,7 +52,7 @@
 
 /* CSS Custom Properties for Responsive Scaling */
 .gradientCardBox {
-  --card-gap: 2rem;
+  --card-gap: 2%;
   --card-padding-x: 2rem;
   --card-padding-y: 40px;
   --card-height: 300px;
@@ -308,7 +308,7 @@
   }
 }
 
-/* Small desktop / tablets landscape: 900–1199px */
+/* Small desktop / tablets landscape: 900–1199px
 @media (min-width: 900px) and (max-width: 1199px) {
   .sectionRoot {
     width: 88%;
@@ -323,7 +323,7 @@
   }
 
   .gradientCardBox {
-    --card-gap: 6rem;
+    --card-gap: 6%;
     --card-padding-x: 2rem;
     --card-padding-y: 40px;
     --card-height: 320px;
@@ -366,12 +366,10 @@
     line-height: 1.5;
     margin-bottom: 20px;
   }
-}
+} */
 
-/* Laptops: 1200–1535px (13"/14"/15") - BASELINE - DO NOT CHANGE VISUALLY */
-@media (min-width: 1200px) and (max-width: 1535px) {
+@media (min-width: 900px) and (max-width: 2559px) {
   .sectionRoot {
-    width: 88%;
     max-width: 100%;
     margin: 0 auto;
     padding: 3.5rem 2rem 4.5rem;
@@ -383,20 +381,19 @@
   }
 
   .gradientCardBox {
-    --card-gap: 9rem;
+    --card-gap: 0%;
     --card-padding-x: 2rem;
     --card-padding-y: 50px;
-    --card-height: 350px;
+    --card-height: 50vh;
     --card-margin-top: 90px;
-    --beam-left: 15%;
-    --beam-width: 65%;
-    --content-width: 120%;
+    --beam-left: 8vw;
+    --beam-width: 11vw;
+    --content-width: 20vw;
     --content-padding-x: 24px;
     --content-padding-y: 32px;
-    --content-height: 75%;
+    --content-height: 35vh;
     --content-blur: 20px;
     --content-blur-webkit: 8px;
-
     max-width: 100%;
     margin: 0 auto;
     grid-template-columns: repeat(3, 1fr);
@@ -404,8 +401,8 @@
 
   .box:hover::before,
   .box:hover::after {
-    left: 8%;
-    width: calc(100% - 15%);
+    left: 22.5%;
+    width: calc(100% - 45%);
   }
 
   .box:hover .content {
@@ -434,7 +431,7 @@
   }
 }
 
-/* Desktops: 1536–1919px */
+/* Desktops: 1536–1919px
 @media (min-width: 1536px) and (max-width: 1919px) {
   .sectionRoot {
     width: 85%;
@@ -449,7 +446,7 @@
   }
 
   .gradientCardBox {
-    --card-gap: 9rem;
+    --card-gap: 10%;
     --card-padding-x: 2.5rem;
     --card-padding-y: 60px;
     --card-height: 480px;
@@ -498,9 +495,9 @@
     padding: 12px 24px;
     margin-top: 10px;
   }
-}
+} */
 
-/* Extra large / 2K screens: 1920–2559px */
+/* Extra large / 2K screens: 1920–2559px
 @media (min-width: 1920px) and (max-width: 2559px) {
   .sectionRoot {
     width: 82%;
@@ -515,7 +512,7 @@
   }
 
   .gradientCardBox {
-    --card-gap: 9rem;
+    --card-gap: 10%;
     --card-padding-x: 3rem;
     --card-padding-y: 70px;
     --card-height: 560px;
@@ -581,7 +578,7 @@
   }
 
   .gradientCardBox {
-    --card-gap: 9rem;
+    --card-gap: 8%;
     --card-padding-x: 4rem;
     --card-padding-y: 80px;
     --card-height: 620px;
@@ -629,4 +626,4 @@
     padding: 15px 30px;
     margin-top: 15px;
   }
-}
+} 
