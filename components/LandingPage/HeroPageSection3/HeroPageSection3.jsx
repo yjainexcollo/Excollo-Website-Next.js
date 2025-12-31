@@ -119,6 +119,11 @@ const HeroPageSection3 = () => {
           sm: "2rem",
           md: getMarginTop(), // Aligned with Section1 & Section2 vertical rhythm
         },
+        marginBottom: {
+          xs: "5vh",
+          sm: "5vh",
+          md: "10vh", // Universal percentage-based gap between Section 3 and Section 4
+        },
         display: "flex",
         flexDirection: "column",
         width: {

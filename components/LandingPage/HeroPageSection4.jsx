@@ -313,13 +313,13 @@ const HeroPageSection4 = ({ onComplete }) => {
 
   // Helper function to get main card width (matching GSAP animation start: 90%)
   const getMainCardWidth = () => {
-    if (isSmallDesktop) return "88%";
-    if (isLaptop13) return "88%";
-    if (isLaptop14) return "89%";
-    if (isLaptop15) return "90%";
-    if (isLargeDesktop) return "90%"; // Baseline: matches GSAP animation
-    if (isXtraLargeDesktop) return "88%";
-    if (isUltraWide) return "85%";
+    if (isSmallDesktop) return "90%";  // Change from "100%"
+    if (isLaptop13) return "90%";      // Change from "100%"
+    if (isLaptop14) return "90%";      // Change from "100%"
+    if (isLaptop15) return "90%";      // Change from "100%"
+    if (isLargeDesktop) return "90%";  // Change from "100%" - matches GSAP start
+    if (isXtraLargeDesktop) return "90%";
+    if (isUltraWide) return "90%";
     return "90%"; // Default
   };
 
@@ -337,14 +337,38 @@ const HeroPageSection4 = ({ onComplete }) => {
 
   // Helper function to get side card max-width
   const getSideCardMaxWidth = () => {
-    if (isSmallDesktop) return "20%";
-    if (isLaptop13) return "20%";
-    if (isLaptop14) return "21%";
-    if (isLaptop15) return "22%";
-    if (isLargeDesktop) return "22%"; // Baseline: unchanged
-    if (isXtraLargeDesktop) return "20%";
-    if (isUltraWide) return "18%";
+    if (isSmallDesktop) return "25%";
+    if (isLaptop13) return "25%";
+    if (isLaptop14) return "25%";
+    if (isLaptop15) return "25%";
+    if (isLargeDesktop) return "30%"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "30%";
+    if (isUltraWide) return "30%";
     return "22%"; // Default
+  };
+
+  // Helper function to get main card animation starting width
+  const getMainCardStartWidth = () => {
+    if (isSmallDesktop) return 90;
+    if (isLaptop13) return 90;
+    if (isLaptop14) return 90;
+    if (isLaptop15) return 90;
+    if (isLargeDesktop) return 90; // Your current value
+    if (isXtraLargeDesktop) return 90;
+    if (isUltraWide) return 90;
+    return 90; // Default
+  };
+
+  // Helper function to get main card shrink amount (how much it shrinks)
+  const getMainCardShrinkAmount = () => {
+    if (isSmallDesktop) return 65;
+    if (isLaptop13) return 65;
+    if (isLaptop14) return 65;
+    if (isLaptop15) return 65;
+    if (isLargeDesktop) return 65; // Adjusted: 85 - 55 = 30% (matches side card 30%)
+    if (isXtraLargeDesktop) return 65;
+    if (isUltraWide) return 65;
+    return 65; // Default
   };
 
   // Helper function to get side card height
@@ -419,9 +443,12 @@ const HeroPageSection4 = ({ onComplete }) => {
         const progress = self.progress;
         const scale = Math.pow(progress, 1.5);
 
-        // Card shrinking animation
+        // Card shrinking animation - dynamic based on breakpoint
+        const startWidth = getMainCardStartWidth();
+        const shrinkAmount = getMainCardShrinkAmount();
+
         gsap.to(".main-card", {
-          width: `${90 - scale * 67}%`,
+          width: `${startWidth - scale * shrinkAmount}%`,
           duration: 1,
           ease: "power2.out",
         });
