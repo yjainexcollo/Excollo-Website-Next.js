@@ -258,14 +258,14 @@ const HeroPageSection4 = ({ onComplete }) => {
 
   // Helper function to get container width (matching Section1/2/3)
   const getContainerWidth = () => {
-    if (isSmallDesktop) return "88%";
-    if (isLaptop13) return "88%";
-    if (isLaptop14) return "87%";
+    if (isSmallDesktop) return "90%";
+    if (isLaptop13) return "90%";
+    if (isLaptop14) return "90%";
     if (isLaptop15) return "90%";
-    if (isLargeDesktop) return "85%"; // Baseline: 1440-1919px (unchanged)
-    if (isXtraLargeDesktop) return "82%";
-    if (isUltraWide) return "75%";
-    return "85%"; // Default fallback
+    if (isLargeDesktop) return "90%"; // Baseline: 1440-1919px (unchanged)
+    if (isXtraLargeDesktop) return "90%";
+    if (isUltraWide) return "90%";
+    return "90%"; // Default fallback
   };
 
   // Helper function to get container max-width for ultra-wide
