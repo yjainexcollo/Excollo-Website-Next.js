@@ -280,9 +280,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
           transformOrigin: "center center",
           ...(isMobile || isTablet
             ? {
-                opacity: 1,
-                transform: "scale(1)",
-              }
+              opacity: 1,
+              transform: "scale(1)",
+            }
             : {}),
         }}
       />
@@ -307,9 +307,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
           },
           ...(isMobile || isTablet
             ? {
-                opacity: 1,
-                transform: "translateX(0)",
-              }
+              opacity: 1,
+              transform: "translateX(0)",
+            }
             : {}),
         }}
       >

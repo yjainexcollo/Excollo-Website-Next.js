@@ -59,34 +59,34 @@ const HeroPageSection6 = () => {
 
     // Wait for DOM to update and fonts to render before measuring
     requestAnimationFrame(() => {
-      const letters1 = textRef1.current.querySelectorAll(".target-letter");
-      const letters2 = textRef2.current.querySelectorAll(".target-letter");
-      const allLetters = [...letters1, ...letters2];
+    const letters1 = textRef1.current.querySelectorAll(".target-letter");
+    const letters2 = textRef2.current.querySelectorAll(".target-letter");
+    const allLetters = [...letters1, ...letters2];
 
       if (allLetters.length === 0) return;
 
-      const offsetY = 8;
-      const containerRect = containerRef.current.getBoundingClientRect();
+    const offsetY = 8;
+    const containerRect = containerRef.current.getBoundingClientRect();
       
-      let letterPositions = allLetters.map((letter) => {
-        const rect = letter.getBoundingClientRect();
-        return {
-          element: letter,
-          x:
-            rect.left -
-            containerRect.left +
-            containerRef.current.scrollLeft +
-            rect.width / 2,
-          y:
-            rect.top -
-            containerRect.top +
-            containerRef.current.scrollTop +
-            rect.height / 2 +
-            offsetY,
-        };
-      });
+    let letterPositions = allLetters.map((letter) => {
+      const rect = letter.getBoundingClientRect();
+      return {
+        element: letter,
+        x:
+          rect.left -
+          containerRect.left +
+          containerRef.current.scrollLeft +
+          rect.width / 2,
+        y:
+          rect.top -
+          containerRect.top +
+          containerRef.current.scrollTop +
+          rect.height / 2 +
+          offsetY,
+      };
+    });
 
-      letterPositions = shuffleArray(letterPositions);
+    letterPositions = shuffleArray(letterPositions);
 
       // Set will-change for performance
       gsap.set(circleRef.current, {
@@ -95,62 +95,62 @@ const HeroPageSection6 = () => {
         WebkitBackfaceVisibility: "hidden",
       });
 
-      const tl = gsap.timeline({
-        repeat: -1,
-        defaults: { ease: "power2.inOut" },
-      });
-      timelineRef.current = tl;
+    const tl = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: "power2.inOut" },
+    });
+    timelineRef.current = tl;
 
-      letterPositions.forEach((pos, index) => {
-        const prevPos = index > 0 ? letterPositions[index - 1] : null;
-        tl.to(circleRef.current, {
-          x: pos.x,
-          y: pos.y,
-          duration: 0.8,
-          onStart: () => {
-            gsap.to(pos.element, { opacity: 0, duration: 0.4 });
-            if (prevPos) {
-              gsap.to(prevPos.element, {
-                opacity: 1,
-                duration: 0.3,
-                delay: 0.2,
-              });
-            }
-          },
-        });
-        tl.to(
-          circleRef.current,
-          {
-            scale: 1.3,
-            duration: 0.3,
-            ease: "power2.out",
-          },
-          ">"
-        );
-        tl.to(
-          circleRef.current,
-          {
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.in",
-          },
-          ">"
-        );
-        tl.to({}, { duration: 0.4 });
-        if (index === letterPositions.length - 1) {
-          tl.add(() => {
-            gsap.to(pos.element, {
+    letterPositions.forEach((pos, index) => {
+      const prevPos = index > 0 ? letterPositions[index - 1] : null;
+      tl.to(circleRef.current, {
+        x: pos.x,
+        y: pos.y,
+        duration: 0.8,
+        onStart: () => {
+          gsap.to(pos.element, { opacity: 0, duration: 0.4 });
+          if (prevPos) {
+            gsap.to(prevPos.element, {
               opacity: 1,
               duration: 0.3,
               delay: 0.2,
             });
-          });
-        }
+          }
+        },
       });
+      tl.to(
+        circleRef.current,
+        {
+          scale: 1.3,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+        ">"
+      );
+      tl.to(
+        circleRef.current,
+        {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.in",
+        },
+        ">"
+      );
+      tl.to({}, { duration: 0.4 });
+      if (index === letterPositions.length - 1) {
+        tl.add(() => {
+          gsap.to(pos.element, {
+            opacity: 1,
+            duration: 0.3,
+            delay: 0.2,
+          });
+        });
+      }
+    });
 
-      gsap.set(circleRef.current, {
-        x: letterPositions[0].x,
-        y: letterPositions[0].y,
+    gsap.set(circleRef.current, {
+      x: letterPositions[0].x,
+      y: letterPositions[0].y,
       });
     });
   };
@@ -202,7 +202,7 @@ const HeroPageSection6 = () => {
         });
       } else {
         requestAnimationFrame(() => {
-          createAnimation();
+    createAnimation();
         });
       }
     };
