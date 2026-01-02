@@ -909,22 +909,19 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
           </Box>
         </Container>
 
-      {/* 3D Interactive Section */}
-      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
+        <Container maxWidth="xl">
         <Box 
-          ref={ex3dTiltRef} // 3D tilt animation reference
-          onMouseMove={handle3DMouseMove} // Mouse move handler for 3D effect
-          onMouseLeave={handle3DMouseLeave} // Mouse leave handler to reset position
+          ref={ex3dTiltRef}
+          onMouseMove={handle3DMouseMove}
+          onMouseLeave={handle3DMouseLeave}
           sx={{ 
-            mt: { xs: 0, md: -20 }, // Negative margin for overlap effect
-            mb: { xs: 0, md: 0 },
+            mt: { xs: -16, md: 17 },
             position: 'relative',
-            zIndex: 1,
+            zIndex: 4,
             background: '#000',
-            willChange: 'transform' // Optimize for transform animations
+            willChange: 'transform'
           }}
         >
-          {/* 3D Excollo logo component */}
           <Excollo3DCaseStudy isStatic />
         </Box>
       </Container>

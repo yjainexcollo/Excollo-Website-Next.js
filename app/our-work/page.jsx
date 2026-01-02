@@ -311,17 +311,30 @@ const OurWorkPage = () => {
 
       <Container maxWidth="xl" sx={{ pt: { xs: 6, md: 10 }, pb: { xs: 8, md: 12 }, px: { xs: 3, sm: 4, md: 8, lg: 14, xl: 18 } }}>
         <Box sx={{ textAlign: "center", maxWidth: 900, mx: "auto", mb: { xs: 6, md: 8 } }}>
-          <Typography component="h2" sx={{ fontFamily: '"Inter", sans-serif', fontWeight: 600, fontSize: { xs: 32, md: 44 }, mb: 1 }}>
-            Our{' '}
-            <Box component="span" sx={{
+        <Box sx={{ textAlign: "center", maxWidth: 900, mx: "auto", mb: { xs: 2, md: 4 } }}>
+          <Typography
+            component="h2"
+            sx={{
+              lineHeight: 1.1,
+              fontFamily: '"Inter", sans-serif',
+              fontWeight: 600,
+              fontSize: {
+                xs: 'clamp(1.75rem, calc(1.25rem + 2vw), 9rem)',
+                md: 'clamp(1.75rem, calc(1.25rem + 2.5vw), 9rem)',
+                lg: 'clamp(1.75rem, calc(1.37rem + 3vw), 8rem)',
+                xl: 'clamp(2.25rem, calc(2rem + 3vw), 10rem)',
+              },
+            }}
+          >
+            Our <Box component="span" sx={{
               background: 'linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
-              Work
-            </Box>
+              backgroundClip: 'text',
+              color: 'transparent'
+            }}>Work</Box>
           </Typography>
+        </Box>
           <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: { xs: 14, md: 16 }, maxWidth: 920, mx: 'auto', lineHeight: 1.6 }}>
           At Excollo, we transform ideas into impact by building intelligent AI solutions tailored for real-world challenges. Our case studies showcase how we collaborate with forward-thinking brands to automate workflows, enhance customer experiences, and unlock new growth opportunities. From conversational commerce to enterprise support systems, every project reflects our commitment to innovation, scalability, and measurable results.
           </Typography>
@@ -391,13 +404,13 @@ const OurWorkPage = () => {
       </Container>
 
       {/* Excollo3D Component */}
-      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
+      <Container maxWidth="xl">
         <Box 
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
           sx={{ 
-            mt: { xs: -10, md: -8 },
+            mt: { xs: -16, md: 0 },
             position: 'relative',
             zIndex: 4,
             background: '#000',

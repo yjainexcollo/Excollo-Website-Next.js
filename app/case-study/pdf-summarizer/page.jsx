@@ -16,6 +16,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 // Import WhatsApp icon for contact button
 import { IoLogoWhatsapp } from "react-icons/io5";
+import Excollo3DCaseStudy from "@/components/AboutUs/Excollo3DCaseStudy";
 
 // Register GSAP ScrollTrigger plugin for scroll-based animations
 gsap.registerPlugin(ScrollTrigger);
@@ -837,21 +838,20 @@ export default function PDFsummarizer() {
           </Box>
         </Container>
 
-      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
+      <Container maxWidth="xl">
         <Box 
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
           sx={{ 
-            mt: { xs: 0, md: -20 },
-            mb: { xs: 0, md: 0 },
+            mt: { xs: -16, md: -15 },
             position: 'relative',
-            zIndex: 1,
+            zIndex: 4,
             background: '#000',
             willChange: 'transform'
           }}
         >
-          <Excollo3D isStatic />
+          <Excollo3DCaseStudy isStatic />
         </Box>
       </Container>
       

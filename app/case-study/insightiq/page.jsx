@@ -870,16 +870,15 @@ export default function InsightIQ() {
         </Box>
       </Container>
 
-      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
+      <Container maxWidth="xl">
         <Box 
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
           sx={{ 
-            mt: { xs: 0, md: -20 },
-            mb: { xs: 0, md: 0 },
+            mt: { xs: -16, md: 17 },
             position: 'relative',
-            zIndex: 1,
+            zIndex: 4,
             background: '#000',
             willChange: 'transform'
           }}
