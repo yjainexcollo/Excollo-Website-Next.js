@@ -59,10 +59,10 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
           gap: 2,
           color: 'rgba(255,255,255,0.6)'
         }}>
-          <Typography sx={{ fontSize: 18, fontWeight: 500, fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+          <Typography sx={{ fontSize: 18, fontWeight: 500, fontFamily: '"Inter", sans-serif' }}>
             Welcome to Hotel Concierge
           </Typography>
-          <Typography sx={{ fontSize: 14, textAlign: 'center', maxWidth: 400, fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+          <Typography sx={{ fontSize: 14, textAlign: 'center', maxWidth: 400, fontFamily: '"Inter", sans-serif' }}>
             How can I assist you today? Ask me about dining reservations, room service, local attractions, or any other hotel services!
           </Typography>
         </Box>
@@ -91,7 +91,7 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
               lineHeight: 1.5,
               wordWrap: 'break-word',
               whiteSpace: 'pre-wrap',
-              fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+              fontFamily: '"Inter", sans-serif',
               boxShadow: m.role === 'user'
                 ? '0 4px 12px rgba(126, 34, 206, 0.2)'
                 : '0 4px 12px rgba(0, 0, 0, 0.2)'
@@ -114,7 +114,7 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
               border: '1px solid rgba(255,255,255,0.1)',
               color: '#fff',
               fontSize: 15,
-              fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+              fontFamily: '"Inter", sans-serif',
               display: 'flex',
               alignItems: 'center',
               gap: 1.5,
@@ -172,7 +172,7 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
           sx: {
             color: '#fff',
             fontSize: 15,
-            fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+            fontFamily: '"Inter", sans-serif',
             borderRadius: 2,
             background: 'rgba(255,255,255,0.05)',
             '& .MuiOutlinedInput-notchedOutline': {
@@ -413,7 +413,7 @@ export default function HotelConcierge() {
             fontWeight: 800,
             fontSize: { xs: 32, sm: 40, md: 62 },
             textAlign: 'center',
-            fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+            fontFamily: '"Inter", sans-serif',
             mb: { xs: 2, md: 3 }
           }}
         >

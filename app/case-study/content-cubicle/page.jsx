@@ -406,7 +406,7 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
       minHeight: "100vh", 
       background: "#000", // Black background
       color: "#fff", // White text
-      fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+      fontFamily: '"Inter", sans-serif',
       WebkitFontSmoothing: 'antialiased', // Better font rendering on WebKit
       MozOsxFontSmoothing: 'grayscale', // Better font rendering on Firefox
       position: 'relative'

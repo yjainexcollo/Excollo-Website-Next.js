@@ -211,7 +211,7 @@ export default function ECommCustomerInteraction() {
             fontWeight: 800,
             fontSize: { xs: 32, sm: 40, md: 48 },
             textAlign: 'center',
-            fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+            fontFamily: '"Inter", sans-serif',
             mb: { xs: 2, md: 3 },
             lineHeight: 1.2
           }}
@@ -273,10 +273,10 @@ export default function ECommCustomerInteraction() {
                 gap: 2,
                 color: 'rgba(255,255,255,0.6)'
               }}>
-                <Typography sx={{ fontSize: 18, fontWeight: 500, fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+                <Typography sx={{ fontSize: 18, fontWeight: 500, fontFamily: '"Inter", sans-serif' }}>
                   Welcome to E-commerce Customer Support
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'center', maxWidth: 400, fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'center', maxWidth: 400, fontFamily: '"Inter", sans-serif' }}>
                   How can I help you today? Ask me about products, orders, returns, or any other questions!
                 </Typography>
               </Box>
@@ -325,7 +325,7 @@ export default function ECommCustomerInteraction() {
                     wordBreak: 'break-word',
                     whiteSpace: 'pre-wrap',
                     overflowWrap: 'break-word',
-                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                    fontFamily: '"Inter", sans-serif',
                     boxShadow: message.isUser
                       ? '0 4px 12px rgba(126, 34, 206, 0.2)'
                       : '0 4px 12px rgba(0, 0, 0, 0.2)',
@@ -422,7 +422,7 @@ export default function ECommCustomerInteraction() {
                     border: '1px solid rgba(255,255,255,0.1)',
                     color: '#fff',
                     fontSize: { xs: 13, sm: 14, md: 15 },
-                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                    fontFamily: '"Inter", sans-serif',
                     display: 'flex',
                     alignItems: 'center',
                     gap: { xs: 1, sm: 1.5 },
@@ -479,7 +479,7 @@ export default function ECommCustomerInteraction() {
                 sx: {
                   color: '#fff',
                   fontSize: { xs: 14, sm: 15 },
-                  fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                  fontFamily: '"Inter", sans-serif',
                   borderRadius: 2,
                   background: 'rgba(255,255,255,0.05)',
                   '& .MuiOutlinedInput-notchedOutline': {

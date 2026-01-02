@@ -180,7 +180,7 @@ const SampleToolsPage = () => {
             component="h2"
             sx={{
               lineHeight: 1.1,
-              fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+              fontFamily: '"Inter", sans-serif',
               fontWeight: 600,
               fontSize: {
                 xs: 'clamp(1.75rem, calc(1.25rem + 2vw), 9rem)',
@@ -198,7 +198,7 @@ const SampleToolsPage = () => {
               color: 'transparent'
             }}>Tools</Box>
           </Typography>
-          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif' }}>
+          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, fontFamily: '"Inter", sans-serif' }}>
             let's create a universe of possibilities together!
           </Typography>
         </Box>

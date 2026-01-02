@@ -303,7 +303,7 @@ export default function ConsolidatedApp() {
             gap: 2,
             fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
             fontWeight: 800,
-            fontFamily: "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+            fontFamily: '"Inter", sans-serif',
             textAlign: "center",
             letterSpacing: "-0.02em"
           }}

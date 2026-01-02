@@ -311,7 +311,7 @@ const OurWorkPage = () => {
 
       <Container maxWidth="xl" sx={{ pt: { xs: 6, md: 10 }, pb: { xs: 8, md: 12 }, px: { xs: 3, sm: 4, md: 8, lg: 14, xl: 18 } }}>
         <Box sx={{ textAlign: "center", maxWidth: 900, mx: "auto", mb: { xs: 6, md: 8 } }}>
-          <Typography component="h2" sx={{ fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif', fontWeight: 600, fontSize: { xs: 32, md: 44 }, mb: 1 }}>
+          <Typography component="h2" sx={{ fontFamily: '"Inter", sans-serif', fontWeight: 600, fontSize: { xs: 32, md: 44 }, mb: 1 }}>
             Our{' '}
             <Box component="span" sx={{
               background: 'linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)',

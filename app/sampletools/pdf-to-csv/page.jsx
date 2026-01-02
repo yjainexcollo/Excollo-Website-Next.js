@@ -292,7 +292,7 @@ export default function PDFtoCSV() {
             sx={{
               fontWeight: 800,
               fontSize: { xs: 32, sm: 40, md: 48 },
-              fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+              fontFamily: '"Inter", sans-serif',
               mb: 2,
               color: '#fff'
             }}

@@ -79,7 +79,7 @@ const ProductPage = () => {
   ];
 
   return (
-    <Box sx={{ minHeight: "100vh", background: "#000", color: "#fff", position: 'relative' }}>
+    <Box sx={{ minHeight: "100vh", background: "#000", color: "#fff", position: 'relative', fontFamily: '"Inter", sans-serif' }}>
       {/* Background Gradient */}
       <Box
         sx={{
@@ -132,7 +132,8 @@ const ProductPage = () => {
               fontWeight: 800,
               fontSize: { xs: 32, sm: 40, md: 48, lg: 56 },
               mb: { xs: 2, md: 3 },
-              lineHeight: 1.2
+              lineHeight: 1.2,
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             Your ICP,{' '}
@@ -152,7 +153,8 @@ const ProductPage = () => {
               fontSize: { xs: 20, sm: 24, md: 28 },
               fontWeight: 600,
               mb: 3,
-              color: 'rgba(255,255,255,0.9)'
+              color: 'rgba(255,255,255,0.9)',
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             AI Personas to Accelerate Messaging and GTM
@@ -165,7 +167,8 @@ const ProductPage = () => {
             maxWidth: 800,
             mx: 'auto',
             fontSize: { xs: 16, sm: 18 },
-            lineHeight: 1.6
+            lineHeight: 1.6,
+            fontFamily: '"Inter", sans-serif'
           }}>
             CRUDO.AI creates hyper-realistic AI personas of your Ideal Customer Profile (ICP),
             so your teams can instantly test messaging, validate positioning, and accelerate
@@ -186,6 +189,7 @@ const ProductPage = () => {
               fontWeight: 600,
               fontSize: { xs: 16, sm: 18 },
               textTransform: 'none',
+              fontFamily: '"Inter", sans-serif',
               background: 'linear-gradient(135deg, #2579E3 0%, #8E54F7 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #1e6bb8 0%, #7c3aed 100%)',
@@ -230,7 +234,8 @@ const ProductPage = () => {
               textAlign: 'center',
               mb: 6,
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             Key Features
@@ -292,7 +297,8 @@ const ProductPage = () => {
                       mt: 2,
                       mb: 1.25,
                       color: '#fff',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      fontFamily: '"Inter", sans-serif'
                     }}
                   >
                     {feature.title}
@@ -303,7 +309,8 @@ const ProductPage = () => {
                       fontSize: 15,
                       color: 'rgba(255,255,255,0.7)',
                       lineHeight: 1.6,
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      fontFamily: '"Inter", sans-serif'
                     }}
                   >
                     {feature.description}
@@ -330,7 +337,8 @@ const ProductPage = () => {
             sx={{
               fontSize: { xs: 24, sm: 28, md: 32 },
               fontWeight: 700,
-              mb: 2
+              mb: 2,
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             Ready to Transform Your GTM Strategy?
@@ -341,7 +349,8 @@ const ProductPage = () => {
               color: 'rgba(255,255,255,0.8)',
               mb: 4,
               maxWidth: 600,
-              mx: 'auto'
+              mx: 'auto',
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             Experience the power of AI-driven customer personas and accelerate your
@@ -360,6 +369,7 @@ const ProductPage = () => {
               fontWeight: 600,
               fontSize: { xs: 16, sm: 18 },
               textTransform: 'none',
+              fontFamily: '"Inter", sans-serif',
               background: 'linear-gradient(135deg, #2579E3 0%, #8E54F7 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #1e6bb8 0%, #7c3aed 100%)',

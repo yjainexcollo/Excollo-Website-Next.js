@@ -264,7 +264,7 @@ By implementing these ${trimmed} strategies, you'll be well-equipped to achieve 
             fontWeight: 800,
             fontSize: { xs: 28, sm: 36, md: 48, lg: 62 },
             textAlign: 'center',
-            fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+            fontFamily: '"Inter", sans-serif',
             lineHeight: { xs: 1.1, sm: 1.2 },
             mb: { xs: 1, sm: 2 }
           }}

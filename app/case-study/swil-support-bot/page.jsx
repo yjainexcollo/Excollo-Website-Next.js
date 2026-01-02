@@ -348,7 +348,7 @@ In short: make support feel always-on, human enough, and flawless.`
       minHeight: "100vh",
       background: "#000",
       color: "#fff",
-      fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+      fontFamily: '"Inter", sans-serif',
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       position: 'relative'
