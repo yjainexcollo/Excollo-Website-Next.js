@@ -34,17 +34,16 @@ const getCardDimensions = (viewportWidth) => {
   // Ultra-wide screens (2560px+)
   if (viewportWidth >= 2560) {
     return { 
-      CARD_WIDTH: 1100, 
+      CARD_WIDTH: 1000, 
       GAP: 1300 
     };
   }
   
   // Extra large screens (1920-2559px)
   if (viewportWidth >= 1920 && viewportWidth < 2560) {
-    const scale = 1 + ((viewportWidth - 1920) / 640) * 0.15; // Scale from 1.0 to 1.15
     return {
-      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
-      GAP: Math.round(BASELINE_GAP * scale),
+      CARD_WIDTH: 1000,
+      GAP: 900,
     };
   }
   
@@ -60,10 +59,9 @@ const getCardDimensions = (viewportWidth) => {
   
   // Laptop 14" (1280-1439px)
   if (viewportWidth >= 1280 && viewportWidth < 1440) {
-    const scale = 0.85 + ((viewportWidth - 1280) / 160) * 0.1; // Scale from 0.85 to 0.95
     return {
-      CARD_WIDTH: Math.round(BASELINE_CARD * scale),
-      GAP: Math.round(BASELINE_GAP * scale),
+      CARD_WIDTH: 550,
+      GAP: 800,
     };
   }
   
