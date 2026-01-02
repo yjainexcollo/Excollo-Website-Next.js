@@ -1,83 +1,61 @@
+"use client";
+
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 // Logo from public directory
 const Logo = "/logo/excollo3d.png";
 
-const Excollo3DCaseStudy = ({ isStatic = false, disableScroll = false }) => {
+const Excollo3D = () => {
   const theme = useTheme();
   const [scrollY, setScrollY] = useState(0);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  
-  // Simplified breakpoint detection
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // 0-599px
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md')); // 600-959px
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md')); // 960px+
-  const isLargeDesktop = useMediaQuery(theme.breakpoints.up('xl')); // 1536px+
-
-  // Scroll handler with throttling for better performance
-  const handleScroll = useCallback(() => {
-    if (!isStatic && isDesktop && !disableScroll) {
-      setScrollY(window.scrollY);
-    }
-  }, [isStatic, isDesktop, disableScroll]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    if (!isStatic && isDesktop && !disableScroll) {
-      let ticking = false;
-      const throttledScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            handleScroll();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
-      
-      window.addEventListener("scroll", throttledScroll, { passive: true });
-      return () => window.removeEventListener("scroll", throttledScroll);
-    }
-  }, [handleScroll, isStatic, isDesktop, disableScroll]);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 480);
+      setIsTablet(window.innerWidth > 480 && window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  // Mouse interaction handlers
-  const handleMouseMove = useCallback((e) => {
-    if (!isDesktop || (isStatic && !disableScroll)) return;
-    
+  useEffect(() => {
+    if (!isMobile && !isTablet) {
+      const handleScroll = () => {
+        setScrollY(window.scrollY);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [isMobile, isTablet]);
+
+  const handleMouseMove = (e) => {
+    if (isMobile || isTablet) return;
     const { clientX, clientY, currentTarget } = e;
     const rect = currentTarget.getBoundingClientRect();
     const x = ((clientX - rect.left) / rect.width - 0.5) * 30;
     const y = ((clientY - rect.top) / rect.height - 0.5) * -30;
     setRotation({ x, y });
-  }, [isDesktop, isStatic, disableScroll]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (isDesktop && (!isStatic || disableScroll)) {
-      setRotation({ x: 0, y: 0 });
-    }
-  }, [isDesktop, isStatic, disableScroll]);
-
-  // Calculate transforms based on screen size and scroll
-  const getTransforms = () => {
-    if (!isDesktop) {
-      return "none";
-    }
-    // If scroll-based motion is disabled, only apply rotation for hover effect
-    if (disableScroll || isStatic) {
-      return `rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`;
-    }
-    // Simplified scroll-based translation calculation
-    const baseTranslate = isLargeDesktop ? 2500 : 1800;
-    const translateY = Math.max(baseTranslate - scrollY * 0.5, 0);
-    const clampedTranslateY = Math.min(translateY, 1000);
-    return `translateY(${clampedTranslateY}px) rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`;
   };
 
-  // Calculate gradient opacity
-  const gradientOpacity = scrollY > 100 ? Math.min((scrollY - 800) / 300, 1) : 1;
+  const handleMouseLeave = () => {
+    if (isMobile || isTablet) return;
+    setRotation({ x: 0, y: 0 });
+  };
+
+  const gradientOpacity =
+    scrollY > 100 ? Math.min((scrollY - 800) / 300, 1) : 1;
 
   return (
     <Box>
-      {/* Main Logo Container */}
       <Box
         display="flex"
         alignItems="center"
@@ -85,62 +63,60 @@ const Excollo3DCaseStudy = ({ isStatic = false, disableScroll = false }) => {
         position="relative"
         zIndex={2}
         sx={{
-          height: {
-            xs: "50vh", // Mobile
-            sm: "55vh", // Tablet
-            md: "60vh", // Desktop
-            lg: "65vh", // Large desktop
-          },
+          height: "60vh",
           width: "100%",
           overflow: "hidden",
-          // Dynamic margins based on screen size and static mode
-          mt: {
-            xs: isStatic ? 0 : -8,  // Mobile: -64px when not static
-            sm: isStatic ? 0 : -6,  // Tablet: -48px when not static
-            md: isStatic ? 0 : -4,  // Desktop: -32px when not static
-            lg: isStatic ? 0 : -2,  // Large desktop: -16px when not static
+          "@media (max-width: 899px)": {
+            width: "100%",
+            marginTop: "-5%",
           },
-          mb: {
-            xs: isStatic ? 0 : -8,  // Mobile: -64px when not static
-            sm: isStatic ? 0 : -6,  // Tablet: -48px when not static
-            md: 0,                  // Desktop: no bottom margin
+          "@media (max-width: 768px)": {
+            width: "100%",
+            margin: "-15% auto",
+          },
+          "@media (max-width: 480px)": {
+            width: "100%",
+            height: "400px",
+            margin: " -25% 0 -25%  0",
           },
         }}
       >
         <Box
           component="img"
           src={Logo}
-          alt="Excollo 3D Logo"
+          alt="Logo"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           sx={{
             height: "auto",
-            width: {
-              xs: "90%", // Mobile: 90% width
-              sm: "85%", // Tablet: 85% width
-              md: "80%", // Desktop: 80% width
-              lg: "75%", // Large desktop: 75% width
-              xl: "70%", // Extra large: 70% width
-            },
-            maxWidth: "800px", // Prevent logo from getting too large
-            transform: getTransforms(),
+            width: "80%",
+            transform:
+              isMobile || isTablet
+                ? "none"
+                : `rotateX(${rotation.y}deg) rotateY(${rotation.x}deg)`,
             transformStyle: "preserve-3d",
-            willChange: isDesktop && (!isStatic || disableScroll) ? "transform" : "auto",
-            transition: isDesktop && (!isStatic || disableScroll) ? "transform 0.2s ease-out" : "none",
-            cursor: isDesktop && (!isStatic || disableScroll) ? "pointer" : "default",
-            // Ensure good performance on mobile
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+            transition: "transform 0.2s ease-out",
+            "@media (max-width: 1200px)": {
+              width: "80%",
+            },
+            "@media (max-width: 768px)": {
+              width: "80%",
+            },
+            "@media (max-width: 480px)": {
+              width: "80%",
+            },
           }}
         />
       </Box>
-
-      {/* Gradient Animation Section - Desktop Only */}
-      {isDesktop && !isStatic && (
+      {/* Gradient Animation Section */}
+      {!isMobile && !isTablet && (
         <Box
           position="relative"
           zIndex={0}
           sx={{
+            left: 0,
+            right: 0,
             width: "100%",
             height: "0px",
             background: `radial-gradient(ellipse at bottom, rgba(196, 188, 213, ${gradientOpacity}) 0%, rgba(0, 0, 0, 0) 60%)`,
@@ -148,20 +124,17 @@ const Excollo3DCaseStudy = ({ isStatic = false, disableScroll = false }) => {
           }}
         />
       )}
-
-      {/* Divider - Desktop Only */}
-      {isDesktop && (
-        <Divider
-          sx={{
-            backgroundColor: "#000000",
-            height: "2px",
-            width: "100%",
-            position: "relative",
-          }}
-        />
-      )}
+      <Divider
+        sx={{
+          backgroundColor: "#000000",
+          height: "2px",
+          width: "100%",
+          position: "relative",
+          display: isMobile || isTablet ? "none" : "block",
+        }}
+      />
     </Box>
   );
 };
 
-export default Excollo3DCaseStudy;
+export default Excollo3D;
