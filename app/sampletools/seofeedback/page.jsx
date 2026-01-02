@@ -166,7 +166,7 @@ export default function SEOFeedback() {
         >
           Submit the website you want us to analyse along with your email. Our SEO workflow will
           run in the background and email you a PDF report in roughly ten minutes. Watch your inbox
-          for the download link—no need to stay on this page.
+          for the download link, No need to stay on this page.
         </Typography>
 
         <Box

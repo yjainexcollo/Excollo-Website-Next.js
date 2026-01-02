@@ -375,34 +375,36 @@ export default function ConsolidatedApp() {
               sx={{
                 flex: 1,
                 "& .MuiOutlinedInput-root": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1) !important",
+                  backgroundColor: "rgba(18, 18, 18, 0.8) !important",
                   borderRadius: "12px",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  border: "1px solid rgba(154, 106, 255, 0.3)",
                   color: "#fff",
                   fontSize: "16px",
                   "& fieldset": {
                     border: "none",
                   },
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1) !important",
+                    backgroundColor: "rgba(18, 18, 18, 0.9) !important",
+                    border: "1px solid rgba(154, 106, 255, 0.5)",
                   },
                   "&:hover fieldset": {
                     border: "none",
                   },
                   "&.Mui-focused": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1) !important",
-                  },
-                  "&.Mui-focused fieldset": {
+                    backgroundColor: "rgba(18, 18, 18, 0.95) !important",
                     border: "2px solid rgba(154, 106, 255, 0.8)",
                   },
+                  "&.Mui-focused fieldset": {
+                    border: "none",
+                  },
                   "&.MuiInputBase-root": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1) !important",
+                    backgroundColor: "rgba(18, 18, 18, 0.8) !important",
                   },
                   "& input": {
                     color: "#fff",
                     "&::placeholder": {
-                      color: "rgba(255, 255, 255, 0.6)",
-                  opacity: 1,
+                      color: "rgba(255, 255, 255, 0.5)",
+                      opacity: 1,
                     },
                   },
                 },
@@ -492,7 +494,7 @@ export default function ConsolidatedApp() {
 
         {/* Dashboard Content */}
         {webhookData && !isLoading && (
-          <Box sx={{ position: "relative", zIndex: 3, px: 4, py: 6 }}>
+          <Box sx={{ position: "relative", zIndex: 3, px: 4, py: 6, mx: { xs: 2, sm: 4, md: 6 } }}>
             {/* Market Overview - Main heading with subsections below */}
             <Box sx={{ mb: 6 }}>
               <Typography

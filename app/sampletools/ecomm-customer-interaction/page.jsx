@@ -480,14 +480,15 @@ export default function ECommCustomerInteraction() {
                   color: '#fff',
                   fontSize: { xs: 14, sm: 15 },
                   fontFamily: '"Inter", sans-serif',
-                  borderRadius: 2,
+                  borderRadius: 7,
                   background: 'rgba(255,255,255,0.05)',
                   '& .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'rgba(126, 34, 206, 0.3)',
                     borderWidth: 1
                   },
                   '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(126, 34, 206, 0.6)'
+                    borderColor: 'rgba(126, 34, 206, 0.6)',
+                    borderWidth: 1
                   },
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                     borderColor: '#7e22ce',
@@ -497,7 +498,8 @@ export default function ECommCustomerInteraction() {
                     color: 'rgba(255,255,255,0.5)',
                     background: 'rgba(255,255,255,0.02)',
                     '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'rgba(255,255,255,0.1)'
+                      borderColor: 'rgba(255,255,255,0.1)',
+                      borderWidth: 1
                     }
                   },
                   '& .MuiInputBase-input': {

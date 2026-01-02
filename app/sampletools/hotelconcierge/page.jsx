@@ -173,7 +173,7 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
             color: '#fff',
             fontSize: 15,
             fontFamily: '"Inter", sans-serif',
-            borderRadius: 2,
+            borderRadius: 7,
             background: 'rgba(255,255,255,0.05)',
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: 'rgba(255,255,255,0.2)',
