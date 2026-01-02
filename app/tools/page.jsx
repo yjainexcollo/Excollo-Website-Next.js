@@ -198,7 +198,7 @@ const SampleToolsPage = () => {
               color: 'transparent'
             }}>Tools</Box>
           </Typography>
-          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, fontFamily: '"Inter", sans-serif' }}>
+          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, marginTop: "2%", fontFamily: '"Inter", sans-serif' }}>
             let's create a universe of possibilities together!
           </Typography>
         </Box>
