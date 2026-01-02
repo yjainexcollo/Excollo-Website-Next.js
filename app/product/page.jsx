@@ -131,7 +131,6 @@ const ProductPage = () => {
             sx={{
               fontWeight: 800,
               fontSize: { xs: 32, sm: 40, md: 48, lg: 56 },
-              fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
               mb: { xs: 2, md: 3 },
               lineHeight: 1.2
             }}
