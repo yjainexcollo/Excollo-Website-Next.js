@@ -1,11 +1,7 @@
+/* Default spacing reset */
 * {
   margin: 0;
   padding: 0;
-}
-
-/* Hide cursor by default on all elements */
-* {
-  cursor: auto !important;
 }
 
 html,
@@ -96,7 +92,7 @@ a:hover:not(.custom-cursor-disable) {
 }
 
 [role="button"]:hover:not(.custom-cursor-disable) {
-  cursor: none !important;
+  cursor: pointer !important;
 }
 
 
@@ -118,13 +114,14 @@ button.MuiAccordionSummary-root * {
 }
 
 /* Override any interactive states */
+/* Override any interactive states */
 .MuiAccordion-root:hover,
 .MuiAccordion-root:active,
 .MuiAccordion-root:focus,
 .MuiAccordionSummary-root:hover,
 .MuiAccordionSummary-root:active,
 .MuiAccordionSummary-root:focus {
-  cursor: none !important;
+  cursor: pointer !important;
 }
 
 /* Target the List components with high specificity */
@@ -136,20 +133,20 @@ div[class*="MuiList-root"],
 div[class*="MuiListItem-root"],
 div[class*="MuiListItemIcon-root"],
 div[class*="MuiListItemText-root"] {
-  cursor: none !important;
+  cursor: auto !important;
 }
 
-/* Ensure buttons and clickable elements maintain functionality without pointer cursor */
+/* Ensure buttons and clickable elements maintain standard pointer cursor */
 button,
 [role="button"],
 a,
 .MuiButtonBase-root {
-  cursor: none !important;
+  cursor: pointer !important;
   pointer-events: auto !important;
 }
 
 /* Target any element with 'button' in its class name */
 [class*="button"],
 [class*="Button"] {
-  cursor: none !important;
+  cursor: pointer !important;
 }

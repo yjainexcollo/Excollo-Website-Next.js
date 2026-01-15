@@ -30,7 +30,7 @@ const AIToolCard = ({
         display: "flex",
         flexDirection: "column",
         minHeight: { xs: 260, sm: 280, md: 300 },
-        cursor: onClick ? "pointer" : "default",
+        cursor: "pointer",
         textAlign: "center",
         width: "100%",
         '&:hover': {

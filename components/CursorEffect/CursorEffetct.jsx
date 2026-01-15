@@ -160,15 +160,15 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
     document.body.addEventListener("mouseleave", handleMouseLeave);
     document.body.addEventListener("mouseenter", handleMouseEnter);
 
-    // Hide default cursor
-    document.body.style.cursor = "none";
+    // Hide default cursor - REMOVED to allow system cursor visibility
+    // document.body.style.cursor = "none";
 
     // Cleanup
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.body.removeEventListener("mouseleave", handleMouseLeave);
       document.body.removeEventListener("mouseenter", handleMouseEnter);
-      document.body.style.cursor = "auto";
+      // document.body.style.cursor = "auto";
     };
   }, []);
 
@@ -226,11 +226,9 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
       const innerTargetY = mouse.current.y + velocity.current.y * 0.5;
       cursorInner.current.x += (innerTargetX - cursorInner.current.x) * 0.2;
       cursorInner.current.y += (innerTargetY - cursorInner.current.y) * 0.2;
-      cursorOuterRef.current.style.transform = `translate3d(${
-        cursorOuter.current.x
-      }px, ${cursorOuter.current.y}px, 0) translate(-50%, -50%) ${
-        isPointer ? "rotate(45deg)" : ""
-      }`;
+      cursorOuterRef.current.style.transform = `translate3d(${cursorOuter.current.x
+        }px, ${cursorOuter.current.y}px, 0) translate(-50%, -50%) ${isPointer ? "rotate(45deg)" : ""
+        }`;
       cursorInnerRef.current.style.transform = `translate3d(${cursorInner.current.x}px, ${cursorInner.current.y}px, 0) translate(-50%, -50%)`;
       velocity.current.x *= 0.85;
       velocity.current.y *= 0.85;
@@ -251,9 +249,8 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
     >
       <CursorOuter
         ref={cursorOuterRef}
-        className={`${cursorType} ${isHovered ? "hovered" : ""} ${
-          isPointer ? "pointer" : "none"
-        }`}
+        className={`${cursorType} ${isHovered ? "hovered" : ""} ${isPointer ? "pointer" : "none"
+          }`}
         isIdle={isIdle}
         isPointer={isPointer}
         isHovered={isHovered}
@@ -299,7 +296,7 @@ const CustomCursor = ({ idleTimeout = 5000 }) => {
             isHovered || isPointer
               ? "white"
               : // : "linear-gradient(90deg, rgb(169, 63, 255) 0%, rgb(94, 129, 235) 100%)",
-                "transparent",
+              "transparent",
           transform: `scale(${isHovered || isPointer ? 1.2 : 1})`,
           // boxShadow:
           //   isHovered || isPointer

@@ -26,32 +26,51 @@ const TableGrid = styled("div")(({ theme }) => ({
   alignItems: "center",
   flexDirection: "column",
   boxSizing: "border-box",
+  padding: "0 16px",
+  gap: "16px",
   [theme.breakpoints.up("xs")]: {
-    width: "70%",
+    width: "100%",
     margin: "auto",
-    maxWidth: "90%",
+    maxWidth: "100%",
+    padding: "0 20px",
+    gap: "16px",
   },
   [theme.breakpoints.up("sm")]: {
-    width: "80%",
-    maxWidth: "90%",
+    width: "100%",
+    maxWidth: "100%",
+    padding: "0 32px",
+    gap: "20px",
   },
   [theme.breakpoints.up("md")]: {
     flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
     alignItems: "stretch",
-    width: "fit-content",
-    maxWidth: "1300px",
+    width: "100%",
+    maxWidth: "100%",
     margin: "0 auto",
+    padding: "0 40px",
+    gap: 0,
+  },
+  [theme.breakpoints.up("lg")]: {
+    maxWidth: "100%",
+    padding: "0 60px",
+    gap: 0,
+  },
+  [theme.breakpoints.up("xl")]: {
+    maxWidth: "100%",
+    padding: "0 80px",
+    gap: 0,
   },
 }));
 
 const TableContent = styled("div")(({ theme }) => ({
-  flex: "1 1",
-  margin: "0 0",
-  padding: "10px",
-  minHeight: 360,
-  height: "auto",
+  flex: "1 1 auto",
+  margin: "0",
+  padding: "24px 20px",
+  minHeight: 300,
+  width: "100%",
+  maxWidth: "100%",
   opacity: 1,
   transform: "none",
   visibility: "visible",
@@ -61,29 +80,34 @@ const TableContent = styled("div")(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "flex-start",
-  marginBottom: "20px",
   borderRadius: "20px",
   background: "linear-gradient(180deg, #05000A 0%, #1B1125 100%)",
   color: "#fff",
-  marginX: "8px",
   border: "2px solid rgba(255, 255, 255, 0.1)",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   boxSizing: "border-box",
   overflowWrap: "anywhere",
   wordBreak: "break-word",
+  [theme.breakpoints.up("xs")]: {
+    padding: "28px 24px",
+    minHeight: 320,
+  },
+  [theme.breakpoints.up("sm")]: {
+    padding: "32px 28px",
+    minHeight: 340,
+  },
   [theme.breakpoints.up("md")]: {
     flex: "1 1 0%",
     minWidth: "200px",
-    maxWidth: "280px",
-    minHeight: "clamp(400px, 50vh, 600px)",
+    maxWidth: "none",
+    minHeight: "clamp(300px, 35vh, 400px)",
     opacity: 0,
     transform: "translateY(100%)",
     visibility: "hidden",
-    marginBottom: 0,
     borderRadius: 0,
-    padding: "clamp(16px, 1.5vw, 24px) clamp(12px, 1vw, 20px)",
+    padding: "clamp(20px, 2vw, 32px) clamp(24px, 2vw, 36px)",
     background: "transparent",
-    margin: 0,
+    border: "1px solid #7E22CE",
     borderLeft: "none",
     "&:first-of-type": {
       borderLeft: "1px solid #7E22CE",
@@ -91,37 +115,13 @@ const TableContent = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.up("lg")]: {
     minWidth: "220px",
-    maxWidth: "300px",
-    minHeight: "clamp(450px, 50vh, 650px)",
-    opacity: 0,
-    transform: "translateY(100%)",
-    visibility: "hidden",
-    marginBottom: 0,
-    padding: "clamp(20px, 1.8vw, 28px) clamp(16px, 1.2vw, 24px)",
-    borderRadius: 0,
-    background: "transparent",
-    margin: 0,
-    borderLeft: "none",
-    "&:first-of-type": {
-      borderLeft: "1px solid #7E22CE",
-    },
+    minHeight: "clamp(320px, 35vh, 420px)",
+    padding: "clamp(24px, 2.2vw, 36px) clamp(28px, 2.2vw, 40px)",
   },
   [theme.breakpoints.up("xl")]: {
     minWidth: "240px",
-    maxWidth: "320px",
-    minHeight: "clamp(500px, 50vh, 700px)",
-    opacity: 0,
-    transform: "translateY(100%)",
-    visibility: "hidden",
-    marginBottom: 0,
-    padding: "clamp(24px, 2vw, 32px) clamp(20px, 1.5vw, 28px)",
-    borderRadius: 0,
-    background: "transparent",
-    margin: 0,
-    borderLeft: "none",
-    "&:first-of-type": {
-      borderLeft: "1px solid #7E22CE",
-    },
+    minHeight: "clamp(340px, 35vh, 450px)",
+    padding: "clamp(28px, 2.5vw, 40px) clamp(32px, 2.5vw, 44px)",
   },
 
   "&:hover": {
@@ -133,24 +133,29 @@ const TableContent = styled("div")(({ theme }) => ({
   "& h3": {
     fontFamily: "Inter, sans-serif",
     fontWeight: 500,
-    lineHeight: "37.5px",
-    margin: "10px auto",
+    lineHeight: 1.3,
+    margin: "0 auto 12px auto",
     color: "#FFFFFF",
     textAlign: "center",
-    fontSize: "1rem",
+    fontSize: "1.5rem",
     overflowWrap: "anywhere",
     wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
-      fontSize: "clamp(1.35rem, calc(0.5rem + 1vw), 9rem)",
+      fontSize: "1.75rem",
+      marginBottom: "16px",
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "2rem",
     },
     [theme.breakpoints.up("md")]: {
-      fontSize: "clamp(0.25rem, calc(1rem + 2vw), 1.7rem)",
+      fontSize: "clamp(1.2rem, calc(0.8rem + 1vw), 1.7rem)",
+      marginBottom: "10px",
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "clamp(0.25rem, calc(1.2rem + 4vw), 2.5rem)",
+      fontSize: "clamp(1.4rem, calc(1rem + 1.2vw), 2rem)",
     },
     [theme.breakpoints.up("xl")]: {
-      fontSize: "clamp(0.25rem, calc(1.4rem + 6vw), 3.3rem)",
+      fontSize: "clamp(1.6rem, calc(1.2rem + 1.5vw), 2.5rem)",
     },
   },
 
@@ -158,23 +163,28 @@ const TableContent = styled("div")(({ theme }) => ({
     fontFamily: "Inter, sans-serif",
     fontWeight: 300,
     color: "#9EA4AA",
-    margin: "10px",
-    lineHeight: 1.6,
+    margin: "0",
+    lineHeight: 1.5,
     textAlign: "center",
-    fontSize: "1rem",
+    fontSize: "0.95rem",
     overflowWrap: "anywhere",
     wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
-      fontSize: "clamp(0.8rem, calc(0.5rem + 1vw), 9rem)",
+      fontSize: "1rem",
+      lineHeight: 1.6,
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.05rem",
     },
     [theme.breakpoints.up("md")]: {
-      fontSize: "clamp(0.5rem, calc(0.6rem + 0.7vw), 1.3rem)",
+      fontSize: "clamp(0.75rem, calc(0.6rem + 0.5vw), 1rem)",
+      lineHeight: 1.4,
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "clamp(0.5rem, calc(0.5rem + 0.9vw), 1.5rem)",
+      fontSize: "clamp(0.85rem, calc(0.7rem + 0.6vw), 1.15rem)",
     },
     [theme.breakpoints.up("xl")]: {
-      fontSize: "clamp(0.5rem, calc(0.5rem + 1vw), 2.1rem)",
+      fontSize: "clamp(0.95rem, calc(0.8rem + 0.7vw), 1.3rem)",
     },
   },
 }));
@@ -186,7 +196,7 @@ const HowWeWork = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    
+
     const isDesktop = window.innerWidth >= 900;
     if (!isDesktop) return;
 
@@ -304,6 +314,8 @@ const HowWeWork = () => {
               key={index}
               sx={{
                 width: { xs: "100%", md: "auto" },
+                display: { md: "flex" },
+                flex: { md: "1 1 0px" },
                 position: "relative",
                 perspective: "1000px",
                 boxSizing: "border-box",
@@ -324,7 +336,7 @@ const HowWeWork = () => {
                     padding: { xs: "16px", md: 0 },
                   }}
                 >
-                  <Box sx={{ margin: { xs: "0", md: "10% 0" } }}>
+                  <Box sx={{ margin: { xs: "0", md: "0.5rem 0" } }}>
                     <Typography variant="h3">{step.title}</Typography>
                   </Box>
                   <Typography variant="body1">{step.content}</Typography>

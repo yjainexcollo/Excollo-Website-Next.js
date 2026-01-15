@@ -472,8 +472,8 @@ export default function ECommCustomerInteraction() {
               size="medium"
               variant="outlined"
               disabled={isLoading}
-              autoFocus
               multiline
+              rows={1}
               maxRows={3}
               InputProps={{
                 sx: {
@@ -481,6 +481,10 @@ export default function ECommCustomerInteraction() {
                   fontSize: { xs: 14, sm: 15 },
                   fontFamily: '"Inter", sans-serif',
                   borderRadius: 7,
+                  minHeight: { xs: 40, sm: 48 }, // Match button height
+                  padding: '8px 14px', // Add vertical padding for multiline growth
+                  alignItems: 'center', // Center vertically for single line
+                  display: 'flex',
                   background: 'rgba(255,255,255,0.05)',
                   '& .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'rgba(126, 34, 206, 0.3)',
@@ -503,8 +507,9 @@ export default function ECommCustomerInteraction() {
                     }
                   },
                   '& .MuiInputBase-input': {
-                    py: { xs: 1, sm: 1.5 },
                     fontSize: { xs: 14, sm: 15 },
+                    lineHeight: 1.5,
+                    padding: '8px 0',
                     '&::placeholder': {
                       color: 'rgba(255,255,255,0.5)',
                       opacity: 1
