@@ -11,6 +11,7 @@ import {
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -395,39 +396,24 @@ const HeroPageSection4 = ({ onComplete }) => {
     return "4rem"; // Default
   };
 
-  const initializeGSAPAnimations = () => {
-    if (typeof window === 'undefined' || isMobile || isTablet || prefersReducedMotion) return;
-
-    // Cleanup any existing triggers first
-    if (titlePinTriggerRef.current) {
-      titlePinTriggerRef.current.kill();
-      titlePinTriggerRef.current = null;
-    }
-    if (mainCardTriggerRef.current) {
-      mainCardTriggerRef.current.kill();
-      mainCardTriggerRef.current = null;
+  useGSAP(() => {
+    if (typeof window === 'undefined' || isMobile || isTablet || prefersReducedMotion) {
+      // Fallback: Ensure side cards are visible if animation is skipped
+      gsap.set(".side-cards-container", { opacity: 1, x: 0 });
+      gsap.set(".main-card", {
+        width: `${getMainCardStartWidth() - getMainCardShrinkAmount()}%`
+      });
+      return;
     }
 
-    // Set will-change for better performance
-    gsap.set(".side-cards-container, .main-card", {
-      willChange: "transform, opacity",
-    });
-
+    // Explicitly set initial state to ensure consistency across re-renders
     gsap.set(".side-cards-container", {
       opacity: 0,
       display: "block",
       x: (index) => (index === 0 ? -100 : 100),
     });
 
-    // NOTE:
-    // We intentionally avoid pinning the title separately here.
-    // Pinning ".title-section" caused Safari to position the heading
-    // relative to the viewport's left edge instead of the centered container,
-    // making the entire section appear shifted to the left in Safari.
-    // The main ScrollTrigger below (pin: true) already pins the whole section,
-    // including the title, so we only need this single trigger.
-
-    mainCardTriggerRef.current = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: ".hero-page-section-4",
       start: "center 55%",
       end: "center 55%",
@@ -523,30 +509,23 @@ const HeroPageSection4 = ({ onComplete }) => {
         }
       },
     });
-  };
-
-  useEffect(() => {
-    if (sectionRef.current) {
-      initializeGSAPAnimations();
-    }
-    return () => {
-      // Cleanup ScrollTriggers in reverse order: kill triggers first, then restore DOM
-      // This prevents React from trying to remove nodes that GSAP has moved
-      if (mainCardTriggerRef.current) {
-        mainCardTriggerRef.current.kill();
-        mainCardTriggerRef.current = null;
-      }
-      if (titlePinTriggerRef.current) {
-        titlePinTriggerRef.current.kill();
-        titlePinTriggerRef.current = null;
-      }
-      
-      // Small delay to ensure DOM is restored before React unmounts
-      setTimeout(() => {
-        gsap.set(".side-cards-container, .main-card", { willChange: "auto" });
-      }, 0);
-    };
-  }, [onComplete, isMobile, isTablet, prefersReducedMotion, viewportWidth, key, isSmallDesktop, isLaptop13, isLaptop14, isLaptop15, isLargeDesktop, isXtraLargeDesktop, isUltraWide]);
+  }, {
+    scope: sectionRef,
+    dependencies: [
+      isMobile, 
+      isTablet, 
+      prefersReducedMotion, 
+      viewportWidth, 
+      key, 
+      isSmallDesktop, 
+      isLaptop13, 
+      isLaptop14, 
+      isLaptop15, 
+      isLargeDesktop, 
+      isXtraLargeDesktop, 
+      isUltraWide
+    ]
+  });
 
   if (isMobile || isTablet) {
     return (
@@ -749,7 +728,7 @@ const HeroPageSection4 = ({ onComplete }) => {
             top: {
               xs: "10px",
               sm: "15px",
-              md: "20px",
+              md: "40px",
             },
           }}
         >
@@ -796,7 +775,7 @@ const HeroPageSection4 = ({ onComplete }) => {
           padding: {
             xs: "2rem 0",
             sm: "3rem 0",
-            md: "0",
+            md: "2rem 0",
           },
           flexWrap: {
             xs: "wrap",
