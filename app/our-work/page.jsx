@@ -16,7 +16,7 @@ import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
 import Excollo3DCaseStudy from "@/components/AboutUs/Excollo3DCaseStudy";
 // Import WhatsApp icon for contact button
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 // Images from public directory
 const image1 = "/OurWork/MrCoconut.png";
@@ -98,9 +98,8 @@ const caseStudies = [
  * @param {boolean} isMobile - Whether in mobile view
  * @returns {JSX.Element} Case study card component
  */
-const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onClick, isMobile = false }) => {
-  // State for mobile overlay visibility
-  const [showMobileOverlay, setShowMobileOverlay] = React.useState(false);
+const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onClick, isMobile = false, isOpen = false, onToggle }) => {
+  const showMobileOverlay = isOpen;
   return (
     <Box onClick={onClick} sx={{
       position: 'relative',
@@ -117,22 +116,25 @@ const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onCl
         transform: 'translateY(-8px) scale(1.02)',
         boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
         '& .overlay': {
-          opacity: 1,
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%)'
+          opacity: isMobile ? (showMobileOverlay || isMainCard ? 1 : 0) : 1,
+          background: !isMobile ? 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%)' : undefined
         },
         '& .content': {
-          opacity: 1,
+          opacity: isMobile ? (showMobileOverlay || isMainCard ? 1 : 0) : 1,
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center'
         },
-        '& .cta': { opacity: 1, transform: 'translateY(0)' }
+        '& .cta': {
+          opacity: isMobile ? (showMobileOverlay ? 1 : 0) : 1,
+          transform: isMobile ? (showMobileOverlay ? 'translateY(0)' : undefined) : 'translateY(0)'
+        }
       }
     }}>
       {/* Mobile toggle button to reveal overlay/content */}
       <IconButton
         aria-label="Toggle details"
-        onClick={(e) => { e.stopPropagation(); setShowMobileOverlay(!showMobileOverlay); }}
+        onClick={(e) => { e.stopPropagation(); onToggle && onToggle(); }}
         sx={{
           position: 'absolute',
           top: 10,
@@ -156,7 +158,9 @@ const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onCl
       <Box className="overlay" sx={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
+        background: (isMainCard || (isMobile && showMobileOverlay))
+          ? 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%)'
+          : 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)',
         opacity: isMainCard ? 1 : (isMobile && showMobileOverlay ? 1 : 0),
         transition: 'all 0.4s ease'
       }} />
@@ -166,7 +170,8 @@ const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onCl
         p: 3,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: (isMobile && showMobileOverlay) ? 'center' : 'space-between',
+        alignItems: (isMobile && showMobileOverlay) ? 'center' : 'stretch',
         opacity: isMainCard ? 1 : (isMobile && showMobileOverlay ? 1 : 0),
         transition: 'all 0.4s ease'
       }}>
@@ -191,6 +196,7 @@ const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onCl
           <Typography sx={{
             mt: 1,
             fontSize: { xs: 11, md: 12 },
+            fontWeight: 400,
             color: 'rgba(255,255,255,0.85)',
             maxWidth: 560,
             mx: 'auto',
@@ -212,16 +218,17 @@ const CaseStudyCard = ({ caseStudy, isMainCard = false, fillHeight = false, onCl
           display: 'inline-flex',
           alignItems: 'center',
           gap: 1,
-          opacity: 0,
-          transform: 'translateY(6px)',
+          opacity: (isMobile && showMobileOverlay) ? 1 : 0,
+          transform: (isMobile && showMobileOverlay) ? 'translateY(0)' : 'translateY(6px)',
           transition: 'all 0.3s ease'
         }}>
-          <Typography sx={{ fontSize: { xs: 11, md: 12 } }}>Read case study</Typography>
+          <Typography sx={{ fontSize: { xs: 11, md: 12 }, fontWeight: 600 }}>Read case study</Typography>
           <ArrowForwardIcon sx={{ fontSize: { xs: 16, md: 18 } }} />
         </Box>
       </Box>
     </Box>
-)};
+  )
+};
 
 /**
  * OurWorkPage Component
@@ -234,11 +241,17 @@ const OurWorkPage = () => {
   const router = useRouter();
   // Material-UI theme and responsive breakpoints
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   // Ref for 3D element interaction
   const ex3dTiltRef = useRef(null);
   // State for WhatsApp button visibility based on scroll
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
+  // State for managing active card overlay on mobile
+  const [activeCardId, setActiveCardId] = useState(null);
+
+  const handleCardToggle = (id) => {
+    setActiveCardId((prev) => (prev === id ? null : id));
+  };
 
   // 3D mouse interaction handlers
   const handle3DMouseMove = useCallback((e) => {
@@ -270,26 +283,7 @@ const OurWorkPage = () => {
     });
   }, []);
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <Box sx={{ minHeight: "100vh", background: "#000", color: "#fff", position: 'relative' }}>
@@ -335,7 +329,18 @@ const OurWorkPage = () => {
               }}>Work</Box>
             </Typography>
           </Box>
-          <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: { xs: 14, md: 16 }, maxWidth: 920, mx: 'auto', lineHeight: 1.6 }}>
+          <Typography sx={{
+            color: 'rgba(255,255,255,0.8)',
+            fontSize: {
+              xs: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              md: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
+              xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
+            },
+            maxWidth: 920,
+            mx: 'auto',
+            lineHeight: 1.6
+          }}>
             At Excollo, we transform ideas into impact by building intelligent AI solutions tailored for real-world challenges. Our case studies showcase how we collaborate with forward-thinking brands to automate workflows, enhance customer experiences, and unlock new growth opportunities. From conversational commerce to enterprise support systems, every project reflects our commitment to innovation, scalability, and measurable results.
           </Typography>
         </Box>
@@ -360,21 +365,46 @@ const OurWorkPage = () => {
             gridRow: { xs: '1', md: '1 / 3' },
             height: { xs: 220, md: '100%' }
           }}>
-            <CaseStudyCard caseStudy={caseStudies[0]} fillHeight onClick={() => { router.push('/case-study/mr-coconut'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+            <CaseStudyCard
+              isMobile={isMobile}
+              caseStudy={caseStudies[0]}
+              fillHeight
+              isOpen={activeCardId === caseStudies[0].id}
+              onToggle={() => handleCardToggle(caseStudies[0].id)}
+              onClick={() => { router.push('/case-study/mr-coconut'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+            />
           </Box>
 
           {/* First row - 2 images on right */}
           <Box sx={{ gridColumn: { xs: '1', md: '2' }, gridRow: { xs: '2', md: '1' } }}>
-            <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[1]} onClick={() => { router.push('/case-study/content-cubicle'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+            <CaseStudyCard
+              isMobile={isMobile}
+              caseStudy={caseStudies[1]}
+              isOpen={activeCardId === caseStudies[1].id}
+              onToggle={() => handleCardToggle(caseStudies[1].id)}
+              onClick={() => { router.push('/case-study/content-cubicle'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+            />
           </Box>
 
           <Box sx={{ gridColumn: { xs: '1', md: '3' }, gridRow: { xs: '3', md: '1' } }}>
-            <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[2]} onClick={() => { router.push('/case-study/swil-support-bot'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+            <CaseStudyCard
+              isMobile={isMobile}
+              caseStudy={caseStudies[2]}
+              isOpen={activeCardId === caseStudies[2].id}
+              onToggle={() => handleCardToggle(caseStudies[2].id)}
+              onClick={() => { router.push('/case-study/swil-support-bot'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+            />
           </Box>
 
           {/* Second row - 1 image on right (tall image continues on left) */}
           <Box sx={{ gridColumn: { xs: '1', md: '2 / 4' }, gridRow: { xs: '4', md: '2' } }}>
-            <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[3]} onClick={() => { router.push('/case-study/insightiq'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+            <CaseStudyCard
+              isMobile={isMobile}
+              caseStudy={caseStudies[3]}
+              isOpen={activeCardId === caseStudies[3].id}
+              onToggle={() => handleCardToggle(caseStudies[3].id)}
+              onClick={() => { router.push('/case-study/insightiq'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+            />
           </Box>
 
           {/* Third row - 3 images covering full width */}
@@ -388,13 +418,31 @@ const OurWorkPage = () => {
               gap: { xs: 2, md: 3 }
             }}>
               <Box>
-                <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[4]} onClick={() => { router.push('/case-study/swil-internal-knowledge-bot'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+                <CaseStudyCard
+                  isMobile={isMobile}
+                  caseStudy={caseStudies[4]}
+                  isOpen={activeCardId === caseStudies[4].id}
+                  onToggle={() => handleCardToggle(caseStudies[4].id)}
+                  onClick={() => { router.push('/case-study/swil-internal-knowledge-bot'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+                />
               </Box>
               <Box>
-                <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[5]} onClick={() => { router.push('/case-study/phyllo'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+                <CaseStudyCard
+                  isMobile={isMobile}
+                  caseStudy={caseStudies[5]}
+                  isOpen={activeCardId === caseStudies[5].id}
+                  onToggle={() => handleCardToggle(caseStudies[5].id)}
+                  onClick={() => { router.push('/case-study/phyllo'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+                />
               </Box>
               <Box>
-                <CaseStudyCard isMobile={isMobile} caseStudy={caseStudies[6]} onClick={() => { router.push('/case-study/pdf-summarizer'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }} />
+                <CaseStudyCard
+                  isMobile={isMobile}
+                  caseStudy={caseStudies[6]}
+                  isOpen={activeCardId === caseStudies[6].id}
+                  onToggle={() => handleCardToggle(caseStudies[6].id)}
+                  onClick={() => { router.push('/case-study/pdf-summarizer'); setTimeout(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, 0); }}
+                />
               </Box>
             </Box>
           </Box>
@@ -410,7 +458,7 @@ const OurWorkPage = () => {
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
           sx={{
-            mt: { xs: -16, md: 0 },
+            mt: { xs: 0, md: 0 },
             position: 'relative',
             zIndex: 4,
             background: '#000',
@@ -423,27 +471,7 @@ const OurWorkPage = () => {
 
       <Footer />
 
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
     </Box>
   );
 };

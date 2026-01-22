@@ -137,8 +137,12 @@ const HeroPageSection1 = ({ animationComplete }) => {
         },
         position: "relative",
         minHeight: {
-          xs: "60vh",
+          xs: "auto",
           md: "60vh",
+        },
+        paddingBottom: {
+          xs: "2rem",
+          md: "0",
         },
         zIndex: 2,
         marginTop: {
@@ -245,7 +249,7 @@ const HeroPageSection1 = ({ animationComplete }) => {
               sm: `clamp(0.9rem, 3vw, 1.2rem)`,
               md: getDescriptionFontSize(),
             },
-            fontWeight: 200,
+            fontWeight: 400,
             lineHeight: 1.7,
             marginLeft: isTabletOrMobile ? 0 : "1%",
             mb: {
@@ -271,10 +275,12 @@ const HeroPageSection1 = ({ animationComplete }) => {
             component="a"
             href="/contact"
             sx={{
-              display: "inline-block",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
               color: "#ffffff",
               textDecoration: "none",
-              fontWeight: 100,
+              fontWeight: 400,
               fontSize: {
                 xs: `clamp(0.75rem, calc(0.5rem + 0.8vw), 1.2rem)`,
                 md: getButtonFontSize(),

@@ -69,14 +69,14 @@ const HeroPageSection5 = () => {
   // GSAP Animation Logic
   useEffect(() => {
     if (typeof window === "undefined" || prefersReducedMotion) return;
-    
+
     const initializeAnimations = () => {
       if (isDesktop && cardRefs.current.length > 0) {
         cardRefs.current.forEach((card, index) => {
           if (card) {
             // Set will-change for better performance
             gsap.set(card, { willChange: "transform, opacity" });
-            
+
             gsap.fromTo(
               card,
               { x: "70%", opacity: 0 },
@@ -120,6 +120,35 @@ const HeroPageSection5 = () => {
     };
   }, [isDesktop, prefersReducedMotion]);
 
+  // Helper functions matching other sections
+  const getContainerWidth = () => {
+    if (isSmallDesktop) return "90%";
+    if (isLaptop13) return "90%";
+    if (isLaptop14) return "90%";
+    if (isLaptop15) return "90%";
+    if (isLargeDesktop) return "90%";
+    if (isXtraLargeDesktop) return "90%";
+    if (isUltraWide) return "90%";
+    return "90%"; // Default fallback
+  };
+
+  const getContainerMaxWidth = () => {
+    if (isXtraLargeDesktop) return "1920px";
+    if (isUltraWide) return "2400px";
+    return "none";
+  };
+
+  const getPadding = () => {
+    if (isSmallDesktop) return "3rem";
+    if (isLaptop13) return "3.5rem";
+    if (isLaptop14) return "3.75rem";
+    if (isLaptop15) return "4rem";
+    if (isLargeDesktop) return "4rem";
+    if (isXtraLargeDesktop) return "4rem";
+    if (isUltraWide) return "5rem";
+    return "4rem"; // Default
+  };
+
   return (
     <Box
       ref={sectionRef}
@@ -129,6 +158,23 @@ const HeroPageSection5 = () => {
         fontFamily: '"Inter", sans-serif',
         position: "relative",
         bgcolor: "#000",
+        marginTop: { xs: "0", sm: "4rem", md: "0" },
+        width: {
+          xs: "100%",
+          sm: "92%",
+          md: getContainerWidth(),
+        },
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: getContainerMaxWidth(),
+        },
+        margin: "0 auto",
+        padding: {
+          xs: "0",
+          sm: "2rem",
+          md: getPadding(),
+        },
       }}
     >
       {/* Background gradient */}

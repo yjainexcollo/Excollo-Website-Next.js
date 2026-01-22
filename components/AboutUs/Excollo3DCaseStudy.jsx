@@ -68,16 +68,20 @@ const Excollo3D = () => {
           overflow: "hidden",
           "@media (max-width: 899px)": {
             width: "100%",
-            marginTop: "-5%",
+            height: "auto",
+            padding: "50px 0",
+            marginTop: "0",
           },
           "@media (max-width: 768px)": {
             width: "100%",
-            margin: "-15% auto",
+            height: "auto",
+            padding: "40px 0",
+            margin: "0 auto",
           },
           "@media (max-width: 480px)": {
             width: "100%",
-            height: "400px",
-            margin: " -25% 0 -25%  0",
+            height: "auto",
+            margin: "0 auto",
           },
         }}
       >
@@ -101,7 +105,7 @@ const Excollo3D = () => {
               width: "80%",
             },
             "@media (max-width: 768px)": {
-              width: "80%",
+              width: "70%",
             },
             "@media (max-width: 480px)": {
               width: "80%",

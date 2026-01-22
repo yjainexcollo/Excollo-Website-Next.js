@@ -16,7 +16,7 @@ import { Container, Typography, Box, Card, CardContent, Button, Fade, IconButton
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 // Import WhatsApp icon for contact button
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 /**
  * PotentialToolsPage Component
@@ -42,7 +42,7 @@ const PotentialToolsPage = () => {
         id: 2,
         icon: "🛍️",
         title: "Retail AI Suite",
-        description:"An all-in-one toolkit that helps retailers boost visibility, streamline operations, and enhance shopping experiences. By connecting catalogs, sales data, and support logs, it powers SEO, instant support, and smart product search. With built-in tools like an SEO Optimizer, Support Bot, Semantic Search, and Analytics Dashboard, retail teams can refine strategy, personalize recommendations, and drive measurable growth.",
+        description: "An all-in-one toolkit that helps retailers boost visibility, streamline operations, and enhance shopping experiences. By connecting catalogs, sales data, and support logs, it powers SEO, instant support, and smart product search. With built-in tools like an SEO Optimizer, Support Bot, Semantic Search, and Analytics Dashboard, retail teams can refine strategy, personalize recommendations, and drive measurable growth.",
         IdealFor: "E-commerce brands, retail chains, marketplaces, D2C businesses",
         buttonText: "Contact Us"
       },
@@ -50,7 +50,7 @@ const PotentialToolsPage = () => {
         id: 3,
         icon: "🔍",
         title: "Brand Discovery AI",
-        description:"Turns raw brand details into actionable strategy. By filling out a simple form or chat with essentials like name, audience, and goals, teams instantly receive a structured report with insights on messaging, positioning, and growth opportunities. From competitor analysis to creative briefs, it streamlines discovery and sets a strong foundation for campaigns.",
+        description: "Turns raw brand details into actionable strategy. By filling out a simple form or chat with essentials like name, audience, and goals, teams instantly receive a structured report with insights on messaging, positioning, and growth opportunities. From competitor analysis to creative briefs, it streamlines discovery and sets a strong foundation for campaigns.",
         IdealFor: "Agencies, marketing firms, startups, brand strategy teams",
         buttonText: "Contact Us"
       },
@@ -59,7 +59,7 @@ const PotentialToolsPage = () => {
         icon: "🛡️",
         title: "Insurance Bot",
         description:
-        "Delivers instant, reliable help for policyholders while easing call center load. Customers can ask about claims, renewals, or policy details and get secure, step-by-step answers in seconds. With support for claims management, onboarding, reminders, and multilingual queries, service becomes faster, simpler, and more accessible.",
+          "Delivers instant, reliable help for policyholders while easing call center load. Customers can ask about claims, renewals, or policy details and get secure, step-by-step answers in seconds. With support for claims management, onboarding, reminders, and multilingual queries, service becomes faster, simpler, and more accessible.",
         IdealFor: "Insurance providers, policy aggregators, financial service firms",
         buttonText: "Contact Us"
       },
@@ -67,7 +67,7 @@ const PotentialToolsPage = () => {
         id: 5,
         icon: "📊",
         title: "FinNewsDashboard",
-        description:"Aggregates and summarizes financial news with actionable insights, helping you stay informed about market trends and investment opportunities.",
+        description: "Aggregates and summarizes financial news with actionable insights, helping you stay informed about market trends and investment opportunities.",
         IdealFor: "Insurance providers, policy aggregators, financial service firms",
         buttonText: "Contact Us"
       },
@@ -83,7 +83,7 @@ const PotentialToolsPage = () => {
         id: 7,
         icon: "🔒",
         title: "Compliance Checker",
-        description:"Helps organizations ensure documents, policies, and communications meet compliance standards without manual effort. By analyzing contracts or reports, it flags missing disclaimers, risky language, and inconsistencies against regulatory frameworks — reducing risk and saving hours of review.",        
+        description: "Helps organizations ensure documents, policies, and communications meet compliance standards without manual effort. By analyzing contracts or reports, it flags missing disclaimers, risky language, and inconsistencies against regulatory frameworks — reducing risk and saving hours of review.",
         IdealFor: "Financial institutions, insurers, healthcare, legal teams, enterprises",
         buttonText: "Contact Us"
       },
@@ -91,7 +91,7 @@ const PotentialToolsPage = () => {
         id: 8,
         icon: "📄",
         title: "Cross Document Comparison",
-        description:"Simplifies tracking changes across multiple versions of critical documents. Upload drafts and the tool automatically highlights edits, additions, and inconsistencies — from numbers in statements to clauses in contracts — ensuring no change is missed.",
+        description: "Simplifies tracking changes across multiple versions of critical documents. Upload drafts and the tool automatically highlights edits, additions, and inconsistencies — from numbers in statements to clauses in contracts — ensuring no change is missed.",
         IdealFor: "Law firms, financial analysts, regulators, auditors, insurers, compliance teams",
         buttonText: "Contact Us"
       },
@@ -106,9 +106,9 @@ const PotentialToolsPage = () => {
   const autoAdvanceRef = useRef(null);
   const isUserControlledRef = useRef(false);
   const ex3dTiltRef = useRef(null);
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
   const wheelThrottleRef = useRef(false);
-  
+
   // Touch/Swipe handling refs
   const touchStartRef = useRef({ x: 0, y: 0 });
   const touchEndRef = useRef({ x: 0, y: 0 });
@@ -126,10 +126,10 @@ const PotentialToolsPage = () => {
   const updateCardsPosition = useCallback((currentIndex, immediate = false) => {
     const cards = cardsRef.current.filter(Boolean);
     const duration = immediate ? 0 : 0.8;
-    
+
     cards.forEach((card, index) => {
       const position = getCardPosition(index, currentIndex, cards.length);
-      
+
       // Calculate the shortest path for smooth wrapping
       let diff = index - currentIndex;
       if (diff > cards.length / 2) {
@@ -137,7 +137,7 @@ const PotentialToolsPage = () => {
       } else if (diff < -cards.length / 2) {
         diff += cards.length;
       }
-      
+
       switch (position) {
         case 'prev':
           gsap.to(card, {
@@ -181,7 +181,7 @@ const PotentialToolsPage = () => {
           } else {
             hiddenX = diff > 0 ? '120%' : '-120%';
           }
-          
+
           gsap.to(card, {
             x: hiddenX,
             scale: 0.6,
@@ -199,7 +199,7 @@ const PotentialToolsPage = () => {
     if (autoAdvanceRef.current) {
       clearInterval(autoAdvanceRef.current);
     }
-    
+
     autoAdvanceRef.current = setInterval(() => {
       if (!isUserControlledRef.current) {
         const cards = cardsRef.current.filter(Boolean);
@@ -242,7 +242,7 @@ const PotentialToolsPage = () => {
       y: touch.clientY
     };
     isSwiping.current = false;
-    
+
     // Stop auto-advance when user starts interacting
     isUserControlledRef.current = true;
     stopAutoAdvance();
@@ -250,11 +250,11 @@ const PotentialToolsPage = () => {
 
   const handleTouchMove = useCallback((e) => {
     if (!touchStartRef.current.x) return;
-    
+
     const touch = e.touches[0];
     const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
     const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
-    
+
     // If horizontal movement is greater than vertical, it's a swipe
     if (deltaX > deltaY && deltaX > 10) {
       isSwiping.current = true;
@@ -264,7 +264,7 @@ const PotentialToolsPage = () => {
 
   const handleTouchEnd = useCallback((e) => {
     if (!isSwiping.current || !touchStartRef.current.x) return;
-    
+
     const touch = e.changedTouches[0];
     touchEndRef.current = {
       x: touch.clientX,
@@ -273,7 +273,7 @@ const PotentialToolsPage = () => {
 
     const deltaX = touchStartRef.current.x - touchEndRef.current.x;
     const deltaY = Math.abs(touchStartRef.current.y - touchEndRef.current.y);
-    
+
     // Minimum swipe distance and ensure it's more horizontal than vertical
     if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
       if (deltaX > 0) {
@@ -289,7 +289,7 @@ const PotentialToolsPage = () => {
     touchStartRef.current = { x: 0, y: 0 };
     touchEndRef.current = { x: 0, y: 0 };
     isSwiping.current = false;
-    
+
     // Resume auto-advance after a delay
     setTimeout(() => {
       isUserControlledRef.current = false;
@@ -304,17 +304,17 @@ const PotentialToolsPage = () => {
       y: e.clientY
     };
     isSwiping.current = false;
-    
+
     isUserControlledRef.current = true;
     stopAutoAdvance();
   }, [stopAutoAdvance]);
 
   const handleMouseMove = useCallback((e) => {
     if (!touchStartRef.current.x) return;
-    
+
     const deltaX = Math.abs(e.clientX - touchStartRef.current.x);
     const deltaY = Math.abs(e.clientY - touchStartRef.current.y);
-    
+
     if (deltaX > deltaY && deltaX > 10) {
       isSwiping.current = true;
     }
@@ -322,7 +322,7 @@ const PotentialToolsPage = () => {
 
   const handleMouseUp = useCallback((e) => {
     if (!isSwiping.current || !touchStartRef.current.x) return;
-    
+
     touchEndRef.current = {
       x: e.clientX,
       y: e.clientY
@@ -330,7 +330,7 @@ const PotentialToolsPage = () => {
 
     const deltaX = touchStartRef.current.x - touchEndRef.current.x;
     const deltaY = Math.abs(touchStartRef.current.y - touchEndRef.current.y);
-    
+
     if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
       if (deltaX > 0) {
         goToNext();
@@ -342,7 +342,7 @@ const PotentialToolsPage = () => {
     touchStartRef.current = { x: 0, y: 0 };
     touchEndRef.current = { x: 0, y: 0 };
     isSwiping.current = false;
-    
+
     setTimeout(() => {
       isUserControlledRef.current = false;
       startAutoAdvance();
@@ -412,26 +412,7 @@ const PotentialToolsPage = () => {
     });
   }, []);
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   useEffect(() => {
     const cards = cardsRef.current.filter(Boolean);
@@ -451,7 +432,7 @@ const PotentialToolsPage = () => {
       container.addEventListener('touchstart', handleTouchStart, { passive: false });
       container.addEventListener('touchmove', handleTouchMove, { passive: false });
       container.addEventListener('touchend', handleTouchEnd, { passive: false });
-      
+
       // Mouse events for desktop
       container.addEventListener('mousedown', handleMouseDown);
       container.addEventListener('mousemove', handleMouseMove);
@@ -474,8 +455,8 @@ const PotentialToolsPage = () => {
         container.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [aiTools.length, handleTouchStart, handleTouchMove, handleTouchEnd, 
-      handleMouseDown, handleMouseMove, handleMouseUp, handleWheel, startAutoAdvance, stopAutoAdvance, updateCardsPosition]);
+  }, [aiTools.length, handleTouchStart, handleTouchMove, handleTouchEnd,
+    handleMouseDown, handleMouseMove, handleMouseUp, handleWheel, startAutoAdvance, stopAutoAdvance, updateCardsPosition]);
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#000", color: "#fff", position: 'relative' }}>
@@ -797,11 +778,11 @@ const PotentialToolsPage = () => {
 
       {/* Excollo3D Component */}
       <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 17 } }}>
-        <Box 
+        <Box
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
-          sx={{ 
+          sx={{
             mt: { xs: -2, md: 2 },
             mb: { xs: 0, md: 0 },
             position: 'relative',
@@ -815,28 +796,8 @@ const PotentialToolsPage = () => {
       </Container>
 
       <Footer />
-      
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
+
     </Box>
   );
 };

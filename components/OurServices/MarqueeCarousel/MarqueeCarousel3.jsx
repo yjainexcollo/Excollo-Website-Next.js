@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 // Images from public directory
@@ -10,10 +11,10 @@ const python = "/marqueelogo3/python.png";
 const pytorch = "/marqueelogo3/pytorch.png";
 
 const MarqueeCarousel3 = () => {
-   const theme = useTheme();
-   const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
-   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-   const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const theme = useTheme();
+  const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const technologies = [
     {
       name: "Technology 1",

@@ -40,7 +40,7 @@ const useIntersectionObserver = (options = {}) => {
       setIsIntersecting(true);
       return;
     }
-    
+
     // Create intersection observer with custom options
     const observer = new IntersectionObserver(([entry]) => {
       setIsIntersecting(entry.isIntersecting);
@@ -103,9 +103,9 @@ const AnimatedCounter = ({ value, duration = 2000, suffix = "" }) => {
   }, [isVisible, value, duration]);
 
   return (
-    <Typography 
+    <Typography
       ref={ref}
-      sx={{ 
+      sx={{
         color: '#8E54F7', // Purple color for metrics
         fontWeight: 700,
         transition: 'all 0.3s ease'
@@ -127,7 +127,7 @@ export default function ContentCubicle() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
+
   // Refs for animation triggers and DOM elements
   const [heroRef] = useIntersectionObserver(); // Hero section animation trigger
   const aboutContainerRef = useRef(null); // About section container
@@ -136,7 +136,7 @@ export default function ContentCubicle() {
   const processStepsRef = useRef([]); // Array of process step elements
   const processContentRef = useRef(null); // Process content container
   const ex3dTiltRef = useRef(null); // 3D element for mouse interaction
-  
+
   // State for WhatsApp button visibility
   const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
 
@@ -285,13 +285,13 @@ export default function ContentCubicle() {
   const handle3DMouseMove = (e) => {
     // Skip on mobile or if element doesn't exist
     if (!ex3dTiltRef.current || isMobile) return;
-    
+
     // Get element's bounding rectangle
     const rect = ex3dTiltRef.current.getBoundingClientRect();
     // Calculate relative mouse position (-0.5 to 0.5)
     const relX = (e.clientX - rect.left) / rect.width - 0.5;
     const relY = (e.clientY - rect.top) / rect.height - 0.5;
-    
+
     // Apply 3D transform based on mouse position
     gsap.to(ex3dTiltRef.current, {
       x: relX * 24, // Horizontal translation
@@ -311,7 +311,7 @@ export default function ContentCubicle() {
    */
   const handle3DMouseLeave = () => {
     if (!ex3dTiltRef.current) return;
-    
+
     // Reset all transforms to original state
     gsap.to(ex3dTiltRef.current, {
       x: 0,
@@ -346,9 +346,9 @@ export default function ContentCubicle() {
         setShowWhatsAppButton(false);
       }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
-    
+
     // Cleanup scroll listener
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -402,8 +402,8 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
 
   return (
     // Main container with dark theme and full viewport height
-    <Box sx={{ 
-      minHeight: "100vh", 
+    <Box sx={{
+      minHeight: "100vh",
       background: "#000", // Black background
       color: "#fff", // White text
       fontFamily: '"Inter", sans-serif',
@@ -431,7 +431,7 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
 
       {/* Hero Section - Main title and project introduction */}
       <Container maxWidth="xl" sx={{ pt: { xs: 2, sm: 3, md: 6 }, px: { xs: 2, sm: 3 } }}>
-        <Box 
+        <Box
           ref={heroRef} // Animation trigger reference
           sx={{
             height: { xs: 'auto', sm: 120, md: 160 },
@@ -484,16 +484,16 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                   Brief Assistant
                 </Box>
               </Typography>
-             
+
             </Box>
           </Box>
         </Box>
       </Container>
 
       {/* About Product Section - Project story and key metrics */}
-      <Container 
-        maxWidth="xl" 
-        sx={{ 
+      <Container
+        maxWidth="xl"
+        sx={{
           py: { xs: 4, sm: 6, md: 8 },
           background: 'transparent',
           zIndex: 2,
@@ -505,7 +505,7 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
           {/* Section title with gradient underline and text effect */}
           <Typography sx={{
             fontWeight: 700,
-            fontSize: { xs: 24, sm: 32, md: 40 }, 
+            fontSize: { xs: 24, sm: 32, md: 40 },
             mb: { xs: 2, md: 3 },
             position: 'relative',
             '&::after': {
@@ -530,7 +530,7 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
               Product
             </Box>
           </Typography>
-          
+
           {/* About details grid - Story and Key insights sections */}
           <Box sx={{
             display: 'grid',
@@ -542,8 +542,8 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
             <Box>
               {/* Story section title */}
               <Typography sx={{
-                color: '#fff', 
-            fontWeight: 600,
+                color: '#fff',
+                fontWeight: 600,
                 fontSize: { xs: 15, sm: 16, md: 25 },
                 mb: { xs: 1, md: 2 },
                 // Remove hover effects on mobile for better performance
@@ -553,12 +553,12 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                 })
               }}>Story</Typography>
               {/* Main story text with italic styling */}
-              <Typography sx={{ 
-                fontSize: { xs: 14, sm: 16, md: 20 }, 
-                color: 'rgba(255,255,255,0.85)', 
-                fontStyle: 'italic', 
-                mb: 1, 
-                lineHeight: 1.5, 
+              <Typography sx={{
+                fontSize: { xs: 14, sm: 16, md: 20 },
+                color: 'rgba(255,255,255,0.85)',
+                fontStyle: 'italic',
+                mb: 1,
+                lineHeight: 1.5,
                 textAlign: 'justify',
                 // Remove hover effects on mobile for better performance
                 ...(!isMobile && {
@@ -571,11 +571,11 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
               }}>
                 Every great campaign begins with a clear brief. But for creative agencies like Content Cubicle, getting there isn't always simple. Early discovery calls, scattered client notes, and inconsistent intake formats meant hours spent just to capture the basics  brand goals, tone, audience, and deliverables.
               </Typography>
-            {/* Additional story context */}
-            <Typography sx={{
-                fontSize: { xs: 13, sm: 13 }, 
-                color: '#fff', 
-                lineHeight: 1.6, 
+              {/* Additional story context */}
+              <Typography sx={{
+                fontSize: { xs: 13, sm: 13 },
+                color: '#fff',
+                lineHeight: 1.6,
                 textAlign: 'justify',
                 mb: 1,
                 // Remove hover effects on mobile for better performance
@@ -587,16 +587,16 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                   }
                 })
               }}>
-                 At Excollo, we asked: why should creativity be slowed down by admin?
-                 The Smart Intake & Brief Assistant was designed to solve this. It's an intelligent system that takes client inputs brand name, target market, product info, colors, themes, and goals  and turns them into a structured, agency-ready brief in minutes.
-            </Typography>
-          </Box>
+                At Excollo, we asked: why should creativity be slowed down by admin?
+                The Smart Intake & Brief Assistant was designed to solve this. It's an intelligent system that takes client inputs brand name, target market, product info, colors, themes, and goals  and turns them into a structured, agency-ready brief in minutes.
+              </Typography>
+            </Box>
 
             {/* Key insights section - Metrics and statistics */}
             <Box sx={{ mt: { xs: 2, md: 2 } }}>
               {/* Key insights title */}
               <Typography sx={{
-                color: '#fff', 
+                color: '#fff',
                 fontWeight: 700,
                 mb: 2,
                 fontSize: { xs: 15, sm: 16, md: 25 },
@@ -607,14 +607,14 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                 })
               }}>Key insights</Typography>
               {/* Metrics grid - 4 columns on all screen sizes */}
-              <Box sx={{ 
-                display: 'grid', 
+              <Box sx={{
+                display: 'grid',
                 gridTemplateColumns: { xs: '1fr 1fr 1fr 1fr', sm: '1fr 1fr 1fr 1fr', md: '1fr 1fr 1fr 1fr' },
                 gap: { xs: 2, md: 3 }
               }}>
                 {/* First metric: Time to Client Onboarding */}
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile for better performance
@@ -629,15 +629,15 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                     }
                   })
                 }}>
-                <Typography sx={{
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Time to Client Onboarding</Typography>
                   {/* Metric value with animated counter and arrow icon */}
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowDownwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                    <ArrowDownwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
@@ -646,8 +646,8 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                 </Box>
 
                 {/* Second metric: Brief Standardization */}
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile for better performance
@@ -662,8 +662,8 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                     }
                   })
                 }}>
-                <Typography sx={{
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Brief Standardization</Typography>
@@ -674,13 +674,13 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} /> */}
-                    <AnimatedCounter value="100" suffix="%" /> 
+                    <AnimatedCounter value="100" suffix="%" />
                   </Box>
                 </Box>
 
                 {/* Third metric: Pitch & Proposal Efficiency */}
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile for better performance
@@ -696,24 +696,24 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                   })
                 }}>
                   <Typography sx={{
-                    color: '#fff', 
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Pitch & Proposal Efficiency</Typography>
                   {/* Metric value with animated counter and upward arrow */}
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowUpwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                    <ArrowUpwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
                     <AnimatedCounter value="40" suffix="%" />
+                  </Box>
                 </Box>
-              </Box>
 
-              {/* Fourth metric: Client Onboarding Satisfaction */}
-              <Box sx={{ 
-                  display: 'flex', 
+                {/* Fourth metric: Client Onboarding Satisfaction */}
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile for better performance
@@ -728,20 +728,20 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                     }
                   })
                 }}>
-                  <Typography sx={{ 
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Client Onboarding Satisfaction</Typography>
-                   {/* Metric value with animated counter and upward arrow */}
-                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowUpwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                  {/* Metric value with animated counter and upward arrow */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
+                    <ArrowUpwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
                     <AnimatedCounter value="30" suffix="%" />
-                </Box>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -750,9 +750,9 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
       </Container>
 
       {/* Process Section - 5-step development process */}
-      <Container 
-        maxWidth="xl" 
-        sx={{ 
+      <Container
+        maxWidth="xl"
+        sx={{
           pt: { xs: 2, md: 3 },
           pb: { xs: 5, md: 6 },
           minHeight: 'auto',
@@ -763,9 +763,9 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
       >
         <Box>
           {/* Process section title with gradient underline and text effect */}
-          <Typography sx={{ 
-            fontWeight: 800, 
-            fontSize: { xs: 24, sm: 32, md: 40 }, 
+          <Typography sx={{
+            fontWeight: 800,
+            fontSize: { xs: 24, sm: 32, md: 40 },
             mt: { xs: 0, md: 1 },
             mb: { xs: 5, md: 7 },
             color: '#fff',
@@ -791,41 +791,41 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
             }}>
               Process
             </Box>
-            </Typography>
-          
+          </Typography>
+
           {/* Process content container with animated timeline */}
-          <Box 
+          <Box
             ref={processContentRef} // Animation trigger reference
-            sx={{ 
-              position: 'relative', 
-              pl: 0, 
-              pr: { xs: 2, md: 15 }, 
+            sx={{
+              position: 'relative',
+              pl: 0,
+              pr: { xs: 2, md: 15 },
               pb: { xs: 6, md: 10 },
               overflow: 'visible'
             }}
           >
             {/* Animated vertical timeline line */}
             <Box ref={processLineRef} sx={{
-              position: 'absolute', 
-              left: { xs: '32px', sm: '40px', md: '56px' }, 
-              top: 0, 
+              position: 'absolute',
+              left: { xs: '32px', sm: '40px', md: '56px' },
+              top: 0,
               bottom: 0,
               height: 'auto',
-              width: { xs: 1.5, md: 2 }, 
+              width: { xs: 1.5, md: 2 },
               background: 'linear-gradient(180deg, rgba(142,84,247,0.8) 0%, rgba(255,255,255,0.15) 50%, rgba(142,84,247,0.3) 100%)',
               transformOrigin: 'top'
             }} />
-            
+
             {/* Process steps grid container */}
-            <Box sx={{ 
-              display: 'grid', 
+            <Box sx={{
+              display: 'grid',
               rowGap: { xs: 4, sm: 4, md: 7 }
             }}>
               {/* Render each process step */}
               {process.map((item, idx) => (
-                <Box key={idx} ref={(el) => setProcessStepRef(el, idx)} sx={{ 
-                  position: 'relative', 
-                  pl: { xs: 'calc(32px + 24px)', sm: 'calc(40px + 24px)', md: 'calc(56px + 24px)' }, 
+                <Box key={idx} ref={(el) => setProcessStepRef(el, idx)} sx={{
+                  position: 'relative',
+                  pl: { xs: 'calc(32px + 24px)', sm: 'calc(40px + 24px)', md: 'calc(56px + 24px)' },
                   // Remove hover effects on mobile for better performance
                   ...(!isMobile && {
                     transition: 'all 0.4s ease',
@@ -840,21 +840,21 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                 }}>
                   {/* Process step indicator dot */}
                   <Box className="process-dot" sx={{
-                    position: 'absolute', 
-                    left: { xs: 'calc(32px - 7px)', sm: 'calc(40px - 7px)', md: 'calc(56px - 8px)' }, 
+                    position: 'absolute',
+                    left: { xs: 'calc(32px - 7px)', sm: 'calc(40px - 7px)', md: 'calc(56px - 8px)' },
                     top: { xs: '0.15em', md: '0.15em' },
-                    width: { xs: 14, md: 16 }, 
-                    height: { xs: 14, md: 16 }, 
-                    borderRadius: '50%', 
+                    width: { xs: 14, md: 16 },
+                    height: { xs: 14, md: 16 },
+                    borderRadius: '50%',
                     background: 'radial-gradient(circle, #8E54F7 0%, #6A3BBA 100%)',
                     boxShadow: '0 0 0 4px rgba(142,84,247,0.25)',
                     transition: isMobile ? 'none' : 'all 0.3s ease'
                   }} />
                   {/* Process step title */}
                   <Typography sx={{
-                    fontWeight: 700, 
-                    fontSize: { xs: 15, sm: 16, md: 25 }, 
-                    mb: 1, 
+                    fontWeight: 700,
+                    fontSize: { xs: 15, sm: 16, md: 25 },
+                    mb: 1,
                     textAlign: 'left',
                     color: '#fff',
                     lineHeight: 1.05,
@@ -871,12 +871,12 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
                     })
                   }}>
                     {item.title}
-            </Typography>
+                  </Typography>
                   {/* Process step description */}
-                  <Typography sx={{ 
-                    color: '#fff', 
-                    fontSize: { xs: 14, sm: 16, md: 20 }, 
-                    lineHeight: 1.6, 
+                  <Typography sx={{
+                    color: '#fff',
+                    fontSize: { xs: 14, sm: 16, md: 20 },
+                    lineHeight: 1.6,
                     textAlign: 'justify',
                     overflowWrap: 'anywhere',
                     wordBreak: 'break-word',
@@ -906,16 +906,16 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
               <Box sx={{ height: { xs: 4, md: 12 } }} />
             </Box>
           </Box>
-          </Box>
-        </Container>
+        </Box>
+      </Container>
 
-        <Container maxWidth="xl">
-        <Box 
+      <Container maxWidth="xl">
+        <Box
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
-          sx={{ 
-            mt: { xs: -16, md: 17 },
+          sx={{
+            mt: { xs: 1, md: 17 },
             position: 'relative',
             zIndex: 4,
             background: '#000',
@@ -925,10 +925,10 @@ Agencies needed a consistent, time‑saving system to capture brand details and 
           <Excollo3DCaseStudy isStatic />
         </Box>
       </Container>
-      
+
       {/* Footer component */}
       <Footer />
-      
+
       {/* Floating WhatsApp contact button */}
       <Fade in={showWhatsAppButton}>
         <Button

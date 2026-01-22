@@ -26,7 +26,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { styled } from "@mui/material/styles";
 import NavBar from "@/components/NavBar/NavBar";
-import Footer from "@/components/OurServices/Footer";
+import Footer from "@/components/Footer/Footer";
 import ThreeDE from "@/components/ThreeDE";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
@@ -316,7 +316,7 @@ const ContactForm = () => {
       }
     };
   }, [submitState]);
-  
+
   const getButtonContent = () => {
     switch (submitState) {
       case "submitting":
@@ -361,25 +361,25 @@ const ContactForm = () => {
   };
 
   useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > 0) {
-          setShowWhatsAppButton(true);
-        } else {
-          setShowButton(false);
-        }
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
-
-    const handleWhatsapp = () => {
-      window.open(
-        "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-        "_blank"
-      );
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowWhatsAppButton(true);
+      } else {
+        setShowButton(false);
+      }
     };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleWhatsapp = () => {
+    window.open(
+      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
+      "_blank"
+    );
+  };
 
   return (
     <Box sx={{ backgroundColor: "#000000", minHeight: "100vh", width: "100%" }}>
@@ -472,18 +472,18 @@ const ContactForm = () => {
           </Typography>
           <Typography
             textAlign="center"
-            color="#fff"
             sx={{
+              color: 'rgba(255,255,255,0.8)',
+              maxWidth: 920,
+              mx: 'auto',
               fontSize: {
                 xs: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
                 md: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
                 lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
                 xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
               },
-              fontWeight: 200,
-              lineHeight: 1.7,
-              width: "80%",
-              marginLeft: "10%",
+              lineHeight: 1.6,
+              fontFamily: '"Inter", sans-serif'
             }}
           >
             Looking to automate, optimize, or scale your business with tailored
@@ -538,7 +538,7 @@ const ContactForm = () => {
                   xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
                 },
                 "&:hover": { color: "#8E54F7" },
-                fontWeight: 200,
+                fontWeight: 400,
                 lineHeight: 1.7,
                 fontFamily: '"Inter", sans-serif',
               }}
@@ -608,7 +608,7 @@ const ContactForm = () => {
                   xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
                 },
                 "&:hover": { color: "#8E54F7" },
-                fontWeight: 200,
+                fontWeight: 400,
                 lineHeight: 1.7,
                 fontFamily: '"Inter", sans-serif',
               }}
@@ -680,7 +680,7 @@ const ContactForm = () => {
                   lg: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.8rem)`,
                   xl: `clamp(0.5rem, calc(0.8rem + 0.7vw), 2.1rem)`,
                 },
-                fontWeight: 200,
+                fontWeight: 400,
                 lineHeight: 1.7,
               }}
             >
@@ -746,7 +746,7 @@ const ContactForm = () => {
                       lg: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.8rem)`,
                       xl: `clamp(0.5rem, calc(0.8rem + 0.7vw), 2.1rem)`,
                     },
-                    fontWeight: 200,
+                    fontWeight: 400,
                     lineHeight: 1.7,
                     mb: 1,
                   }}
@@ -859,7 +859,7 @@ const ContactForm = () => {
                       lg: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.8rem)`,
                       xl: `clamp(0.5rem, calc(0.8rem + 0.7vw), 2.1rem)`,
                     },
-                    fontWeight: 200,
+                    fontWeight: 400,
                     lineHeight: 1.7,
                   }}
                 >
@@ -990,7 +990,7 @@ const ContactForm = () => {
               lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
               xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
             },
-            fontWeight: 200,
+            fontWeight: 400,
             lineHeight: 1.7,
             width: "80%",
             marginLeft: "10%",

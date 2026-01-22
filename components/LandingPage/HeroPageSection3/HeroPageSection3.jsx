@@ -25,7 +25,7 @@ const HeroPageSection3 = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  
+
   // Comprehensive breakpoints matching HeroPageSection1 & Section2 pattern
   const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
   const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
@@ -34,7 +34,7 @@ const HeroPageSection3 = () => {
   const isLargeDesktop = useMediaQuery("(min-width: 1536px) and (max-width: 1919px)");
   const isXtraLargeDesktop = useMediaQuery("(min-width: 1920px)");
   const isUltraWide = useMediaQuery("(min-width: 2560px)");
-  
+
   const isTabletOrMobile = isMobile || isTablet;
 
   // Helper function to get container width (matching Section1 & Section2)
@@ -115,19 +115,19 @@ const HeroPageSection3 = () => {
           md: getMinHeight(),
         },
         marginTop: {
-          xs: "2rem",
-          sm: "2rem",
+          xs: "0",
+          sm: "0",
           md: getMarginTop(), // Aligned with Section1 & Section2 vertical rhythm
         },
         marginBottom: {
-          xs: "5vh",
-          sm: "5vh",
-          md: "10vh", // Universal percentage-based gap between Section 3 and Section 4
+          xs: "0",
+          sm: "0",
+          md: "0", // Further reduced gap between Section 3 and Section 4
         },
         display: "flex",
         flexDirection: "column",
         width: {
-          xs: "95%",
+          xs: "100%",
           sm: "92%",
           md: getContainerWidth(), // Matching Section2 container system
         },
@@ -138,7 +138,7 @@ const HeroPageSection3 = () => {
         },
         margin: "0 auto",
         padding: {
-          xs: "1.5rem",
+          xs: "0",
           sm: "2rem",
           md: getPadding(), // Matching Section2 padding system
         },
@@ -206,6 +206,7 @@ const HeroPageSection3 = () => {
           {/* Gradient Background - positioned directly behind the carousel card */}
           <Box
             sx={{
+              display: { xs: "none", md: "block" },
               position: "absolute",
               top: "50%",
               left: "50%",

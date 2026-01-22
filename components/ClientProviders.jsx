@@ -5,6 +5,7 @@ import { Box, ThemeProvider } from "@mui/material";
 import { CursorProvider } from "./CursorEffect/context/CursorContext";
 import CustomCursor from "./CursorEffect/CursorEffetct";
 import ChatBotWidget from "./ChatBotWidget";
+import WhatsAppWidget from "./WhatsAppWidget";
 import theme from "./theme";
 
 export default function ClientProviders({ children }) {
@@ -15,6 +16,7 @@ export default function ClientProviders({ children }) {
           <CustomCursor />
           {children}
         </Box>
+        <WhatsAppWidget />
         <ChatBotWidget />
       </CursorProvider>
     </ThemeProvider>

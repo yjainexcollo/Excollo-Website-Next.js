@@ -18,7 +18,7 @@ export class ErrorBoundary extends React.Component {
     }
 
     render() {
-        if (this.state.hasError) {
+        if (this.state.hasError) { 
             return (
                 <Box sx={{ p: 4, textAlign: "center" }}>
                     <Typography variant="h6" color="error">

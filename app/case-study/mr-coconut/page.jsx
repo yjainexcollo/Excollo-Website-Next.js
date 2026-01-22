@@ -15,7 +15,7 @@ import Excollo3DCaseStudy from "@/components/AboutUs/Excollo3DCaseStudy";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 // Import WhatsApp icon for contact button
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 // Register GSAP ScrollTrigger plugin for scroll-based animations
 gsap.registerPlugin(ScrollTrigger);
@@ -40,7 +40,7 @@ const useIntersectionObserver = (options = {}) => {
       setIsIntersecting(true);
       return;
     }
-    
+
     // Create intersection observer with custom options
     const observer = new IntersectionObserver(([entry]) => {
       setIsIntersecting(entry.isIntersecting);
@@ -103,9 +103,9 @@ const AnimatedCounter = ({ value, duration = 2000, suffix = "" }) => {
   }, [isVisible, value, duration]);
 
   return (
-    <Typography 
+    <Typography
       ref={ref}
-      sx={{ 
+      sx={{
         color: '#8E54F7', // Purple color for metrics
         fontWeight: 700,
         transition: 'all 0.3s ease'
@@ -127,7 +127,7 @@ export default function MrCoconut() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
+
   // Refs for animation triggers and DOM elements
   const [heroRef] = useIntersectionObserver(); // Hero section animation trigger
   const aboutContainerRef = useRef(null); // About section container
@@ -136,9 +136,9 @@ export default function MrCoconut() {
   const processStepsRef = useRef([]); // Array of process step elements
   const processContentRef = useRef(null); // Process content container
   const ex3dTiltRef = useRef(null); // 3D element for mouse interaction
-  
+
   // State for WhatsApp button visibility
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
 
   /**
    * Helper function to set process step references
@@ -301,26 +301,7 @@ export default function MrCoconut() {
     });
   };
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   /**
    * Process data for the case study
@@ -337,10 +318,10 @@ export default function MrCoconut() {
   ];
 
   return (
-    <Box sx={{ 
-      minHeight: "100vh", 
-      background: "#000", 
-      color: "#fff", 
+    <Box sx={{
+      minHeight: "100vh",
+      background: "#000",
+      color: "#fff",
       fontFamily: '"Inter", sans-serif',
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
@@ -364,7 +345,7 @@ export default function MrCoconut() {
 
       {/* Hero Section */}
       <Container maxWidth="xl" sx={{ pt: { xs: 2, sm: 3, md: 6 }, px: { xs: 2, sm: 3 } }}>
-        <Box 
+        <Box
           ref={heroRef}
           sx={{
             height: { xs: 'auto', sm: 120, md: 160 },
@@ -414,9 +395,9 @@ export default function MrCoconut() {
       </Container>
 
       {/* About Product Section */}
-      <Container 
-        maxWidth="xl" 
-        sx={{ 
+      <Container
+        maxWidth="xl"
+        sx={{
           py: { xs: 4, sm: 6, md: 8 },
           background: 'transparent',
           zIndex: 2,
@@ -427,7 +408,7 @@ export default function MrCoconut() {
         <Box>
           <Typography sx={{
             fontWeight: 700,
-            fontSize: { xs: 24, sm: 32, md: 40 }, 
+            fontSize: { xs: 24, sm: 32, md: 40 },
             mb: { xs: 2, md: 3 },
             position: 'relative',
             '&::after': {
@@ -451,7 +432,7 @@ export default function MrCoconut() {
               Product
             </Box>
           </Typography>
-          
+
           {/* About details grid (Story followed by Key insights in a separate row) */}
           <Box sx={{
             display: 'grid',
@@ -462,8 +443,8 @@ export default function MrCoconut() {
             {/* Story Section */}
             <Box>
               <Typography sx={{
-                color: '#fff', 
-            fontWeight: 600,
+                color: '#fff',
+                fontWeight: 600,
                 fontSize: { xs: 15, sm: 16, md: 25 },
                 mb: { xs: 1, md: 2 },
                 // Remove hover effects on mobile
@@ -472,12 +453,12 @@ export default function MrCoconut() {
                   '&:hover': { color: 'rgba(255,255,255,0.9)' }
                 })
               }}>Story</Typography>
-              <Typography sx={{ 
-                fontSize: { xs: 14, sm: 16, md: 20 }, 
-                color: 'rgba(255,255,255,0.85)', 
-                fontStyle: 'italic', 
-                mb: 1, 
-                lineHeight: 1.5, 
+              <Typography sx={{
+                fontSize: { xs: 14, sm: 16, md: 20 },
+                color: 'rgba(255,255,255,0.85)',
+                fontStyle: 'italic',
+                mb: 1,
+                lineHeight: 1.5,
                 textAlign: 'justify',
                 // Remove hover effects on mobile
                 ...(!isMobile && {
@@ -490,10 +471,10 @@ export default function MrCoconut() {
               }}>
                 "We'd get messages at midnight: 'Need 300 coconuts for Jan 20 wedding, logo print, can you confirm price?' By the next morning, details were missing or changed, and the team was scrambling."
               </Typography>
-            <Typography sx={{
-                fontSize: { xs: 13, sm: 13 }, 
-                color: '#fff', 
-                lineHeight: 1.6, 
+              <Typography sx={{
+                fontSize: { xs: 13, sm: 13 },
+                color: '#fff',
+                lineHeight: 1.6,
                 textAlign: 'justify',
                 mb: 1,
                 // Remove hover effects on mobile
@@ -506,11 +487,11 @@ export default function MrCoconut() {
                 })
               }}>
                 That was Mr. Coconut's reality. Personalized coconuts were turning into beautiful centerpieces at weddings and events, but managing orders felt like wrangling dozens of fragmented WhatsApp threads.
-            </Typography>
-            <Typography sx={{
-                fontSize: { xs: 13, sm: 13 }, 
-                color: '#fff', 
-                lineHeight: 1.6, 
+              </Typography>
+              <Typography sx={{
+                fontSize: { xs: 13, sm: 13 },
+                color: '#fff',
+                lineHeight: 1.6,
                 textAlign: 'justify',
                 // Remove hover effects on mobile
                 ...(!isMobile && {
@@ -522,13 +503,13 @@ export default function MrCoconut() {
                 })
               }}>
                 With rising demand came rising tension: missed details, lost leads, exhausted team members. They needed something that worked when the lights are off, but felt warm when chatting with clients.
-            </Typography>
-          </Box>
+              </Typography>
+            </Box>
 
             {/* Key insights section */}
             <Box sx={{ mt: { xs: 2, md: 2 } }}>
               <Typography sx={{
-                color: '#fff', 
+                color: '#fff',
                 fontWeight: 700,
                 mb: 2,
                 fontSize: { xs: 15, sm: 16, md: 25 },
@@ -538,13 +519,13 @@ export default function MrCoconut() {
                   '&:hover': { color: '#8E54F7' }
                 })
               }}>Key insights</Typography>
-              <Box sx={{ 
-                display: 'grid', 
+              <Box sx={{
+                display: 'grid',
                 gridTemplateColumns: { xs: '1fr 1fr 1fr 1fr', sm: '1fr 1fr 1fr 1fr', md: '1fr 1fr 1fr 1fr' },
                 gap: { xs: 2, md: 3 }
               }}>
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile
@@ -559,14 +540,14 @@ export default function MrCoconut() {
                     }
                   })
                 }}>
-                <Typography sx={{
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Confirm Time</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowDownwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                    <ArrowDownwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
@@ -574,8 +555,8 @@ export default function MrCoconut() {
                   </Box>
                 </Box>
 
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile
@@ -590,14 +571,14 @@ export default function MrCoconut() {
                     }
                   })
                 }}>
-                <Typography sx={{
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Support Load</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowDownwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                    <ArrowDownwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
@@ -605,8 +586,8 @@ export default function MrCoconut() {
                   </Box>
                 </Box>
 
-                <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile
@@ -622,22 +603,22 @@ export default function MrCoconut() {
                   })
                 }}>
                   <Typography sx={{
-                    color: '#fff', 
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Leads</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-                    <ArrowUpwardIcon className="metric-icon" sx={{ 
-                      color: '#8E54F7', 
+                    <ArrowUpwardIcon className="metric-icon" sx={{
+                      color: '#8E54F7',
                       fontSize: { xs: 16, sm: 18 },
                       transition: isMobile ? 'none' : 'all 0.5s ease'
                     }} />
                     <AnimatedCounter value="25" suffix="%" />
+                  </Box>
                 </Box>
-              </Box>
 
-              <Box sx={{ 
-                  display: 'flex', 
+                <Box sx={{
+                  display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   // Remove hover effects on mobile
@@ -652,13 +633,13 @@ export default function MrCoconut() {
                     }
                   })
                 }}>
-                  <Typography sx={{ 
-                    color: '#fff', 
+                  <Typography sx={{
+                    color: '#fff',
                     fontSize: { xs: 14, sm: 16 },
                     mb: 1
                   }}>Events</Typography>
-                  <Typography className="multiplier" sx={{ 
-                    color: '#8E54F7', 
+                  <Typography className="multiplier" sx={{
+                    color: '#8E54F7',
                     fontWeight: 700,
                     fontSize: { xs: 14, sm: 16 },
                     transition: isMobile ? 'none' : 'all 0.3s ease'
@@ -671,9 +652,9 @@ export default function MrCoconut() {
       </Container>
 
       {/* Process Section */}
-      <Container 
-        maxWidth="xl" 
-        sx={{ 
+      <Container
+        maxWidth="xl"
+        sx={{
           pt: { xs: 2, md: 3 },
           pb: { xs: 5, md: 6 },
           minHeight: 'auto',
@@ -683,9 +664,9 @@ export default function MrCoconut() {
         ref={processContainerRef}
       >
         <Box>
-          <Typography sx={{ 
-            fontWeight: 800, 
-            fontSize: { xs: 24, sm: 32, md: 40 }, 
+          <Typography sx={{
+            fontWeight: 800,
+            fontSize: { xs: 24, sm: 32, md: 40 },
             mt: { xs: 0, md: 1 },
             mb: { xs: 5, md: 7 },
             color: '#fff',
@@ -710,37 +691,37 @@ export default function MrCoconut() {
             }}>
               Process
             </Box>
-            </Typography>
-          
-          <Box 
-            ref={processContentRef} 
-            sx={{ 
-              position: 'relative', 
-              pl: 0, 
-              pr: { xs: 2, md: 15 }, 
+          </Typography>
+
+          <Box
+            ref={processContentRef}
+            sx={{
+              position: 'relative',
+              pl: 0,
+              pr: { xs: 2, md: 15 },
               pb: { xs: 6, md: 10 },
               overflow: 'visible'
             }}
           >
             <Box ref={processLineRef} sx={{
-              position: 'absolute', 
-              left: { xs: '32px', sm: '40px', md: '56px' }, 
-              top: 0, 
+              position: 'absolute',
+              left: { xs: '32px', sm: '40px', md: '56px' },
+              top: 0,
               bottom: 0,
               height: 'auto',
-              width: { xs: 1.5, md: 2 }, 
+              width: { xs: 1.5, md: 2 },
               background: 'linear-gradient(180deg, rgba(142,84,247,0.8) 0%, rgba(255,255,255,0.15) 50%, rgba(142,84,247,0.3) 100%)',
               transformOrigin: 'top'
             }} />
-            
-            <Box sx={{ 
-              display: 'grid', 
+
+            <Box sx={{
+              display: 'grid',
               rowGap: { xs: 4, sm: 4, md: 7 }
             }}>
               {process.map((item, idx) => (
-                <Box key={idx} ref={(el) => setProcessStepRef(el, idx)} sx={{ 
-                  position: 'relative', 
-                  pl: { xs: 'calc(32px + 24px)', sm: 'calc(40px + 24px)', md: 'calc(56px + 24px)' }, 
+                <Box key={idx} ref={(el) => setProcessStepRef(el, idx)} sx={{
+                  position: 'relative',
+                  pl: { xs: 'calc(32px + 24px)', sm: 'calc(40px + 24px)', md: 'calc(56px + 24px)' },
                   // Remove hover effects on mobile
                   ...(!isMobile && {
                     transition: 'all 0.4s ease',
@@ -754,20 +735,20 @@ export default function MrCoconut() {
                   })
                 }}>
                   <Box className="process-dot" sx={{
-                    position: 'absolute', 
-                    left: { xs: 'calc(32px - 7px)', sm: 'calc(40px - 7px)', md: 'calc(56px - 8px)' }, 
+                    position: 'absolute',
+                    left: { xs: 'calc(32px - 7px)', sm: 'calc(40px - 7px)', md: 'calc(56px - 8px)' },
                     top: { xs: '0.15em', md: '0.15em' },
-                    width: { xs: 14, md: 16 }, 
-                    height: { xs: 14, md: 16 }, 
-                    borderRadius: '50%', 
+                    width: { xs: 14, md: 16 },
+                    height: { xs: 14, md: 16 },
+                    borderRadius: '50%',
                     background: 'radial-gradient(circle, #8E54F7 0%, #6A3BBA 100%)',
                     boxShadow: '0 0 0 4px rgba(142,84,247,0.25)',
                     transition: isMobile ? 'none' : 'all 0.3s ease'
                   }} />
                   <Typography sx={{
-                    fontWeight: 700, 
-                    fontSize: { xs: 15, sm: 16, md: 25 }, 
-                    mb: 1, 
+                    fontWeight: 700,
+                    fontSize: { xs: 15, sm: 16, md: 25 },
+                    mb: 1,
                     textAlign: 'left',
                     color: '#fff',
                     lineHeight: 1.05,
@@ -784,11 +765,11 @@ export default function MrCoconut() {
                     })
                   }}>
                     {item.title}
-            </Typography>
-                  <Typography sx={{ 
-                    color: '#fff', 
-                    fontSize: { xs: 14, sm: 16, md: 20 }, 
-                    lineHeight: 1.6, 
+                  </Typography>
+                  <Typography sx={{
+                    color: '#fff',
+                    fontSize: { xs: 14, sm: 16, md: 20 },
+                    lineHeight: 1.6,
                     textAlign: 'justify',
                     overflowWrap: 'anywhere',
                     wordBreak: 'break-word',
@@ -802,16 +783,16 @@ export default function MrCoconut() {
               <Box sx={{ height: { xs: 4, md: 12 } }} />
             </Box>
           </Box>
-          </Box>
-        </Container>
+        </Box>
+      </Container>
 
-        <Container maxWidth="xl">
-        <Box 
+      <Container maxWidth="xl">
+        <Box
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
-          sx={{ 
-            mt: { xs: -16, md: -15 },
+          sx={{
+            mt: { xs: 1, md: -15 },
             position: 'relative',
             zIndex: 4,
             background: '#000',
@@ -821,30 +802,10 @@ export default function MrCoconut() {
           <Excollo3DCaseStudy isStatic />
         </Box>
       </Container>
-      
+
       <Footer />
-      
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
+
     </Box>
   );
 }

@@ -16,7 +16,7 @@ import { Container, Grid, Typography, Box, Button } from "@mui/material";
 // Import Material-UI icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 // Import WhatsApp icon for contact button
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 /**
  * SampleToolsPage Component
@@ -64,12 +64,7 @@ const SampleToolsPage = () => {
     });
   }, []);
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
+
 
   const handleHotelConciergeClick = () => {
     window.open('/sampletools/hotelconcierge', '_blank');
@@ -198,7 +193,18 @@ const SampleToolsPage = () => {
               color: 'transparent'
             }}>Tools</Box>
           </Typography>
-          <Typography component="p" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 20, fontWeight: 400, marginTop: "2%", fontFamily: '"Inter", sans-serif' }}>
+          <Typography component="p" sx={{
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: {
+              xs: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              md: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
+              xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
+            },
+            fontWeight: 400,
+            marginTop: "2%",
+            fontFamily: '"Inter", sans-serif'
+          }}>
             let's create a universe of possibilities together!
           </Typography>
         </Box>
@@ -299,12 +305,12 @@ const SampleToolsPage = () => {
 
       {/* Excollo3D Component */}
       <Container maxWidth="xl">
-        <Box 
+        <Box
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
-          sx={{ 
-            mt: { xs: -16, md: -15 },
+          sx={{
+            mt: { xs: 0, md: -15 },
             position: 'relative',
             zIndex: 4,
             background: '#000',
@@ -314,29 +320,10 @@ const SampleToolsPage = () => {
           <Excollo3DCaseStudy isStatic />
         </Box>
       </Container>
-      
+
       <Footer />
-      
-      <Button
-        onClick={handleWhatsapp}
-        variant="contained"
-        color="primary"
-        sx={{
-          position: "fixed",
-          height: 60,
-          width: 60,
-          bottom: { xs: 200, md: 100 },
-          right: { xs: 24, md: 24 },
-          zIndex: 10001,
-          borderRadius: "50%",
-          background: "rgba(255, 255, 255, 0.1)",
-          "&:hover": {
-            background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-          },
-        }}
-      >
-        <IoLogoWhatsapp size={30} />
-      </Button>
+
+
     </Box>
   );
 };

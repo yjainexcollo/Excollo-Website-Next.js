@@ -817,12 +817,12 @@ In short: make support feel always-on, human enough, and flawless.`
       </Container>
 
       <Container maxWidth="xl">
-        <Box 
+        <Box
           ref={ex3dTiltRef}
           onMouseMove={handle3DMouseMove}
           onMouseLeave={handle3DMouseLeave}
-          sx={{ 
-            mt: { xs: -16, md: 17 },
+          sx={{
+            mt: { xs: 1, md: 17 },
             position: 'relative',
             zIndex: 4,
             background: '#000',

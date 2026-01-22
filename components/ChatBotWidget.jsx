@@ -72,24 +72,27 @@ function formatBotMessage(text) {
   return withLinks.replace(/\n/g, "<br />");
 }
 
+
+const defaultDimensions = {
+  width: "28vw",
+  height: "70vh",
+  maxWidth: "450px",
+  maxHeight: "600px",
+  bottom: 24,
+  right: 24,
+  borderRadius: 24,
+  buttonSize: 60,
+  fontSize: 15,
+  headerFontSize: 18,
+  padding: "20px 24px",
+  messageMaxWidth: "280px",
+};
+
 // Responsive utility functions
 const getResponsiveDimensions = () => {
   if (typeof window === "undefined") {
     // Default dimensions for SSR
-    return {
-      width: "28vw",
-      height: "70vh",
-      maxWidth: "450px",
-      maxHeight: "600px",
-      bottom: 24,
-      right: 24,
-      borderRadius: 24,
-      buttonSize: 60,
-      fontSize: 15,
-      headerFontSize: 18,
-      padding: "20px 24px",
-      messageMaxWidth: "280px",
-    };
+    return defaultDimensions;
   }
   const isMobile = window.innerWidth <= 768;
   const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
@@ -127,20 +130,7 @@ const getResponsiveDimensions = () => {
       messageMaxWidth: "75%",
     };
   } else {
-    return {
-      width: "28vw",
-      height: "70vh",
-      maxWidth: "450px",
-      maxHeight: "600px",
-      bottom: 24,
-      right: 24,
-      borderRadius: 24,
-      buttonSize: 60,
-      fontSize: 15,
-      headerFontSize: 18,
-      padding: "20px 24px",
-      messageMaxWidth: "280px",
-    };
+    return defaultDimensions;
   }
 };
 
@@ -152,7 +142,7 @@ const ChatBotWidget = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState("");
-  const [dimensions, setDimensions] = useState(() => getResponsiveDimensions());
+  const [dimensions, setDimensions] = useState(defaultDimensions);
   const messagesEndRef = useRef(null);
   const chatBoxRef = useRef(null);
   const textareaRef = useRef(null);
@@ -167,7 +157,7 @@ const ChatBotWidget = () => {
   // Handle window resize
   useEffect(() => {
     if (typeof window === "undefined") return;
-    
+
     const handleResize = () => {
       setDimensions(getResponsiveDimensions());
     };

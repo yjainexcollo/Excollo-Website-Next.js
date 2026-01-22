@@ -15,7 +15,7 @@ import HowWeWork from "./HowWeWork";
 import ThreeDE from "../ThreeDE";
 import Footer from "../Footer/Footer";
 import Excollo3D from "./Excollo3D";
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 const ContentSection = styled("section")(({ theme }) => ({
   display: "flex",
@@ -44,6 +44,8 @@ const TitleContainer = styled("div")(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "left",
   padding: 10,
+  position: "relative",
+  zIndex: 5,
   opacity: 1,
   "& h2": {
     textAlign: "left",
@@ -82,10 +84,11 @@ const TitleContainer = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     width: "100%",
-    marginBottom: "-280px",
+    flex: "0 0 auto",
+    marginBottom: "-15px",
     "& h2": {
       fontSize: `clamp(1.75rem, calc(1.15rem + 2vw), 9rem)`,
-      paddingBottom: "-50px",
+      paddingBottom: "0px",
       textAlign: "center",
       "& br": {
         display: "none",
@@ -93,9 +96,10 @@ const TitleContainer = styled("div")(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("sm")]: {
-    marginBottom: "-275px",
+    marginBottom: "-15px",
     "& h2": {
       fontSize: `clamp(1.75rem, calc(1.15rem + 2vw), 9rem)`,
+      padding: "0px",
     },
   },
 }));
@@ -154,33 +158,37 @@ const Card = styled("div")(
     },
 
     [theme.breakpoints.down("md")]: {
-      width: "90%",
+      width: "95%",
+      height: "auto",
       marginBottom: "20px",
-      fontSize: `clamp(0.8rem, calc(0.6rem + 1vw), 9rem)`,
+      fontSize: `clamp(0.8rem, calc(0.6rem + 1vw), 1.2rem)`,
       background: `linear-gradient(${direction}, rgba(142, 84, 247, 0.5), rgba(51, 46, 108, 0.8), rgba(0, 0, 0, 1))`,
-      padding: isMobile ? "0" : "30px",
+      padding: isMobile ? "20px" : "30px",
       "&::before": {
         display: isMobile ? "none" : "block",
       },
       "& p": {
-        padding: "15px",
+        padding: "10px",
         margin: "10px",
         textAlign: "center",
       },
     },
 
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
+      width: "95%",
+      height: "auto",
+      minHeight: "150px",
       borderRadius: "30px",
       background: `linear-gradient(${direction},rgba(0, 0, 0, 1), rgba(51, 46, 108, 0.8), rgba(51, 46, 108, 0.8), rgba(0, 0, 0, 1))`,
-      fontSize: `clamp(0.8rem, calc(0.6rem + 1vw), 9rem)`,
-      padding: isMobile ? "0" : "0px 20px",
+      fontSize: `clamp(0.9rem, calc(0.8rem + 1vw), 1.1rem)`,
+      padding: "20px",
       "&::before": {
         borderRadius: "31px",
       },
       "& p": {
         padding: "0px",
         margin: "0px",
+        textAlign: "center",
       },
     },
 
@@ -205,7 +213,7 @@ const AboutUs = () => {
   const [showButton, setShowButton] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(false);
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
 
   // Initialize windowWidth on client side only
   useEffect(() => {
@@ -313,26 +321,7 @@ const AboutUs = () => {
     });
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
 
   const VisionSection = useCallback(
     () => (
@@ -663,27 +652,7 @@ const AboutUs = () => {
           <ArrowUpwardIcon />
         </Button>
       </Fade>
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
     </Box>
   );
 };

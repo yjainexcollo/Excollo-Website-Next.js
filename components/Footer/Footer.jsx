@@ -30,9 +30,11 @@ const ExcolloWebsiteLogo = "/ExcolloWebsiteLogo.png";
  */
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery("(min-width:600px) and (max-width:899px)");
-  const isSmallLaptop = useMediaQuery("(min-width:900px) and (max-width:1199px)");
+  const isMobile = useMediaQuery("(max-width:479px)");
+  const isTablet = useMediaQuery("(min-width:480px) and (max-width:899px)");
+  const isSmallLaptop = useMediaQuery(
+    "(min-width:900px) and (max-width:1199px)"
+  );
   const isLaptop = useMediaQuery("(min-width:1200px) and (max-width:1535px)");
   const isDesktop = useMediaQuery("(min-width:1536px) and (max-width:1919px)");
   const isXtraLargeDesktop = useMediaQuery("(min-width:1920px) and (max-width:2559px)");
@@ -40,8 +42,8 @@ const Footer = () => {
 
   // Responsive logo width using vw units
   const getLogoWidth = () => {
-    if (isMobile) return "40vw";
-    if (isTablet) return "30vw";
+    if (isMobile) return "150px";
+    if (isTablet) return "120px";
     if (isSmallLaptop) return "10vw";
     if (isLaptop) return "10vw";
     if (isDesktop) return "10vw";
@@ -64,7 +66,7 @@ const Footer = () => {
       zIndex={1}
       sx={{
         width: "100%",
-        pt: "20vh",
+        pt: { xs: "10vh", md: "20vh" },
         pb: "5vh",
         px: "4vw",
         boxSizing: "border-box",
@@ -94,10 +96,14 @@ const Footer = () => {
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            md: "auto 1fr",  // Column 1 auto width, right side takes remaining space
+            md: "auto 1fr", // Column 1 auto width, right side takes remaining space
           },
-          gap: "15vw",  // Gap between Column 1 and the grouped columns
+          "@media (min-width: 480px) and (max-width: 899px)": {
+            display: "flex",
+            flexDirection: "column",
+            gap: "4vh",
+          },
+          gap: { xs: "4rem", md: "15vw" }, // Gap between Column 1 and the grouped columns
           px: "3vw",
         }}
       >
@@ -105,95 +111,127 @@ const Footer = () => {
         <Box
           sx={{
             display: "flex",
-              flexDirection: "column",
+            flexDirection: "column",
             alignItems: { xs: "center", md: "flex-start" },
-              }}
-            >
-                  <Box
-                    component="img"
-                    src={ExcolloWebsiteLogo}
+            "@media (min-width: 480px)": { alignItems: "flex-start" },
+            "@media (min-width: 480px) and (max-width: 899px)": {
+              display: "grid",
+              gridTemplateColumns: "175px 1fr",
+              alignItems: "start",
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={ExcolloWebsiteLogo}
             alt="Excollo"
-                    loading="lazy"
-                    sx={{
+            loading="lazy"
+            sx={{
               width: getLogoWidth(),
               maxWidth: "100%",
               height: "auto",
               mb: "2vh",
-                    }}
-                  />
-            <Typography
-              variant="body2"
-              color="grey.400"
-              sx={{
-                fontSize: {
-                xs: "2.5vw",
-                sm: "2vw",
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                gridRow: "span 2",
+                mb: 0,
+              },
+            }}
+          />
+          <Typography
+            variant="body2"
+            color="grey.400"
+            sx={{
+              fontSize: {
+                xs: "0.875rem",
+                sm: "1rem",
                 md: "1.2vw",
                 lg: "1vw",
               },
               mb: "1vh",
               textAlign: { xs: "center", md: "left" },
-              }}
-            >
-              AI Driven. Outcome Focused.
-            </Typography>
-            <Link
-              component={NextLink}
-              href="/about"
-              sx={{
+              "@media (min-width: 480px)": { textAlign: "left" },
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                gridColumn: "2",
+              },
+            }}
+          >
+            AI Driven. Outcome Focused.
+          </Typography>
+          <Link
+            component={NextLink}
+            href="/about"
+            sx={{
               display: "inline-flex",
               alignItems: "center",
               gap: "0.5vw",
-                color: "grey.400",
-                textDecoration: "none",
+              color: "grey.400",
+              textDecoration: "none",
               fontSize: {
-                xs: "2.5vw",
-                sm: "2vw",
+                xs: "0.875rem",
+                sm: "1rem",
                 md: "1.2vw",
                 lg: "1vw",
               },
               '&:hover': { color: "#a693c1" },
               mt: "1vh",
-                justifyContent: { xs: "center", md: "flex-start" },
+              justifyContent: { xs: "center", md: "flex-start" },
+              "@media (min-width: 480px)": { justifyContent: "flex-start" },
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                gridColumn: "2",
+              },
             }}
           >
             Learn More
             <LaunchIcon
               sx={{
                 fontSize: {
-                  xs: "2.5vw",
-                  sm: "2vw",
+                  xs: "1.2rem",
+                  sm: "1.4rem",
                   md: "1.2vw",
                   lg: "1vw",
-                  },
-                }}
-              />
-            </Link>
+                },
+              }}
+            />
+          </Link>
         </Box>
 
         {/* Right side: Group of 3 columns with equal spacing */}
         <Box
-            sx={{
+          sx={{
             display: "grid",
             gridTemplateColumns: {
               xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",  // 3 equal columns
+              md: "repeat(3, 1fr)", // 3 equal columns
             },
-            columnGap: "1.5vw",  // Smaller gap between columns for tighter spacing
-            rowGap: 0,  // No vertical gap needed
+            "@media (min-width: 480px) and (max-width: 899px)": {
+              display: "flex",
+              flexDirection: "column",
+              gap: "4vh",
+            },
+            columnGap: "1.5vw", // Smaller gap between columns for tighter spacing
+            rowGap: { xs: "3rem", md: 0 }, // Vertical gap for stacked columns on mobile
           }}
         >
           {/* Column 2: Quick Links */}
-          <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
+          <Box
+            sx={{
+              textAlign: { xs: "center", md: "left" },
+              "@media (min-width: 480px)": { textAlign: "left" },
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                display: "grid",
+                gridTemplateColumns: "175px 1fr",
+                alignItems: "start",
+              },
+            }}
+          >
             <Typography
               variant="body1"
               sx={{
                 fontWeight: 500,
                 mb: "1vh",
                 fontSize: {
-                  xs: "3vw",
-                  sm: "2.5vw",
+                  xs: "1.125rem",
+                  sm: "1.25rem",
                   md: "1.4vw",
                   lg: "1.2vw",
                 },
@@ -206,6 +244,7 @@ const Footer = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: { xs: "center", md: "flex-start" },
+                "@media (min-width: 480px)": { alignItems: "flex-start" },
                 gap: "3vh",
               }}
             >
@@ -218,8 +257,8 @@ const Footer = () => {
                     color: "grey.400",
                     textDecoration: "none",
                     fontSize: {
-                      xs: "2.5vw",
-                      sm: "2vw",
+                      xs: "0.875rem",
+                      sm: "1rem",
                       md: "1.2vw",
                       lg: "1vw",
                     },
@@ -234,15 +273,25 @@ const Footer = () => {
           </Box>
 
           {/* Column 3: Contact Us */}
-          <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
+          <Box
+            sx={{
+              textAlign: { xs: "center", md: "left" },
+              "@media (min-width: 480px)": { textAlign: "left" },
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                display: "grid",
+                gridTemplateColumns: "175px 1fr",
+                alignItems: "start",
+              },
+            }}
+          >
             <Typography
               variant="body1"
               sx={{
                 fontWeight: 500,
                 mb: "1vh",
                 fontSize: {
-                  xs: "3vw",
-                  sm: "2.5vw",
+                  xs: "1.125rem",
+                  sm: "1.25rem",
                   md: "1.4vw",
                   lg: "1.2vw",
                 },
@@ -255,6 +304,7 @@ const Footer = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: { xs: "center", md: "flex-start" },
+                "@media (min-width: 480px)": { alignItems: "flex-start" },
                 gap: "1vh",
               }}
             >
@@ -265,13 +315,14 @@ const Footer = () => {
                   alignItems: "center",
                   gap: "0.5vw",
                   justifyContent: { xs: "center", md: "flex-start" },
+                  "@media (min-width: 480px)": { justifyContent: "flex-start" },
                 }}
               >
                 <EmailIcon
                   sx={{
                     fontSize: {
-                      xs: "3vw",
-                      sm: "2.4vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.4vw",
                     },
                     color: "grey.400",
@@ -285,8 +336,8 @@ const Footer = () => {
                     color: "grey.400",
                     textDecoration: "none",
                     fontSize: {
-                      xs: "2.5vw",
-                      sm: "2vw",
+                      xs: "0.875rem",
+                      sm: "1rem",
                       md: "1.2vw",
                       lg: "1vw",
                     },
@@ -305,13 +356,14 @@ const Footer = () => {
                   alignItems: "center",
                   gap: "0.5vw",
                   justifyContent: { xs: "center", md: "flex-start" },
+                  "@media (min-width: 480px)": { justifyContent: "flex-start" },
                 }}
               >
                 <PhoneIcon
                   sx={{
                     fontSize: {
-                      xs: "3vw",
-                      sm: "2.4vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.4vw",
                     },
                     color: "grey.400",
@@ -325,8 +377,8 @@ const Footer = () => {
                     color: "grey.400",
                     textDecoration: "none",
                     fontSize: {
-                      xs: "2.5vw",
-                      sm: "2vw",
+                      xs: "0.875rem",
+                      sm: "1rem",
                       md: "1.2vw",
                       lg: "1vw",
                     },
@@ -340,18 +392,20 @@ const Footer = () => {
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: { xs: "center", md: "flex-start" },
+                  alignItems: "flex-start",
                   gap: "0.5vw",
                   justifyContent: { xs: "center", md: "flex-start" },
+                  "@media (min-width: 480px)": { justifyContent: "flex-start" },
                   maxWidth: { xs: "90%", md: "70%", lg: "60%" },
                   mx: { xs: "auto", md: 0 },
+                  "@media (min-width: 480px)": { mx: 0 },
                 }}
               >
                 <LocationOnIcon
                   sx={{
                     fontSize: {
-                      xs: "3vw",
-                      sm: "2.4vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.4vw",
                     },
                     color: "grey.400",
@@ -369,15 +423,15 @@ const Footer = () => {
                     color="grey.400"
                     sx={{
                       fontSize: {
-                        xs: "2.5vw",
-                        sm: "2vw",
+                        xs: "0.875rem",
+                        sm: "1rem",
                         md: "1.2vw",
                         lg: "1vw",
                       },
                       lineHeight: 1.4,
                       wordBreak: "break-word",
                       overflowWrap: "anywhere",
-                      textAlign: { xs: "center", md: "left" },
+                      textAlign: "left",
                     }}
                   >
                     C-230 Bharat Marg, Hanuman Nagar, Vaishali, Jaipur, Rajasthan&nbsp;-&nbsp;302021
@@ -388,15 +442,26 @@ const Footer = () => {
           </Box>
 
           {/* Column 4: Stay Connected */}
-          <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
+          <Box
+            sx={{
+              textAlign: { xs: "center", md: "left" },
+              "@media (min-width: 480px)": { textAlign: "left" },
+              "@media (min-width: 480px) and (max-width: 899px)": {
+                gridColumn: "1 / -1", // Reset this, we are using flex now
+                display: "grid",
+                gridTemplateColumns: "175px 1fr",
+                alignItems: "start",
+              },
+            }}
+          >
             <Typography
               variant="body1"
               sx={{
                 fontWeight: 500,
                 mb: "1vh",
                 fontSize: {
-                  xs: "3vw",
-                  sm: "2.5vw",
+                  xs: "1.125rem",
+                  sm: "1.25rem",
                   md: "1.4vw",
                   lg: "1.2vw",
                 },
@@ -409,6 +474,7 @@ const Footer = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: { xs: "center", md: "flex-start" },
+                "@media (min-width: 480px)": { alignItems: "flex-start" },
                 gap: "2vh",
               }}
             >
@@ -423,8 +489,8 @@ const Footer = () => {
                   gap: "0.5vw",
                   textDecoration: "none",
                   fontSize: {
-                    xs: "2.5vw",
-                    sm: "2vw",
+                    xs: "0.875rem",
+                    sm: "1rem",
                     md: "1.2vw",
                     lg: "1vw",
                   },
@@ -435,8 +501,8 @@ const Footer = () => {
                 <LinkedInIcon
                   sx={{
                     fontSize: {
-                      xs: "3vw",
-                      sm: "2.4vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.4vw",
                     },
                   }}
@@ -453,8 +519,8 @@ const Footer = () => {
                   gap: "0.5vw",
                   textDecoration: "none",
                   fontSize: {
-                    xs: "2.5vw",
-                    sm: "2vw",
+                    xs: "0.875rem",
+                    sm: "1rem",
                     md: "1.2vw",
                     lg: "1vw",
                   },
@@ -466,8 +532,8 @@ const Footer = () => {
                 <LaunchIcon
                   sx={{
                     fontSize: {
-                      xs: "2.5vw",
-                      sm: "2vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.2vw",
                       lg: "1vw",
                     },
@@ -484,21 +550,22 @@ const Footer = () => {
                   gap: "0.5vw",
                   textDecoration: "none",
                   fontSize: {
-                    xs: "2.5vw",
-                    sm: "2vw",
+                    xs: "0.875rem",
+                    sm: "1rem",
                     md: "1.2vw",
                     lg: "1vw",
                   },
                   '&:hover': { color: "#a693c1" },
                   justifyContent: { xs: "center", md: "flex-start" },
+                  "@media (min-width: 480px)": { justifyContent: "flex-start" },
                 }}
               >
                 Explore our Services
                 <LaunchIcon
                   sx={{
                     fontSize: {
-                      xs: "2.5vw",
-                      sm: "2vw",
+                      xs: "1.2rem",
+                      sm: "1.4rem",
                       md: "1.2vw",
                     },
                   }}
@@ -524,21 +591,24 @@ const Footer = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
+          "@media (min-width: 480px)": { flexDirection: "row" },
           justifyContent: "space-between",
           alignItems: "center",
           px: "3vw",
           gap: { xs: "2vh", sm: 0 },
+          "@media (min-width: 480px)": { gap: 0 },
         }}
       >
         <Typography
           variant="caption"
           sx={{
             fontSize: {
-              xs: "2.5vw",
-              sm: "2vw",
+              xs: "0.75rem",
+              sm: "0.875rem",
               md: "1.2vw",
             },
             textAlign: { xs: "center", sm: "left" },
+            "@media (min-width: 480px)": { textAlign: "left" },
           }}
         >
           © {new Date().getFullYear()} Excollo Inc. All Rights Reserved.
@@ -549,7 +619,9 @@ const Footer = () => {
             gap: "2vw",
             flexWrap: "wrap",
             justifyContent: { xs: "center", sm: "flex-start" },
+            "@media (min-width: 480px)": { justifyContent: "flex-start" },
             mt: { xs: "2vh", sm: 0 },
+            "@media (min-width: 480px)": { mt: 0 },
           }}
         >
           <Link
@@ -559,8 +631,8 @@ const Footer = () => {
               color: "grey.400",
               textDecoration: "none",
               fontSize: {
-                xs: "2.5vw",
-                sm: "2vw",
+                xs: "0.75rem",
+                sm: "1rem",
                 md: "1.2vw",
               },
               '&:hover': { color: "#a693c1" },
@@ -575,8 +647,8 @@ const Footer = () => {
               color: "grey.400",
               textDecoration: "none",
               fontSize: {
-                xs: "2.5vw",
-                sm: "2vw",
+                xs: "0.75rem",
+                sm: "1rem",
                 md: "1.2vw",
               },
               '&:hover': { color: "#a693c1" },

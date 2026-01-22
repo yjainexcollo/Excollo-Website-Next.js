@@ -5,7 +5,8 @@
   margin: 0 auto;
   padding: 1.5rem 1.5rem 4rem;
   box-sizing: border-box;
-  -webkit-box-sizing: border-box; /* Safari */
+  -webkit-box-sizing: border-box;
+  /* Safari */
 }
 
 .sectionInner {
@@ -105,8 +106,8 @@
   height: 100%;
   text-decoration: none;
   background: linear-gradient(180deg,
-    rgba(170, 63, 255, 0.9) 0%,
-    rgba(94, 129, 235, 0.9) 100%);
+      rgba(170, 63, 255, 0.9) 0%,
+      rgba(94, 129, 235, 0.9) 100%);
   border-radius: 8px;
   transform: skewX(15deg);
   transition: 0.5s;
@@ -122,8 +123,8 @@
   width: var(--beam-width);
   height: 100%;
   background: linear-gradient(180deg,
-    rgba(170, 63, 255, 0.9) 0%,
-    rgba(94, 129, 235, 0.9) 100%);
+      rgba(170, 63, 255, 0.9) 0%,
+      rgba(94, 129, 235, 0.9) 100%);
   border-radius: 8px;
   transform: skewX(15deg);
   transition: 0.5s;
@@ -140,6 +141,7 @@
 }
 
 @keyframes animate {
+
   0%,
   100% {
     transform: translateY(10px);
@@ -189,8 +191,10 @@
 .content h2 {
   font-size: 1.5rem;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
   font-weight: 400;
+  white-space: nowrap;
 }
 
 .box:hover .content p {
@@ -200,6 +204,7 @@
 
 .content p {
   font-size: 16px;
+  margin-top: 0.5rem;
   margin-bottom: 10px;
   line-height: 1.4em;
   display: none;
@@ -414,13 +419,15 @@
 
   .content h2 {
     font-size: clamp(0.25rem, calc(1rem + 0.8vw), 2.2rem);
-    margin-bottom: 0.7rem;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   .content p {
     font-size: clamp(0.5rem, calc(0.6rem + 0.6vw), 1.8rem);
     font-weight: 100;
     line-height: 1.5;
+    margin-top: 0.5rem;
     margin-bottom: 10px;
   }
 
@@ -546,13 +553,15 @@
 
   .content h2 {
     font-size: clamp(0.25rem, calc(1rem + 1vw), 3rem);
-    margin-bottom: 2rem;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   .content p {
     font-size: clamp(0.25rem, calc(0.5rem + 0.8vw), 3rem);
     font-weight: 100;
     line-height: 1.7;
+    margin-top: 2rem;
     margin-bottom: 20px;
   }
 
@@ -612,12 +621,14 @@
 
   .content h2 {
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   .content p {
     font-size: 1.25rem;
     line-height: 1.7;
+    margin-top: 2rem;
     margin-bottom: 20px;
   }
 
@@ -626,4 +637,4 @@
     padding: 15px 30px;
     margin-top: 15px;
   }
-} 
+}

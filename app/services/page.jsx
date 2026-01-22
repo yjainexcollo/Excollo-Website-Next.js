@@ -2,7 +2,8 @@ import React from "react";
 import { Box } from "@mui/material";
 import OurServices from "@/components/OurServices/OurServices";
 import NavBar from "@/components/NavBar/NavBar";
-import Footer from "@/components/OurServices/Footer";
+import Footer from "@/components/Footer/Footer";
+import HeroPageSection7 from "@/components/LandingPage/HeroPageSection7";
 
 export default function ServicesPage() {
     return (
@@ -40,6 +41,7 @@ export default function ServicesPage() {
             <Box>
                 <OurServices />
             </Box>
+            <HeroPageSection7 />
             <Box>
                 <Footer />
             </Box>

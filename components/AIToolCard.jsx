@@ -101,7 +101,7 @@ const AIToolCard = ({
         <Box sx={{ mt: "auto", pt: { xs: 1.25, sm: 1.5 } }}>
           <Typography component="div" sx={{ fontSize: { xs: "0.85rem", sm: "0.9rem" } }}>
             <Box component="span" sx={{ color: "rgba(255,255,255,0.6)" }}>Suitable for: </Box>
-            <Box component="span" sx={{ fontWeight: 500, color: chipColor }}>{suitableFor}</Box>
+            <Box component="span" sx={{ fontWeight: 400, color: chipColor }}>{suitableFor}</Box>
           </Typography>
         </Box>
       </CardContent>

@@ -36,7 +36,9 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
     backdropFilter: 'blur(10px)',
     boxShadow: '0 8px 32px rgba(126, 34, 206, 0.1)',
     minHeight: 500,
-    mb: { xs: 4, md: 6 }
+    mb: { xs: 4, md: 6 },
+    display: 'flex',
+    flexDirection: 'column'
   }}>
     {/* Chat Messages */}
     <Box sx={{
@@ -147,7 +149,10 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
       borderTop: '1px solid rgba(255,255,255,0.1)',
       background: 'rgba(0,0,0,0.2)',
       borderRadius: '0 0 12px 12px',
-      alignItems: 'center'
+      alignItems: 'center',
+      height: 88,
+      flexShrink: 0,
+      boxSizing: 'border-box'
     }}>
       <TextField
         ref={inputRef}
@@ -166,10 +171,10 @@ const ChatBox = ({ messages, input, isLoading, handleSend, setInput, inputRef })
         size="medium"
         variant="outlined"
         disabled={isLoading}
-        multiline
-        maxRows={3}
+        rows={1}
         InputProps={{
           sx: {
+            height: 56,
             color: '#fff',
             fontSize: 15,
             fontFamily: '"Inter", sans-serif',

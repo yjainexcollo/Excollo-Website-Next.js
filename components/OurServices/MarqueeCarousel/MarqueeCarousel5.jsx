@@ -11,9 +11,9 @@ const microsoft_azure = "/marqueelogo5/microsoft_azure.png";
 
 const MarqueeCarousel5 = () => {
   const theme = useTheme();
-     const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
-     const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-     const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const technologies = [
     {
       name: "Technology 1",

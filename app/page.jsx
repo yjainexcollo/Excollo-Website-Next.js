@@ -18,7 +18,7 @@ import Footer from "@/components/Footer/Footer";
 import HeroPageSection6 from "@/components/LandingPage/HeroPageSection6";
 import HeroPageSection7 from "@/components/LandingPage/HeroPageSection7";
 import { ErrorBoundary } from "@/components/ErrorBoundaryClient";
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 // Register plugins
 if (typeof window !== "undefined") {
@@ -29,7 +29,7 @@ const HeroPage = () => {
   const [showThreeDE, setShowThreeDE] = useState(true);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
   const [hero1Complete, setHero1Complete] = useState(false);
   const [hero2Complete, setHero2Complete] = useState(false);
   const threeDERef = useRef(null);
@@ -133,27 +133,19 @@ const HeroPage = () => {
     };
   }, []);
 
-  // Scroll logic for WhatsApp button
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
 
   const ANIMATION_SESSION_DURATION = 1 * 60 * 60 * 1000;
 
   // Body overflow handling
+  // Body overflow handling
   useEffect(() => {
     if (typeof document === "undefined") return;
+    // Ensure overflow is always auto to prevent scroll locking
+    document.body.style.overflow = "auto";
+
+    // Original blocking logic removed to fix laptop touch scroll issues:
+    /*
     if (!hero1Complete || showThreeDE) {
       document.body.style.overflow = "hidden";
     } else {
@@ -161,6 +153,7 @@ const HeroPage = () => {
         document.body.style.overflow = "auto";
       }, 100);
     }
+    */
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -360,7 +353,7 @@ const HeroPage = () => {
             path: [
               { x: "33%", y: "0%" },
               { x: "12%", y: "50%" },
-              { x: "-27vw", y: "90vh" },
+              { x: "-27vw", y: "85vh" },
             ],
             curviness: 1.5,
           },
@@ -390,15 +383,9 @@ const HeroPage = () => {
       return () => {
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       };
-
-    } else if (hero1Complete && !isDesktop) {
-      setHero2Complete(true);
-      const heroSection2 = document.querySelector(".hero-section-2");
-      if (heroSection2) {
-        heroSection2.style.opacity = "1";
-        heroSection2.style.transform = "translateX(0)";
-      }
     }
+
+
   }, [hero1Complete, isDesktop, isSpecificSize, isLargeScreenSize, isXtraLargeScreenSize]);
 
   const handleScrollToTop = () => {
@@ -409,12 +396,11 @@ const HeroPage = () => {
     });
   };
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
+
+
+  const handleHero2Complete = React.useCallback(() => {
+    setHero2Complete(true);
+  }, []);
 
   return (
     <Box
@@ -424,8 +410,6 @@ const HeroPage = () => {
         overflowX: "hidden",
         overflowY: "auto",
         background: "#000000",
-        overscrollBehavior: "none",
-        overscrollBehaviorY: "none",
       }}
     >
       <Fade in={showButton}>
@@ -452,30 +436,7 @@ const HeroPage = () => {
           <ArrowUpwardIcon />
         </Button>
       </Fade>
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            width: { xs: 50, sm: 56, md: 60 },
-            height: { xs: 50, sm: 56, md: 60 },
-            minWidth: "44px",
-            minHeight: "44px",
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 10001,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
 
       {/* Desktop ThreeDE - Only render on desktop */}
       {showDesktopThreeDE && (
@@ -493,6 +454,7 @@ const HeroPage = () => {
             top: 0,
             left: 0,
             zIndex: 2,
+            pointerEvents: "none",
           }}
         >
           <Box
@@ -540,12 +502,12 @@ const HeroPage = () => {
           suppressHydrationWarning
           sx={{
             width: { xs: "100%", sm: "80%", md: "50%", lg: "40%" },
-            height: { xs: "40vh", sm: "45vh", md: "55vh" },
+            height: { xs: "40svh", sm: "45svh", md: "55vh" },
             maxHeight: "500px",
             position: "relative",
-            top: { xs: "-2vh", sm: "-1vh", md: 0 },
+            top: { xs: "-2svh", sm: "-1svh", md: 0 },
             margin: "0 auto",
-            marginBottom: { xs: "-4vh", sm: "-3vh", md: 0 },
+            marginBottom: { xs: "-4svh", sm: "-3svh", md: 0 },
           }}
         >
           <Box
@@ -567,7 +529,7 @@ const HeroPage = () => {
           display: "flex",
           position: "relative",
           zIndex: 3,
-          marginTop: { xs: "-8vh", sm: "-6vh", md: "-6rem" },
+          marginTop: { xs: "-8svh", sm: "-6svh", md: "-6rem" },
           opacity: isMobile || isTablet ? 1 : 0,
           transform:
             isMobile || isTablet ? "translateX(0)" : "translateX(-100px)",
@@ -584,6 +546,7 @@ const HeroPage = () => {
             ? {
               opacity: 1,
               transform: "none",
+              willChange: "transform",
             }
             : {
               opacity: 1,
@@ -591,7 +554,7 @@ const HeroPage = () => {
             }),
         }}
       >
-        <HeroPageSection2 onAnimationComplete={() => setHero2Complete(true)} />
+        <HeroPageSection2 onAnimationComplete={handleHero2Complete} />
       </Box>
       <Box
         sx={{

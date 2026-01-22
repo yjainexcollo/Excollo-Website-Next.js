@@ -16,7 +16,7 @@ import ProductDevelopment from "./ProductDevelopment";
 import TechConsultancy from "./TechConsultancy";
 import SalesChannelDevelopment from "./SalesChannelDevelopment";
 import MLDrivenDataAnalysis from "./MLDrivenDataAnalysis";
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 const OurServices = () => {
   const [showButton, setShowButton] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -29,7 +29,7 @@ const OurServices = () => {
   const isMediumScreen = useMediaQuery(theme.breakpoints.only("md"));
   const isLargeScreen = useMediaQuery(theme.breakpoints.only("lg"));
   const isExtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
+
 
   // Prevent hydration mismatch
   useEffect(() => {
@@ -90,19 +90,7 @@ const OurServices = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -142,12 +130,7 @@ const OurServices = () => {
     });
   };
 
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let’s%20talk%21",
-      "_blank"
-    );
-  };
+
 
   return (
     <Box className="services-section">
@@ -301,22 +284,22 @@ const OurServices = () => {
       <Box
         sx={{
           position: "relative",
-          mt: { xs: "-20%", sm: -5, md: -30 },
+          mt: { xs: -1, md: -10 },
           paddingTop: isTablet || isLandscapeMedium ? "10px" : { xs: 0, md: 0 },
         }}
       >
         <AIAutomation sectionRef={sectionRef} />
       </Box>
-      <Box>
+      <Box sx={{ mt: { xs: 10, md: 15 } }}>
         <SalesChannelDevelopment sectionRef={sectionRef} />
       </Box>
-      <Box>
+      <Box sx={{ mt: { xs: 10, md: 15 } }}>
         <MLDrivenDataAnalysis sectionRef={sectionRef} />
       </Box>
-      <Box>
+      <Box sx={{ mt: { xs: 10, md: 15 } }}>
         <ProductDevelopment sectionRef={sectionRef} />
       </Box>
-      <Box>
+      <Box sx={{ mt: { xs: 10, md: 15 } }}>
         <TechConsultancy sectionRef={sectionRef} />
       </Box>
       <Fade in={showButton}>
@@ -340,27 +323,7 @@ const OurServices = () => {
           <ArrowUpwardIcon />
         </Button>
       </Fade>
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
     </Box>
   );
 };

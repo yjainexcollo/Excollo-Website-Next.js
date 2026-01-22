@@ -164,7 +164,7 @@ const AnimatedCTA = () => {
         trigger: container,
         start: "top 85%",
         end: "bottom 20%",
-        toggleActions: "play reverse play reverse",
+        toggleActions: "play none none reverse",
         scrub: false,
       },
     });

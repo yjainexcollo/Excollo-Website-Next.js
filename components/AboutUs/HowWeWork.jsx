@@ -89,12 +89,12 @@ const TableContent = styled("div")(({ theme }) => ({
   overflowWrap: "anywhere",
   wordBreak: "break-word",
   [theme.breakpoints.up("xs")]: {
-    padding: "28px 24px",
-    minHeight: 320,
+    padding: "12px 16px",
+    minHeight: 150,
   },
   [theme.breakpoints.up("sm")]: {
     padding: "32px 28px",
-    minHeight: 340,
+    minHeight: "auto",
   },
   [theme.breakpoints.up("md")]: {
     flex: "1 1 0%",
@@ -141,8 +141,8 @@ const TableContent = styled("div")(({ theme }) => ({
     overflowWrap: "anywhere",
     wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
-      fontSize: "1.75rem",
-      marginBottom: "16px",
+      fontSize: "1.5rem",
+      marginBottom: "10px",
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "2rem",
@@ -161,7 +161,7 @@ const TableContent = styled("div")(({ theme }) => ({
 
   "& p": {
     fontFamily: "Inter, sans-serif",
-    fontWeight: 300,
+    fontWeight: 400,
     color: "#9EA4AA",
     margin: "0",
     lineHeight: 1.5,
@@ -170,8 +170,8 @@ const TableContent = styled("div")(({ theme }) => ({
     overflowWrap: "anywhere",
     wordBreak: "break-word",
     [theme.breakpoints.up("xs")]: {
-      fontSize: "1rem",
-      lineHeight: 1.6,
+      fontSize: "0.9rem",
+      lineHeight: 1.5,
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.05rem",

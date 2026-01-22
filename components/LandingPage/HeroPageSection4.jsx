@@ -29,11 +29,11 @@ const FeatureCard = ({
     borderRadius: "12px",
     textAlign: "center",
     padding: {
-      xs: "1rem",
+      xs: "0.5rem",
       sm: "1.25rem",
       md: "1rem",
     },
-    height: isMobile ? "150px" : isTablet ? "200px" : "100%",
+    height: isMobile ? "200px" : isTablet ? "200px" : "100%",
     minHeight: {
       xs: "150px",
       sm: "200px",
@@ -65,6 +65,7 @@ const FeatureCard = ({
         md: "rgba(133, 86, 245, 0.4) 0px 0px 60px 0px", // Reduced from 100px
       },
     },
+    overflow: "hidden", // Prevent content from overflowing the card
   };
 
   const titleStyles = {
@@ -81,17 +82,17 @@ const FeatureCard = ({
       ? isTablet
         ? `clamp(1.35rem, calc(0.5rem + 1.5vw), 9rem)`
         : isMobile
-        ? `clamp(1.35rem, calc(0.5rem + 1vw), 9rem)`
-        : "4rem" // Will be overridden by GSAP animation, but provides fallback
+          ? `clamp(1.35rem, calc(0.5rem + 1vw), 9rem)`
+          : "4rem" // Will be overridden by GSAP animation, but provides fallback
       : isMobile
-      ? `clamp(1.35rem, calc(0.5rem + 1vw), 9rem)`
-      : isTablet
-      ? `clamp(1.35rem, calc(1rem + 1vw), 9rem)`
-      : {
-          md: `clamp(0.25rem,calc(1rem + 0.5vw),2.2rem)`,
-          lg: `clamp(0.25rem,calc(1rem + 0.8vw),2.2rem)`,
-          xl: `clamp(0.25rem,calc(1rem + 1vw),3rem)`,
-        },
+        ? `clamp(1rem, calc(0.5rem + 1vw), 1.5rem)`
+        : isTablet
+          ? `clamp(1.35rem, calc(1rem + 1vw), 9rem)`
+          : {
+            md: `clamp(0.25rem,calc(1rem + 0.5vw),2.2rem)`,
+            lg: `clamp(0.25rem,calc(1rem + 0.8vw),2.2rem)`,
+            xl: `clamp(0.25rem,calc(1rem + 1vw),3rem)`,
+          },
     fontWeight: isMainCard ? 400 : 400,
   };
 
@@ -103,28 +104,28 @@ const FeatureCard = ({
       {((!isMobile && !isTablet) ||
         (isMobile && description) ||
         (isTablet && description)) && (
-        <Typography
-          fontWeight={100}
-          color="white"
-          className="feature-description"
-          sx={{
-            fontSize: {
-              xs: `clamp(0.8rem, calc(0.5rem + 1vw), 9rem)`,
-              md: `clamp(0.5rem, calc(0.6rem + 0.4vw), 1.5rem)`,
-              lg: `clamp(0.5rem, calc(0.6rem + 0.6vw), 1.8rem)`,
-              xl: `clamp(0.25rem, calc(0.5rem + 0.8vw), 3rem)`,
-            },
-            fontWeight: 200,
-            lineHeight: "1.7",
-            fontFamily: '"Inter", sans-serif',
-            maxWidth: "80%",
-            opacity: isMobile || isTablet ? 1 : showDescription ? 1 : 0,
-            transition: "opacity 0.5s ease",
-          }}
-        >
-          {description}
-        </Typography>
-      )}
+          <Typography
+            fontWeight={100}
+            color="white"
+            className="feature-description"
+            sx={{
+              fontSize: {
+                xs: `clamp(0.7rem, calc(0.4rem + 1vw), 0.9rem)`,
+                md: `clamp(0.5rem, calc(0.6rem + 0.4vw), 1.5rem)`,
+                lg: `clamp(0.5rem, calc(0.6rem + 0.6vw), 1.8rem)`,
+                xl: `clamp(0.25rem, calc(0.5rem + 0.8vw), 3rem)`,
+              },
+              fontWeight: 200,
+              lineHeight: "1.7",
+              fontFamily: '"Inter", sans-serif',
+              maxWidth: "80%",
+              opacity: isMobile || isTablet ? 1 : showDescription ? 1 : 0,
+              transition: "opacity 0.5s ease",
+            }}
+          >
+            {description}
+          </Typography>
+        )}
     </Paper>
   );
 };
@@ -158,7 +159,7 @@ const HeroPageSection4 = ({ onComplete }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  
+
   // Comprehensive breakpoints matching Section1/2/3 pattern
   const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
   const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
@@ -243,15 +244,15 @@ const HeroPageSection4 = ({ onComplete }) => {
   // Track viewport width to avoid hydration issues
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     setViewportWidth(window.innerWidth);
-    
+
     const handleResize = () => {
       setViewportWidth(window.innerWidth);
     };
-    
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -302,14 +303,14 @@ const HeroPageSection4 = ({ onComplete }) => {
 
   // Helper function to get margin-top for vertical rhythm
   const getMarginTop = () => {
-    if (isSmallDesktop) return "-7rem";
-    if (isLaptop13) return "-7rem";
-    if (isLaptop14) return "-7rem";
-    if (isLaptop15) return "-7rem";
-    if (isLargeDesktop) return "-7rem"; // Baseline: unchanged
-    if (isXtraLargeDesktop) return "-7rem";
-    if (isUltraWide) return "-7rem";
-    return "-7rem"; // Default
+    if (isSmallDesktop) return "0";
+    if (isLaptop13) return "0";
+    if (isLaptop14) return "0";
+    if (isLaptop15) return "0";
+    if (isLargeDesktop) return "0"; // Baseline: unchanged
+    if (isXtraLargeDesktop) return "0";
+    if (isUltraWide) return "0";
+    return "0"; // Default
   };
 
   // Helper function to get main card width (matching GSAP animation start: 90%)
@@ -483,8 +484,8 @@ const HeroPageSection4 = ({ onComplete }) => {
           viewportWidth < 900
             ? "md"
             : viewportWidth < 1200
-            ? "lg"
-            : "xl";
+              ? "lg"
+              : "xl";
 
         // Apply the final font size based on the breakpoint
         gsap.to(".main-card .feature-title", {
@@ -512,17 +513,17 @@ const HeroPageSection4 = ({ onComplete }) => {
   }, {
     scope: sectionRef,
     dependencies: [
-      isMobile, 
-      isTablet, 
-      prefersReducedMotion, 
-      viewportWidth, 
-      key, 
-      isSmallDesktop, 
-      isLaptop13, 
-      isLaptop14, 
-      isLaptop15, 
-      isLargeDesktop, 
-      isXtraLargeDesktop, 
+      isMobile,
+      isTablet,
+      prefersReducedMotion,
+      viewportWidth,
+      key,
+      isSmallDesktop,
+      isLaptop13,
+      isLaptop14,
+      isLaptop15,
+      isLargeDesktop,
+      isXtraLargeDesktop,
       isUltraWide
     ]
   });
@@ -536,20 +537,20 @@ const HeroPageSection4 = ({ onComplete }) => {
           fontFamily: '"Inter", sans-serif',
           position: "relative",
           width: {
-            xs: "95%",
-            sm: "92%",
+            xs: "100%",
+            sm: "100%",
           },
           maxWidth: "100%",
           margin: "0 auto",
           padding: {
-            xs: "1.5rem",
-            sm: "2rem",
+            xs: "0",
+            sm: "0",
           },
-          paddingTop: { xs: "2rem", sm: "3rem" },
+          paddingTop: { xs: "0", sm: "0" },
           zIndex: 2,
           marginTop: {
-            xs: "2rem",
-            sm: "2rem",
+            xs: "0",
+            sm: "0",
           },
           overflow: "hidden",
           boxSizing: "border-box",
@@ -587,18 +588,16 @@ const HeroPageSection4 = ({ onComplete }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            columnGap: isMobile ? "10%" : "12%", // Responsive gap
+            columnGap: isMobile ? "5vw" : "6vw", // Smaller gap
             width: "100%",
-            padding: isMobile ? "0 15%" : "0 20%", // Responsive padding
+            padding: isMobile ? "0 17.5vw" : "0 20vw", // Center the cards (100 - 65)/2 = 17.5
             overflow: "visible",
             touchAction: "pan-y pinch-zoom",
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
           }}
           animate={{
-            x: `calc(-${currentIndex * 60}% + ${
-              currentIndex * 8
-            }% + ${dragOffset}px)`,
+            x: `calc(-${currentIndex * (isMobile ? 70 : 66)}vw + ${dragOffset}px)`, // Stride = cardWidth + gap
           }}
           transition={{
             type: prefersReducedMotion ? "tween" : "spring",
@@ -615,11 +614,13 @@ const HeroPageSection4 = ({ onComplete }) => {
             <Box
               key={index}
               sx={{
-                width: isMobile ? "70%" : "60%", // Responsive card width
+                width: isMobile ? "65vw" : "60vw", // Responsive card width
                 flexShrink: 0,
-                opacity: index === currentIndex ? 1 : 0.5,
-                transform: index === currentIndex ? "scale(1.05)" : "scale(0.95)",
+                opacity: index === currentIndex ? 1 : 0.4, // Keep side cards visible but dimmed
+                transform: index === currentIndex ? "scale(1.05)" : "scale(0.9)", // Slightly smaller side cards
+                filter: index === currentIndex ? "none" : "blur(1px)", // Add slight blur to side cards for depth
                 transition: prefersReducedMotion ? "none" : "all 0.3s ease",
+                backfaceVisibility: "hidden",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
               }}

@@ -151,7 +151,7 @@ const NavBar = () => {
           "@media (max-width: 319px)": {
             margin: "0 auto 0 -20px", // Adjust the left margin for smaller screens
           },
-          "@media (min-width: 375px && max-width: 725px)": {
+          "@media (min-width: 375px) and (max-width: 725px)": {
             margin: "0 auto", // Adjust for slightly wider but small screens
           },
         }}

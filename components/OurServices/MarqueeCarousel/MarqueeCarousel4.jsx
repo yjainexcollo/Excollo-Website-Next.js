@@ -11,10 +11,10 @@ const webflow = "/marqueelogo4/webflow.png";
 const wix = "/marqueelogo4/wix.png";
 
 const MarqueeCarousel4 = () => {
-   const theme = useTheme();
-   const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
-   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-   const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const theme = useTheme();
+  const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const technologies = [
     {
       name: "Technology 1",
@@ -48,11 +48,11 @@ const MarqueeCarousel4 = () => {
             borderRadius: 1,
           }}
         >
-            <img
-              src={nextjs}
-              alt="Logo"
-              style={{ height: 50, width: "auto", marginLeft: "-2rem", marginRight: "-2rem" }}
-            />
+          <img
+            src={nextjs}
+            alt="Logo"
+            style={{ height: 50, width: "auto", marginLeft: "-2rem", marginRight: "-2rem" }}
+          />
         </Box>
       ),
     },

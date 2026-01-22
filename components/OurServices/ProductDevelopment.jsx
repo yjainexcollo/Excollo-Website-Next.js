@@ -41,7 +41,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
   const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
@@ -132,11 +132,11 @@ const ProductDevelopment = forwardRef((props, ref) => {
           let leftOffset = rect.left - parentRect.left + rect.width / 2 - 20;
 
           if (isLargeScreen) {
-            topOffset = rect.top - parentRect.top + rect.height / 2 - 170;
+            topOffset = rect.top - parentRect.top + rect.height / 2;
             leftOffset = rect.left - parentRect.left + rect.width / 2 - 27;
           }
           if (is1536pxto1789px) {
-            topOffset = rect.top - parentRect.top + rect.height / 2 - 170;
+            topOffset = rect.top - parentRect.top + rect.height / 2;
             leftOffset = rect.left - parentRect.left + rect.width / 2 - 32;
           }
           if (is1790pxto2000px) {
@@ -168,164 +168,36 @@ const ProductDevelopment = forwardRef((props, ref) => {
     }
   }, [currentDotIndex, isMobile, isLargeScreen, is1536pxto1789px, is1790pxto2000px, is2001pxto2250px, is2251pxto2550px]);
 
-  useEffect(() => {
-    if (!isMobile && !isTablet) {
-      const screenHeight = window.innerHeight;
-
-      // Define y values relative to screen height
-      const yValue = screenHeight * 0.145;
-      gsap.set(".animate-content-4", {
-        x: "100%",
-        opacity: 0,
-      });
-
-      gsap.set(".services-title-4", {
-        opacity: 0,
-        y: yValue,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".services-container-4",
-          start: "center center",
-          end: "+=150%",
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-
-      tl.fromTo(
-        ".fade-in-heading-4",
-        {
-          opacity: 1,
-          y: yValue * 4,
-        },
-        {
-          opacity: 1,
-          y: yValue * 4,
-          duration: 1,
-          scrollTrigger: {
-            trigger: ".fade-in-heading-4",
-            start: "top 100%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        }
-      )
-        .to(".fade-in-heading-4", {
-          x: "-100%",
-          opacity: 1,
-          delay: 2,
-          duration: 5,
-          scrollTrigger: {
-            trigger: ".fade-in-heading-4",
-            start: "center 5%",
-            end: "center 0%",
-            scrub: 2,
-          },
-        })
-        .to(".animate-content-4", {
-          x: "0%",
-          opacity: 1,
-          delay: 2,
-          duration: 5,
-          scrollTrigger: {
-            trigger: ".animate-content-4",
-            start: "center 10%",
-            end: "center 10%",
-            scrub: 2,
-          },
-        })
-        .to(".services-title-4", {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          delay: 0.3,
-          scrollTrigger: {
-            trigger: ".services-title-4",
-            start: "center 10%",
-            end: "center 10%",
-            scrub: 1,
-          },
-        });
-
-      // Animate service items
-      gsap.utils.toArray(".service-item").forEach((item, index) => {
-        gsap.from(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: "top bottom-=100",
-            toggleActions: "play none none reverse",
-          },
-          opacity: 0,
-          y: 50,
-          duration: 0.6,
-          delay: index * 0.1,
-        });
-      });
-
-      return () => {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      };
-    }
-  }, [isMobile, isTablet]);
+  // Cleaned up desktop animations effect
 
   useEffect(() => {
     if (isTablet) {
-      gsap.set(".tablet-heading", {
-        y: 100,
-        opacity: 0,
-      });
+      let ctx = gsap.context(() => {
+        const q = gsap.utils.selector(sectionRef);
 
-      gsap.set(".tablet-service-item", {
-        y: 10,
-        opacity: 0,
-      });
-
-      gsap.to(".tablet-heading", {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        scrollTrigger: {
-          trigger: ".tablet-heading",
-          start: "top 80%",
-          end: "top 60%",
-          scrub: 1,
-        },
-      });
-
-      gsap.utils.toArray(".tablet-service-item").forEach((item, index) => {
-        gsap.to(item, {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          delay: index * 0.5,
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            end: "top 60%",
-            scrub: 1,
-          },
+        gsap.set(q(".tablet-service-item"), {
+          y: 50,
+          opacity: 0,
         });
-      });
 
-      gsap.utils
-        .toArray(".tablet-gradient-divider")
-        .forEach((divider, index) => {
-          gsap.to(divider, {
+        const items = q(".tablet-service-item");
+        items.forEach((item, index) => {
+          gsap.to(item, {
             y: 0,
             opacity: 1,
             duration: 0.6,
-            delay: index * 0.1 + 0.3,
+            delay: index * 0.1,
             scrollTrigger: {
-              trigger: divider,
-              start: "top 80%",
-              end: "top 60%",
-              scrub: 1,
+              trigger: item,
+              start: "top 95%",
+              toggleActions: "play none none reverse",
             },
           });
         });
+
+      }, sectionRef);
+
+      return () => ctx.revert();
     }
   }, [isTablet]);
 
@@ -394,6 +266,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
     width: "100%",
     minHeight: isTablet || isSpecified ? "auto" : "120vh",
     position: "relative",
+    marginTop: "5rem",
     marginBottom: "5rem",
     padding: isTablet || isSpecified ? "1rem" : 0,
     ml: isTablet || isSpecified ? -5 : "-5%",
@@ -409,7 +282,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
   const titleStyles = {
     fontSize: isTablet || isSpecified ? "2rem" : "3rem",
     textAlign: "center",
-    ml: isTablet ? 0 : "5%",
+    ml: 5,
     marginBottom: isTablet || isSpecified ? "2rem" : "3rem",
   };
 
@@ -503,6 +376,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                     backgroundColor: "#000",
                     color: "#fff",
                     boxShadow: "none",
+                    overflow: "visible",
                     "&.Mui-expanded": {
                       margin: 0,
                     },
@@ -511,6 +385,17 @@ const ProductDevelopment = forwardRef((props, ref) => {
                   <AccordionSummary
                     expandIcon={<ChevronDown style={{ color: "#fff" }} />}
                     sx={{
+                      width: "100%",
+                      position: "relative",
+                      "& .MuiAccordionSummary-content": {
+                        width: "100%",
+                      },
+                      "& .MuiAccordionSummary-expandIconWrapper": {
+                        position: "absolute",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        right: "1rem",
+                      },
                       "&.Mui-expanded": {
                         minHeight: isTablet ? 80 : 105,
                         margin: 0,
@@ -522,11 +407,11 @@ const ProductDevelopment = forwardRef((props, ref) => {
                       variant="h6"
                       sx={{
                         fontSize: `clamp(1rem, calc(0.6rem + 1vw), 9rem)`,
-                        fontWeight: 100,
+                        fontWeight: 400,
                         position: "relative",
                         ml: isTablet ? -5 : "1%",
                       }}
-                      className={isTablet ? "tablet-service-item" : ""}
+                      className="tablet-service-item"
                     >
                       <span
                         ref={(el) => (symbolRefs.current[index] = el)}
@@ -555,7 +440,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                       {service.details.map((detail, index) => (
                         <ListItem
                           key={index}
-                          className={isTablet ? "tablet-service-item" : ""}
+                          className="tablet-service-item"
                         >
                           <ListItemIcon sx={{ minWidth: 25 }}>
                             <Circle size={6} color="#fff" />
@@ -565,7 +450,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                             primaryTypographyProps={{
                               sx: {
                                 fontSize: `clamp(0.8rem, calc(0.5rem + 0.8vw), 9rem)`,
-                                fontWeight: 100,
+                                fontWeight: 400,
                               },
                             }}
                           />
@@ -645,7 +530,8 @@ const ProductDevelopment = forwardRef((props, ref) => {
                 textAlign: expanded ? "left" : "center",
                 fontSize: `clamp(1rem, calc(0.7rem + 1vw), 9rem)`,
                 width: "100%",
-                fontWeight: 100,
+                fontWeight: 400,
+
               }}
             >
               {services[0].title}
@@ -682,7 +568,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                     sx={{
                       textAlign: "left",
                       fontSize: `clamp(1rem, calc(0.7rem + 1vw), 9rem)`,
-                      fontWeight: 100,
+                      fontWeight: 400,
                     }}
                   >
                     {service.title}
@@ -760,38 +646,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
         position: "relative",
       }}
     >
-      <Box
-        className="fade-in-heading-4"
-        sx={{
-          position: "relative",
-          top: 0,
-          left: 0,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box>
-          <Typography
-            variant="h1"
-            sx={{
-              fontWeight: "500",
-              textAlign: "center",
-              color: "#fff",
-            }}
-          >
-            Product Development
-          </Typography>
-        </Box>
-        <Box>
-          <Typography
-            variant="h4"
-            sx={{ textAlign: "center", fontWeight: "500", mt: 2, color: "#fff", }}
-          >
-            Scalable And Reliable Development
-          </Typography>
-        </Box>
-      </Box>
+
 
       <Box
         className="animate-content-4"
@@ -813,24 +668,20 @@ const ProductDevelopment = forwardRef((props, ref) => {
           }}
         >
           <Typography
-            variant="h6"
+            variant="h2"
             sx={{
-              color: "grey.500",
-              ml: {
-                md: "3%",
-              },
-              mb: {
-                md: "1%",
-                lg: "2%",
-                xl: "1.5%",
-              },
-              fontSize: {
-                md: `clamp(0.5rem, calc(0.5rem + 1vw), 1.5rem)`,
-                lg: `clamp(0.5rem, calc(0.8rem + 1vw), 2rem)`,
-                xl: `clamp(0.5rem, calc(0.5rem + 1vw), 3rem)`,
-              },
+              ...titleStyles,
+              background: "linear-gradient(180deg, #2579e3, #8e54f7)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              textFillColor: "transparent",
+              textAlign: "center",
+              fontSize: `clamp(1rem, calc(1rem + 2vw), 9rem)`,
+              fontWeight: 500,
+              mb: 4,
             }}
-            className="services-title-4"
+            className="tablet-heading"
           >
             Product Development
           </Typography>
@@ -843,6 +694,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                   backgroundColor: "#000",
                   color: "#fff",
                   boxShadow: "none",
+                  overflow: "visible",
                   "&.Mui-expanded": {
                     marginRight: {
                       md: "0%",
@@ -854,16 +706,24 @@ const ProductDevelopment = forwardRef((props, ref) => {
               >
                 <AccordionSummary
                   expandIcon={
-                    <ChevronDown style={{ color: "#fff", marginRight: "0%" }} />
+                    <ChevronDown style={{ color: "#fff" }} />
                   }
                   sx={{
-                    width: {
-                      md: "95%",
+                    width: "100%",
+                    position: "relative",
+                    "& .MuiAccordionSummary-content": {
+                      width: "100%",
+                    },
+                    "& .MuiAccordionSummary-expandIconWrapper": {
+                      position: "absolute",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      right: "1rem",
                     },
                     height: {
-                      md: "clamp(100px, 16vh, 250px)",
-                      lg: "clamp(100px, 16vh, 250px)",
-                      xl: "clamp(100px, 18vh, 250px)",
+                      md: "clamp(70px, 12vh, 200px)",
+                      lg: "clamp(70px, 12vh, 200px)",
+                      xl: "clamp(80px, 13vh, 220px)",
                     },
                     minHeight: "auto",
                     "&.Mui-expanded": {
@@ -884,11 +744,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                         xl: `clamp(0.5rem, calc(0.5rem + 1vw), 3rem)`,
                       },
                       position: "relative",
-                      marginLeft: {
-                        md: "2%",
-                        lg: "2.5%",
-                        xl: "2.5%",
-                      },
+                      textAlign: "center",
                     }}
                   >
                     <span
@@ -922,7 +778,7 @@ const ProductDevelopment = forwardRef((props, ref) => {
                     }}
                   >
                     {service.details.map((detail, index) => (
-                      <ListItem key={index}>
+                      <ListItem key={index} className="desktop-service-item">
                         <ListItemIcon>
                           <Circle size={8} color="#fff" />
                         </ListItemIcon>

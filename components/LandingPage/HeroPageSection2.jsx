@@ -19,7 +19,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  
+
   // Comprehensive breakpoints matching HeroPageSection1 pattern
   const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
   const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
@@ -28,21 +28,28 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
   const isLargeDesktop = useMediaQuery("(min-width: 1536px) and (max-width: 1919px)");
   const isXtraLargeDesktop = useMediaQuery("(min-width: 1920px)");
   const isUltraWide = useMediaQuery("(min-width: 2560px)");
-  
+
   const isTabletOrMobile = isMobile || isTablet;
 
   useGSAP(() => {
-    // Skip animations only if reduced motion is enabled
-    if (prefersReducedMotion) {
-      onAnimationComplete?.();
-      return;
-    }
-
     const section = sectionRef.current;
     const gradient = gradientRef.current;
     const content = contentRef.current;
 
     if (!section || !gradient || !content) return;
+
+    // IF MOBILE/TABLET: Force static state immediately and exit
+    if (isTabletOrMobile) {
+      gsap.set([gradient, content], { opacity: 1, x: 0, scale: 1 });
+      onAnimationComplete?.();
+      return;
+    }
+
+    // Skip animations only if reduced motion is enabled
+    if (prefersReducedMotion) {
+      onAnimationComplete?.();
+      return;
+    }
 
     // Set will-change on animated elements
     gsap.set([gradient, content], { willChange: "transform, opacity" });
@@ -97,7 +104,7 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
       // Cleanup: unset will-change if component unmounts
       gsap.set([gradient, content], { willChange: "auto" });
     };
-  }, [onAnimationComplete, prefersReducedMotion]);
+  }, [onAnimationComplete, prefersReducedMotion, isTabletOrMobile]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -227,8 +234,8 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
         color: "#fff",
         overflow: "hidden",
         minHeight: {
-          xs: "60vh",
-          sm: "70vh",
+          xs: "60svh",
+          sm: "70svh",
           md: getMinHeight(),
         },
         display: "flex",
@@ -247,16 +254,16 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
         },
         margin: "0 auto",
         padding: {
-          xs: "1.5rem",
-          sm: "2rem",
+          xs: "0",
+          sm: "0",
           md: getPadding(),
         },
         fontFamily: '"Inter", sans-serif',
         position: "relative",
         zIndex: 2,
         marginTop: {
-          xs: "-10vh",
-          sm: "-5vh",
+          xs: "0",
+          sm: "0",
           md: "0rem",
         },
       }}
@@ -266,8 +273,8 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
         sx={{
           position: "absolute",
           top: {
-            xs: "15%",
-            sm: "10%",
+            xs: "0%", // Start from top on mobile
+            sm: "0%",
             md: "-10%",
             lg: "-20%",
           },
@@ -334,8 +341,8 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
               md: getWrapperMarginLeft(),
             },
             marginTop: {
-              xs: "8%",
-              sm: "8%",
+              xs: "0",
+              sm: "0",
               md: "10%",
             },
             width: {
@@ -355,8 +362,8 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
               display: "flex",
               flexDirection: "column",
               mt: {
-                xs: 6,
-                sm: 4,
+                xs: 0,
+                sm: 0,
                 md: 0,
                 lg: -20,
               },
@@ -419,7 +426,9 @@ const HeroPageSection2 = ({ onAnimationComplete }) => {
               href="/services"
               onClick={handleClick}
               sx={{
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
                 color: "#ffffff",
                 textDecoration: "none",
                 fontWeight: 400,

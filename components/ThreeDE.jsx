@@ -19,7 +19,7 @@ const ThreeDE = ({ textSize }) => {
 
   useEffect(() => {
     if (!mountRef.current) return;
-    
+
     // Guard: prevent double initialization for the same mount
     if (didInitRef.current) return;
     didInitRef.current = true;
@@ -35,7 +35,7 @@ const ThreeDE = ({ textSize }) => {
     const scene = new THREE.Scene();
     scene.background = null;
     sceneRef.current = scene;
-    
+
     const camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000);
     camera.position.z = 50;
     cameraRef.current = camera;
@@ -44,7 +44,7 @@ const ThreeDE = ({ textSize }) => {
     renderer.setSize(WIDTH, HEIGHT);
     renderer.setClearColor(0x000000, 0);
     rendererRef.current = renderer;
-    
+
     mountRef.current.appendChild(renderer.domElement);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -135,7 +135,7 @@ const ThreeDE = ({ textSize }) => {
         const animate = () => {
           // Check if cancelled before continuing
           if (cancelled || !mountRef.current) return;
-          
+
           animationFrameIdRef.current = requestAnimationFrame(animate);
           textMesh.rotation.y += 0.02;
           renderer.render(scene, camera);
@@ -234,6 +234,7 @@ const ThreeDE = ({ textSize }) => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
+        pointerEvents: "none",
       }}
     />
   );

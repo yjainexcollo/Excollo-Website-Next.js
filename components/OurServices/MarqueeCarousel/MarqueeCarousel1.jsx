@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 // Images from public directory
@@ -10,10 +11,10 @@ const Zapier = "/marqueelogo1/Zapier.png";
 const LLama = "/marqueelogo1/LLama.png";
 
 const MarqueeCarousel1 = () => {
-   const theme = useTheme();
-   const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
-   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-   const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const theme = useTheme();
+  const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const technologies = [
     {
       name: "Technology 1",
@@ -51,11 +52,11 @@ const MarqueeCarousel1 = () => {
             borderRadius: 1,
           }}
         >
-            <img
-              src={github_copilot}
-              alt="Logo"
-              style={{ height: 20, width: "auto" }}
-            />
+          <img
+            src={github_copilot}
+            alt="Logo"
+            style={{ height: 20, width: "auto" }}
+          />
         </Box>
       ),
     },
@@ -155,51 +156,51 @@ const MarqueeCarousel1 = () => {
     },
   ];
 
- return (
-   <Box
-     sx={{
-       backgroundColor: "black",
-       position: "relative",
-       zIndex: 1,
-     }}
-   >
-     <Box
-       sx={{
-         position: "relative",
-         display: "flex",
-         alignItems: "center",
-         top: 0,
-         bottom: 0,
-       }}
-     >
-       <Box
-         className="animate-marquee"
-         sx={{ display: "flex", whiteSpace: "nowrap" }}
-       >
-         {technologies.concat(technologies).map((tech, index) => (
-           <Box key={index} sx={{ flex: "none", mx: {xs: 4, sm: 4,md: 4, lg: 6, xl: 8}, px: {xs: 4, sm: 4,md: 4,lg: 6, xl: 9} }}>
-             {tech.content}
-           </Box>
-         ))}
-       </Box>
-     </Box>
-     <style jsx>{`
-       @keyframes marquee {
-         0% {
-           transform: translateX(0%);
-         }
-         100% {
-           transform: translateX(-100%);
-         }
-       }
-       .animate-marquee {
-         display: flex;
-         white-space: nowrap;
-         animation: marquee 30s linear infinite;
-       }
-     `}</style>
-   </Box>
- );
+  return (
+    <Box
+      sx={{
+        backgroundColor: "black",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          top: 0,
+          bottom: 0,
+        }}
+      >
+        <Box
+          className="animate-marquee"
+          sx={{ display: "flex", whiteSpace: "nowrap" }}
+        >
+          {technologies.concat(technologies).map((tech, index) => (
+            <Box key={index} sx={{ flex: "none", mx: { xs: 4, sm: 4, md: 4, lg: 6, xl: 8 }, px: { xs: 4, sm: 4, md: 4, lg: 6, xl: 9 } }}>
+              {tech.content}
+            </Box>
+          ))}
+        </Box>
+      </Box>
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          display: flex;
+          white-space: nowrap;
+          animation: marquee 16s linear infinite;
+        }
+      `}</style>
+    </Box>
+  );
 };
 
 export default MarqueeCarousel1;

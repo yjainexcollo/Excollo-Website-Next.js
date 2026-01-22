@@ -10,12 +10,12 @@ const HeroPageSection7 = () => {
   const [scrollY, setScrollY] = useState(0);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const rafRef = useRef(null);
-  
+
   // Use MUI useMediaQuery for responsive detection (SSR-safe)
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // < 600px
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md")); // 600-900px
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  
+
   // Comprehensive breakpoints matching Section1-6 pattern
   const isSmallDesktop = useMediaQuery("(min-width: 900px) and (max-width: 1023px)");
   const isLaptop13 = useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
@@ -111,6 +111,7 @@ const HeroPageSection7 = () => {
             sm: 0,
             md: 0,
           },
+          marginX: "auto",
         }}
       >
         <Box

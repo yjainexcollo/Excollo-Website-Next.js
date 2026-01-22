@@ -16,34 +16,12 @@ import { Sparkles, Users, MessageSquare, TrendingUp, Zap, Target } from 'lucide-
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
 import Excollo3DCaseStudy from "@/components/AboutUs/Excollo3DCaseStudy";
-import { IoLogoWhatsapp } from "react-icons/io5";
+
 
 const ProductPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(false);
 
-  // WhatsApp button scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowWhatsAppButton(true);
-      } else {
-        setShowWhatsAppButton(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleWhatsapp = () => {
-    window.open(
-      "https://wa.me/918890204938?text=Hey%2C%20I%20need%20help%20with%20a%20tech%20solution.%20Let's%20talk%21",
-      "_blank"
-    );
-  };
 
   const features = [
     {
@@ -79,7 +57,7 @@ const ProductPage = () => {
   ];
 
   return (
-    <Box sx={{ minHeight: "100vh", background: "#000", color: "#fff", position: 'relative', fontFamily: '"Inter", sans-serif' }}>
+    <Box sx={{ minHeight: "100vh", background: "#000", color: "#fff", position: 'relative' }}>
       {/* Background Gradient */}
       <Box
         sx={{
@@ -129,11 +107,16 @@ const ProductPage = () => {
           {/* Main Headline */}
           <Typography
             sx={{
-              fontWeight: 800,
-              fontSize: { xs: 32, sm: 40, md: 48, lg: 56 },
+              fontWeight: 600,
+              fontFamily: '"Inter", sans-serif',
+              fontSize: {
+                xs: `clamp(1.75rem, calc(1.25rem + 2vw), 9rem)`,
+                md: `clamp(1.75rem, calc(1.25rem + 2.5vw), 9rem)`,
+                lg: `clamp(1.75rem, calc(1.37rem + 3vw), 8rem)`,
+                xl: `clamp(2.25rem, calc(2rem + 3vw), 10rem)`,
+              },
               mb: { xs: 2, md: 3 },
-              lineHeight: 1.2,
-              fontFamily: '"Inter", sans-serif'
+              lineHeight: 1.1,
             }}
           >
             Your ICP,{' '}
@@ -154,7 +137,7 @@ const ProductPage = () => {
               fontWeight: 600,
               mb: 3,
               color: 'rgba(255,255,255,0.9)',
-              fontFamily: '"Inter", sans-serif'
+
             }}
           >
             AI Personas to Accelerate Messaging and GTM
@@ -163,12 +146,17 @@ const ProductPage = () => {
           {/* Description */}
           <Typography sx={{
             mb: 4,
-            color: 'rgba(255,255,255,0.85)',
-            maxWidth: 800,
+            color: 'rgba(255,255,255,0.8)',
+            maxWidth: 920,
             mx: 'auto',
-            fontSize: { xs: 16, sm: 18 },
+            fontSize: {
+              xs: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              md: `clamp(0.5rem, calc(0.8rem + 0.6vw), 1.5rem)`,
+              lg: `clamp(0.5rem, calc(0.8rem + 0.7vw), 1.8rem)`,
+              xl: `clamp(0.5rem, calc(0.8rem + 0.8vw), 2.1rem)`,
+            },
             lineHeight: 1.6,
-            fontFamily: '"Inter", sans-serif'
+
           }}>
             CRUDO.AI creates hyper-realistic AI personas of your Ideal Customer Profile (ICP),
             so your teams can instantly test messaging, validate positioning, and accelerate
@@ -189,7 +177,7 @@ const ProductPage = () => {
               fontWeight: 600,
               fontSize: { xs: 16, sm: 18 },
               textTransform: 'none',
-              fontFamily: '"Inter", sans-serif',
+
               background: 'linear-gradient(135deg, #2579E3 0%, #8E54F7 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #1e6bb8 0%, #7c3aed 100%)',
@@ -204,9 +192,9 @@ const ProductPage = () => {
         </Box>
 
         {/* Features Grid */}
-        <Box sx={{ 
-          mb: { xs: 10, md: 12 }, 
-          maxWidth: 1200, 
+        <Box sx={{
+          mb: { xs: 10, md: 12 },
+          maxWidth: 1200,
           mx: 'auto',
           position: 'relative',
           px: { xs: 2, sm: 3 }
@@ -226,7 +214,7 @@ const ProductPage = () => {
               pointerEvents: 'none'
             }}
           />
-          
+
           <Typography
             sx={{
               fontSize: { xs: 24, sm: 28, md: 32 },
@@ -235,14 +223,14 @@ const ProductPage = () => {
               mb: 6,
               position: 'relative',
               zIndex: 1,
-              fontFamily: '"Inter", sans-serif'
+
             }}
           >
             Key Features
           </Typography>
 
-          <Grid 
-            container 
+          <Grid
+            container
             spacing={{ xs: 3, md: 4 }}
             justifyContent="center"
             alignItems="stretch"
@@ -298,7 +286,7 @@ const ProductPage = () => {
                       mb: 1.25,
                       color: '#fff',
                       textAlign: 'left',
-                      fontFamily: '"Inter", sans-serif'
+
                     }}
                   >
                     {feature.title}
@@ -310,7 +298,7 @@ const ProductPage = () => {
                       color: 'rgba(255,255,255,0.7)',
                       lineHeight: 1.6,
                       textAlign: 'left',
-                      fontFamily: '"Inter", sans-serif'
+
                     }}
                   >
                     {feature.description}
@@ -338,7 +326,7 @@ const ProductPage = () => {
               fontSize: { xs: 24, sm: 28, md: 32 },
               fontWeight: 700,
               mb: 2,
-              fontFamily: '"Inter", sans-serif'
+
             }}
           >
             Ready to Transform Your GTM Strategy?
@@ -350,7 +338,7 @@ const ProductPage = () => {
               mb: 4,
               maxWidth: 600,
               mx: 'auto',
-              fontFamily: '"Inter", sans-serif'
+
             }}
           >
             Experience the power of AI-driven customer personas and accelerate your
@@ -369,7 +357,7 @@ const ProductPage = () => {
               fontWeight: 600,
               fontSize: { xs: 16, sm: 18 },
               textTransform: 'none',
-              fontFamily: '"Inter", sans-serif',
+
               background: 'linear-gradient(135deg, #2579E3 0%, #8E54F7 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #1e6bb8 0%, #7c3aed 100%)',
@@ -402,28 +390,7 @@ const ProductPage = () => {
       {/* Footer */}
       <Footer />
 
-      {/* WhatsApp Button */}
-      <Fade in={showWhatsAppButton}>
-        <Button
-          onClick={handleWhatsapp}
-          variant="contained"
-          color="primary"
-          sx={{
-            position: "fixed",
-            height: 60,
-            bottom: { xs: 200, md: 100 },
-            right: { xs: 24, md: 24 },
-            zIndex: 1000,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.1)",
-            "&:hover": {
-              background: "linear-gradient(180deg, #2579E3 0%, #8E54F7 100%)",
-            },
-          }}
-        >
-          <IoLogoWhatsapp size={30} />
-        </Button>
-      </Fade>
+
     </Box>
   );
 };

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 // Images from public directory
@@ -12,9 +13,9 @@ const aisensy = "/marqueelogo2/aisensy.png";
 
 const MarqueeCarousel2 = () => {
   const theme = useTheme();
-     const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
-     const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-     const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isSpecified = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isXtraLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const technologies = [
     {
       name: "Technology 1",
@@ -61,7 +62,7 @@ const MarqueeCarousel2 = () => {
       content: (
         <Box
           sx={{
-            backgroundColor: "gray.700",
+            backgroundColor: "transparent",
             height: 48,
             width: 96,
             display: "flex",

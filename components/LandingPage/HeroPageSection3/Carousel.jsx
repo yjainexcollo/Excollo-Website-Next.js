@@ -30,15 +30,15 @@ const getCardDimensions = (viewportWidth) => {
   // Desktop baseline (1440-1919px): CARD_WIDTH = 850, GAP = 1000 (increased card width)
   const BASELINE_CARD = 850;
   const BASELINE_GAP = 1000;
-  
+
   // Ultra-wide screens (2560px+)
   if (viewportWidth >= 2560) {
-    return { 
-      CARD_WIDTH: 1000, 
-      GAP: 1300 
+    return {
+      CARD_WIDTH: 1000,
+      GAP: 1300
     };
   }
-  
+
   // Extra large screens (1920-2559px)
   if (viewportWidth >= 1920 && viewportWidth < 2560) {
     return {
@@ -46,17 +46,17 @@ const getCardDimensions = (viewportWidth) => {
       GAP: 900,
     };
   }
-  
+
   // Large desktop baseline (1536-1919px) - unchanged
   if (viewportWidth >= 1536 && viewportWidth < 1920) {
     return { CARD_WIDTH: BASELINE_CARD, GAP: BASELINE_GAP };
   }
-  
+
   // Laptop 15" (1440-1535px) - reduced width to prevent breaking
   if (viewportWidth >= 1440 && viewportWidth < 1536) {
     return { CARD_WIDTH: 650, GAP: 900 }; // Reduced for laptop 15" to prevent overflow
   }
-  
+
   // Laptop 14" (1280-1439px)
   if (viewportWidth >= 1280 && viewportWidth < 1440) {
     return {
@@ -64,7 +64,7 @@ const getCardDimensions = (viewportWidth) => {
       GAP: 800,
     };
   }
-  
+
   // Laptop 13" (1024-1279px)
   if (viewportWidth >= 1024 && viewportWidth < 1280) {
     const scale = 0.6 + ((viewportWidth - 1024) / 256) * 0.15; // Scale from 0.7 to 0.85
@@ -73,7 +73,7 @@ const getCardDimensions = (viewportWidth) => {
       GAP: Math.round(BASELINE_GAP * scale),
     };
   }
-  
+
   // Small desktop (900-1023px)
   if (viewportWidth >= 900 && viewportWidth < 1024) {
     const scale = 0.6 + ((viewportWidth - 900) / 124) * 0.1; // Scale from 0.6 to 0.7
@@ -82,7 +82,7 @@ const getCardDimensions = (viewportWidth) => {
       GAP: Math.round(BASELINE_GAP * scale),
     };
   }
-  
+
   // Tablet (768-899px)
   if (viewportWidth >= 768 && viewportWidth < 900) {
     const scale = 0.5 + ((viewportWidth - 768) / 132) * 0.1; // Scale from 0.5 to 0.6
@@ -91,7 +91,7 @@ const getCardDimensions = (viewportWidth) => {
       GAP: Math.round(BASELINE_GAP * scale),
     };
   }
-  
+
   // Mobile/Tablet (below 768px) - use proportional scaling with minimum
   const scale = Math.max(viewportWidth / 1440, 0.35); // Min 35% of baseline
   return {
@@ -108,9 +108,9 @@ const Feature = ({ title, description, isMobile, isTablet }) => {
     background: "linear-gradient(180deg, #05000A 0%, #1B1125 100%)",
     borderRadius: "12px",
     textAlign: "center",
-    padding: "1",
+    padding: "1rem",
     width: "100%",
-    height: isMobile ? "150px" : isTablet ? "200px" : "100%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -272,26 +272,20 @@ const ResponsiveView = ({ type, isTablet }) => {
     <Box
       key={key}
       sx={{
-        minHeight: {
-          xs: "100vh",
-        },
-        color: "#fff",
-        fontFamily: '"Inter", sans-serif',
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         position: "relative",
-        marginTop: {
-          xs: "20%",
-          sm: "10%",
-        },
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
           position: "relative",
-          backgroundColor: "black",
+          width: "100%",
+          height: isMobile ? "200px" : "220px", // Adjusted height as per screenshot
+          marginBottom: "1rem",
         }}
       >
         <AnimatePresence initial={false} custom={direction}>
@@ -301,15 +295,16 @@ const ResponsiveView = ({ type, isTablet }) => {
             initial={{ opacity: 0, x: direction > 0 ? "100%" : "-100%" }}
             animate={{ opacity: 1, x: "0%" }}
             exit={{ opacity: 0, x: direction > 0 ? "-100%" : "100%" }}
-            transition={{ 
+            transition={{
               duration: prefersReducedMotion ? 0 : 0.5,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             style={{
-              width: "80%",
+              width: "85%", // Wider card
+              height: "100%",
               position: "absolute",
-              left: "10%",
-              x: "-50%",
+              left: "7.5%", // Center: (100 - 85) / 2
+              top: 0,
               cursor: "pointer",
             }}
             onClick={handleCardClick}
@@ -322,47 +317,56 @@ const ResponsiveView = ({ type, isTablet }) => {
             />
           </motion.div>
         </AnimatePresence>
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "30%",
-              mt: isMobile ? 22 : 32,
-              gap: 1,
-            }}
+      </Box>
+
+      {/* Navigation Arrows */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 3,
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            borderRadius: "50%",
+            border: "1px solid rgb(206, 84, 247)",
+            height: "40px",
+            width: "40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backdropFilter: "blur(4px)",
+            backgroundColor: "rgba(0,0,0,0.3)",
+          }}
+        >
+          <IconButton
+            onClick={handlePrev}
+            sx={{ ml: 0.5, p: 1, color: "white" }}
           >
-            <Box
-              sx={{
-                borderRadius: "50%",
-                border: "1px solid rgb(206, 84, 247)",
-                height: "40px",
-                width: "40px",
-              }}
-            >
-              <IconButton
-                onClick={handlePrev}
-                sx={{ ml: 0.5, p: 1, color: "white" }}
-              >
-                <ArrowBackIosIcon />
-              </IconButton>
-            </Box>
-            <Box
-              sx={{
-                borderRadius: "50%",
-                border: "1px solid rgb(206, 84, 247)",
-                height: "40px",
-                width: "40px",
-              }}
-            >
-              <IconButton
-                onClick={handleNext}
-                sx={{ ml: 0.2, p: 1, color: "white" }}
-              >
-                <ArrowForwardIosIcon />
-              </IconButton>
-            </Box>
-          </Box>
+            <ArrowBackIosIcon fontSize="small" />
+          </IconButton>
+        </Box>
+        <Box
+          sx={{
+            borderRadius: "50%",
+            border: "1px solid rgb(206, 84, 247)",
+            height: "40px",
+            width: "40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backdropFilter: "blur(4px)",
+            backgroundColor: "rgba(0,0,0,0.3)",
+          }}
+        >
+          <IconButton
+            onClick={handleNext}
+            sx={{ ml: 0.2, p: 1, color: "white" }}
+          >
+            <ArrowForwardIosIcon fontSize="small" />
+          </IconButton>
         </Box>
       </Box>
     </Box>
@@ -404,16 +408,16 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
   // Use viewport width for breakpoint detection (more accurate than container width)
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     // Set initial viewport width
     setViewportWidth(window.innerWidth);
-    
+
     const handleResize = () => {
       setViewportWidth(window.innerWidth);
     };
-    
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -732,10 +736,10 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
       cursor: type === "title" ? "pointer" : "default",
       color: isReverse ? "white" : "black",
       textAlign: "center",
-      marginLeft: index === 0 ? (type === "title" ? "40%" : "30%") : "0",
-      marginRight: index === carouselContent.length - 1 ? "40%" : "0",
-      transition: prefersReducedMotion 
-        ? "none" 
+      marginLeft: index === 0 ? (isMobile ? "5%" : type === "title" ? "40%" : "30%") : "0",
+      marginRight: index === carouselContent.length - 1 ? (isMobile ? "5%" : "40%") : "0",
+      transition: prefersReducedMotion
+        ? "none"
         : "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       transformStyle: "preserve-3d",
       backfaceVisibility: "hidden",
@@ -777,7 +781,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
           lg: "clamp(0.5rem, calc(0.7rem + 0.9vw), 1.8rem)",
           xl: "clamp(0.5rem, calc(0.7rem + 1.1vw), 2.1rem)",
         },
-        fontWeight: "100",
+        fontWeight: "400",
         color: "#ddd",
         marginLeft: "auto",
         marginRight: "auto",
@@ -785,7 +789,7 @@ const DesktopCarousel = ({ isReverse, type = "title", mounted = true }) => {
         alignItems: "center",
         display: "flex",
         width: "95%",
-        marginTop: "12%",
+        marginTop:{ xs: "12%", md: "18%" },
         transform: "translateZ(40px)",
         transition: "transform 0.3s ease-out",
       },
@@ -996,6 +1000,7 @@ const Carousel = ({ isReverse, type = "title" }) => {
   // Since this component is now dynamically imported with ssr: false,
   // we can safely use conditional rendering
   if (isMobile || isTablet) {
+    if (type === "description") return null;
     return <ResponsiveView type={type} isTablet={isTablet} />;
   }
 
